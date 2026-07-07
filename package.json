@@ -9,6 +9,7 @@
     "Jothika":"cucumber-js --tags @Jothika",
     "Harini":"cucumber-js --tags @Harini",
     "jagadeep": "cucumber-js --tags @jagadeep",
+    "Subha":"cucumber-js --tags @Subha",
     "parallel": "cucumber-js --parallel 2",
     "re:fail": "cucumber-js -p rerun",
     "posttest": "npx ts-node src/test/utils/report.mts",
@@ -31,6 +32,7 @@
     "csv-parse": "^7.0.1",
     "dotenv": "^17.4.2",
     "exceljs": "^4.4.0",
+    "typescript": "^6.0.3",
     "winston": "^3.19.0"
   }
 }
