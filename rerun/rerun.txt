@@ -1,2 +1,4 @@
+src\test\features\CourseManagement\Addcourse.feature:8
+src\test\features\CourseManagement\Search.feature:8
 src\test\features\CourseManagement\Search.feature:8
 src\test\features\CourseManagement\EditAndDelete.feature:8
