@@ -6,3 +6,6 @@ reports/
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+
+# Playwright
+/playwright-report/
