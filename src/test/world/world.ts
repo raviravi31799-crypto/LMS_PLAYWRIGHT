@@ -1,3 +1,4 @@
+import { CourseManagementPage } from './../pages/CourseManagementPage';
 import{Browser,BrowserContext,Page} from "@playwright/test";
 import{Loginpage} from "../pages/Loginpage";
 
@@ -8,7 +9,7 @@ export class CustomWorld{
     
 
     loginpage!:Loginpage;
-
+    courseManagementpage!: CourseManagementPage;
     
 
    

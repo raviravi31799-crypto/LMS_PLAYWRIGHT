@@ -3,6 +3,7 @@ import{Before,After,BeforeAll,AfterAll} from "@cucumber/cucumber";
 import {Browser, chromium} from "@playwright/test";
 import{CustomWorld} from "../world/world";
 import { Loginpage } from '../pages/Loginpage';
+import { CourseManagementPage } from '../pages/CourseManagementPage';
 
 
 let browser:Browser;
@@ -17,6 +18,7 @@ Before(async function(this:CustomWorld,scenario){
     this.context=await browser.newContext();
     this.page=await this.context.newPage();
     this.loginpage=new Loginpage(this.page);
+    this.courseManagementpage = new CourseManagementPage(this.page);
     
    
 
