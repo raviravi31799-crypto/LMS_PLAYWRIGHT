@@ -8,6 +8,7 @@
     "test": "cucumber-js",
     "sriram": "cucumber-js --tags @sriram",
     "Jothika":"cucumber-js --tags @Jothika",
+    "Harini":"cucumber-js --tags @Harini",
     "parallel": "cucumber-js --parallel 2",
     "re:fail": "cucumber-js -p rerun",
     "posttest": "npx ts-node src/test/utils/report.mts",
