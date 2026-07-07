@@ -5,6 +5,7 @@ import { CustomWorld } from "../world/world";
 import { Loginpage } from '../pages/Loginpage';
 import { CourseStructure } from '../pages/AddCourseStructurePage';
 import { CoursePage } from '../pages/CoursePage';
+import { courseHierarchyPage } from '../pages/CourseHierarchyPage';
 
 let browser: Browser;
 BeforeAll(async () => {
@@ -19,7 +20,8 @@ Before(async function (this: CustomWorld, scenario) {
     this.page = await this.context.newPage();
     this.loginpage = new Loginpage(this.page);
     this.coursestructure = new CourseStructure(this.page);
-    this.coursepage = new CoursePage(this.page); 
+    this.coursepage = new CoursePage(this.page);
+    this.coursehierarchypage=new courseHierarchyPage(this.page);
 });
 
 After(async function (this: CustomWorld, scenario) {

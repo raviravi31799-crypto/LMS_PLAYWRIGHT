@@ -1,0 +1,54 @@
+{
+  "basicConfiguration": {
+    "client": "PSG Tech",
+    "serviceType": "Business to institution",
+    "serviceModel": "TD",
+    "category": "Software Development",
+    "courseName": "Frontend"
+  },
+
+  "courseHierarchy": {
+    "courseLevel": "Beginner",
+    "description": "Frontend Development Course",
+
+    "pedagogy": {
+      "iDo": "Lecture",
+      "weDo": "Practical",
+      "youDo": "Assessments"
+    },
+
+    "resourceType": {
+      "iDo": [
+        "Video",
+        "PPT",
+        "PDF"
+      ],
+
+      "weDo": [
+        "Video"
+      ],
+
+      "youDo": [
+        "Notes"
+      ]
+    },
+
+    "skills": {
+      "coreProgramming": [
+        "C",
+        "Java"
+      ],
+
+      "frontend": [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "React"
+      ],
+
+      "database": [
+        "MongoDB"
+      ]
+    }
+  }
+}
