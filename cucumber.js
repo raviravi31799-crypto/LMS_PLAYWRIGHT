@@ -43,7 +43,7 @@ module.exports={
             "src/test/support/**/*.ts"
         ],
          paths: [
-             "./@rerun.txt"
+             "rerun/rerun.txt"
          ],
     
 
@@ -54,7 +54,7 @@ module.exports={
         "progress-bar",
         "html:reports/cucumber-report.html",
         "json:reports/cucumber-report.json",
-        "rerun:@rerun.txt"
+        "rerun:rerun/rerun.txt"
         
     ]
     }
