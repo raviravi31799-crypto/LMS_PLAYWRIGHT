@@ -8,8 +8,8 @@ Background:
 Scenario: Verify user can create a new course successfully
 When the user clicks the "Add Course" button
 And the user enters the course basic configuration
-  | Client | Service Type | Service Model | Category | Course Name |
-  | Kiot   | Software     | Offline       | Testing  | Playwright  |
+  | Client | ServiceType | ServiceModel | Category | CourseName |
+  | Kiot   | Software    | Offline      | Testing  | Frontend |
 And the user clicks the "Next" button
 And the user enters the course hierarchy details
 And the user clicks the "Preview & Create" button
