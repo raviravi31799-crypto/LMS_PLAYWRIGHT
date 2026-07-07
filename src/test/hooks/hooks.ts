@@ -2,6 +2,7 @@ import { logger } from '../utils/winstonlogger';
 import{Before,After,BeforeAll,AfterAll} from "@cucumber/cucumber";
 import {Browser, chromium} from "@playwright/test";
 import{CustomWorld} from "../world/world";
+import { Loginpage } from '../pages/Loginpage';
 
 
 let browser:Browser;
@@ -15,6 +16,7 @@ Before(async function(this:CustomWorld,scenario){
     this.browser=browser;
     this.context=await browser.newContext();
     this.page=await this.context.newPage();
+    this.loginpage=new Loginpage(this.page);
     
    
 
