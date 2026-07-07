@@ -4,6 +4,8 @@ import { Browser, chromium } from "@playwright/test";
 import { CustomWorld } from "../world/world";
 import { Loginpage } from '../pages/Loginpage';
 import { CourseStructure } from '../pages/AddCourseStructurePage';
+import { CourseManagementPage } from '../pages/CourseManagementPage';
+
 
 let browser: Browser;
 BeforeAll(async () => {
@@ -13,11 +15,13 @@ BeforeAll(async () => {
 
 Before(async function (this: CustomWorld, scenario) {
     logger.info(`Starting scenario:${scenario.pickle.name}`);
+
     this.browser = browser;
     this.context = await browser.newContext();
     this.page = await this.context.newPage();
     this.loginpage = new Loginpage(this.page);
     this.coursestructure = new CourseStructure(this.page);
+    this.courseManagementpage = new CourseManagementPage(this.page);
 });
 
 After(async function (this: CustomWorld, scenario) {
