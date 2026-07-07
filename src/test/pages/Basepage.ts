@@ -1,8 +1,14 @@
-import { Page, Locator } from "@playwright/test";
+import { Locator, Page } from "@playwright/test";
 
 
 export class Basepage {
-    constructor(protected page: Page) {}
+    
+    readonly page : Page
+
+    constructor(page:Page)
+    {
+        this.page = page
+    }
 
     async click(locator: Locator) {
         await locator.click();
