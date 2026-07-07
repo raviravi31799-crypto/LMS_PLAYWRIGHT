@@ -3,7 +3,15 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": 
+  {
+    "test": "cucumber-js",
+    "sriram": "cucumber-js --tags @sriram",
+    "parallel": "cucumber-js --parallel 2",
+    "re:fail": "cucumber-js -p rerun",
+    "posttest": "npx ts-node src/test/utils/report.mts",
+    "test:qa": "cross-env TEST_ENV=qa cucumber-js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
