@@ -37,7 +37,9 @@ export class Basepage {
         return await locator.allTextContents();
     }
 
+
     async select(locator: Locator, value: string) {
-    await locator.selectOption(value);
+         await locator.click();
+         await this.page.getByRole("option", { name: value, exact: true }).click();
 }
 }

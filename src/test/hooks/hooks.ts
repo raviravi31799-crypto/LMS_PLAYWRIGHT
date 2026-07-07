@@ -4,6 +4,7 @@ import { Browser, chromium } from "@playwright/test";
 import { CustomWorld } from "../world/world";
 import { Loginpage } from '../pages/Loginpage';
 import { CourseStructure } from '../pages/AddCourseStructurePage';
+import { CoursePage } from '../pages/CoursePage';
 import { CourseManagementPage } from '../pages/CourseManagementPage';
 
 
@@ -21,6 +22,7 @@ Before(async function (this: CustomWorld, scenario) {
     this.page = await this.context.newPage();
     this.loginpage = new Loginpage(this.page);
     this.coursestructure = new CourseStructure(this.page);
+    this.coursepage = new CoursePage(this.page); 
     this.courseManagementpage = new CourseManagementPage(this.page);
 });
 
