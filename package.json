@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": 
-  {
+  "scripts": {
     "test": "cucumber-js",
     "sriram": "cucumber-js --tags @sriram",
     "parallel": "cucumber-js --parallel 2",
