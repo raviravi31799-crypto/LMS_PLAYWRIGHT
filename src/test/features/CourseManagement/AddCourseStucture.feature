@@ -7,11 +7,10 @@ Feature: 7/7/2026_SRIRAM_K_ADD_COURSE_STRUCTURE
     Background:
         Given admin login with the valid credentials
         When admin clicks the Course Management menu
-        And admin search the course "<search>"
-        And admin click the Add Course Structure
 
     Scenario Outline: Verify that the user can add a new course structure module
-
+        And admin search the course "<search>"
+        And admin click the Add Course Structure
         And admin click the module menu
         And admin enter the title as "<title>"
         And admin enter the description as "<description>"
@@ -21,4 +20,4 @@ Feature: 7/7/2026_SRIRAM_K_ADD_COURSE_STRUCTURE
 
     Examples:
         | search | title            | description                 | skils  |
-        | ML DEMO | Machine Learning | Machine Learning Algorithms | Python |
+        | DEEPLEARNING | Machine Learning | Machine Learning Algorithms | Python |
