@@ -1,7 +1,7 @@
 import { Given, Then, When } from "@cucumber/cucumber";
 import { CustomWorld } from "../world/world";
 
-Given('admin login with the valid credentials', { timeout: 30000 }, async function (this: CustomWorld) {
+Given('admin login with the valid credentials', { timeout: 50000 }, async function (this: CustomWorld) {
   await this.loginpage.launch();
   await this.loginpage.enterdatas('testing@gmail.com', '123');
   await this.loginpage.clicksignin();

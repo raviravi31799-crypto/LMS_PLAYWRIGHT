@@ -7,6 +7,7 @@
     "test": "cucumber-js",
     "sriram": "cucumber-js --tags @sriram",
     "Jothika":"cucumber-js --tags @Jothika",
+    "Harini":"cucumber-js --tags @Harini",
     "jagadeep": "cucumber-js --tags @jagadeep",
     "Subha":"cucumber-js --tags @Subha",
     "parallel": "cucumber-js --parallel 2",

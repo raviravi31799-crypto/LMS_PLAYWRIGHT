@@ -3,6 +3,8 @@ import { Browser, BrowserContext, Page } from "@playwright/test";
 import { Loginpage } from "../pages/Loginpage";
 import { CourseStructure } from "../pages/AddCourseStructurePage";
 import { EditDeletepage } from "../pages/EditDeletepage";
+import { CoursePage } from "../pages/CoursePage";
+
 
 export class CustomWorld {
     browser!: Browser;
@@ -12,6 +14,7 @@ export class CustomWorld {
 
     loginpage!: Loginpage;
     coursestructure!: CourseStructure;
+    coursepage!: CoursePage;
     courseManagementpage!:CourseManagementPage;
     editdeletepage!:EditDeletepage;
 }
