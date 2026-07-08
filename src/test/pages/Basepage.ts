@@ -10,7 +10,8 @@ export class Basepage {
         this.page = page
     }
 
-    async click(locator: Locator) {
+    async click(locator: Locator)
+    {
         await locator.click(
             {
                 timeout : 50000

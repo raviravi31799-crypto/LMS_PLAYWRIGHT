@@ -20,14 +20,25 @@ Feature: 7/7/2026_SRIRAM_K_ADD_COURSE_STRUCTURE
 
     Examples:
         | search | title            | description                 | skils  |
-        | DEEPLEARNING | Machine Learning | Machine Learning Algorithms | Python |
+        | ML DEMO | Machine Learnings | Machine Learning Algorithms | Python |
 
-    # Scenario Outline: Verify that the user can add a new submodule for that course
-    #     And admin 
+    @submodule
+    Scenario Outline: Verify that the user can add a new submodule for that course
+        And admin search the course "<search>"
+        And admin click the Add Course Structure
+        And admin Add the module 
+        And admin click the submodule menu
+        And admin enter the title as "<title>"
+        And admin enter the description as "<description>"
+        And admin select the skillset as "<skils>"
+        And admin click the Add submodulemodule
+        Then admin should seen the "<title>" in the submodule
+
+    Examples:
+        | search | title            | description                 | skils  |
+        | DL DEMO | Machine Learning | Machine Learning Algorithms | Python |
 
 
-    #     w-4 h-4 bg-white rounded-full shadow transition-transform duration-300 transform translate-x-0
-
-    #     //span[text()="More"]
-    #    
-    #    
+        
+       
+       

@@ -16,7 +16,34 @@ export class CourseStructure extends Basepage
   private titleInput = this.page.locator('textarea#title');
   private descriptionInput = this.page.locator('textarea#description');
   private addModuleButton = this.page.locator('//form//button[@type="submit"]');
+  private lastRow = this.page.locator("//table//tbody//tr").last()
   private deleteButton = this.page.locator('//button[text()="Delete"]')
+  private moreButton = this.page.getByRole('button', { name: 'More' });
+  private submodule = this.page.locator('//button[@title="Add New Sub Module"]').last()
+  private lastSubModule = this.page.locator("//table//tbody/tr[1]/td[2]");
+
+  private hierarchyActionsToggle = this.page.locator(
+  '//span[normalize-space()="Hierarchy Actions"]/ancestor::label//div[contains(@class,"w-9 h-4")]');
+
+  private saveSubModule = this.page.locator('//button[@type="submit"]')
+
+  private hierarchyLabel = this.page.locator(
+    '//span[normalize-space()="Hierarchy Actions"]/ancestor::label'
+  );
+
+  private hierarchyCheckbox = this.page.locator(
+    '//span[normalize-space()="Hierarchy Actions"]/ancestor::label//input[@type="checkbox"]'
+  );
+
+  private moduleRow = (moduleName: string) =>
+    this.page.locator(
+      `//table//tbody//tr[td[normalize-space()="${moduleName}"]]`
+    );
+
+  private subModuleCell = (moduleName: string) =>
+    this.page.locator(
+      `//table//tbody//tr[td[normalize-space()="${moduleName}"]]/td[2]`
+    );
   async clickCourseManagement() 
   {
     await this.click(this.courseManagementMenu);
@@ -26,7 +53,7 @@ export class CourseStructure extends Basepage
 
   async searchCourse(courseName: string) 
   {
-    await this.searchInput.fill(courseName);
+    await this.filldata(this.searchInput,courseName);
     await this.page.waitForTimeout(2000);
     logger.info(`Searched for course: ${courseName}`);
   }
@@ -97,31 +124,69 @@ export class CourseStructure extends Basepage
     logger.info("Clicked Add Module button");
   }
 
-  async verifyModuleTitle(title: string) 
+  async verifyModuleTitle(title: string) {
+  
+
+    await expect(this.lastRow).toContainText(title);
+
+    logger.info(`Verified '${title}' is added as the last module.`);
+}
+
+  
+
+  async addModule()
   {
-    const moduleRow = this.page.locator(`//tr[contains(td, "${title}")]`).first();
-    await expect(moduleRow).toBeVisible({ timeout: 10000 });
-    logger.info(`Verified module title "${title}" is visible in table`);
+    await this.clickModuleMenu()
+    await this.enterTitle("deepLearning")
+    await this.enterDescription("suprevised deepLearning")
+    await this.selectSkillset("Python")
+    await this.clickAddModule()
+
+    await this.click(this.moreButton);
+    await this.click(this.hierarchyActionsToggle);
+
+    
+    await this.page.locator('body').click({
+      position: { x: 50, y: 50 }
+});
+
+    
+
   }
 
-  async deleteModule(title: string)
+  
+
+  async clickSubModule() 
   {
-    await this.page.screenshot({ path: 'reports/screenshots/debug_before_delete.png' });
-    const row = this.page.locator(`//tr[contains(td, "${title}")]`).first();
-    await row.waitFor({ state: 'visible', timeout: 5000 });
-    const allBtns = row.locator('button');
-    const count = await allBtns.count();
-    logger.info(`Found ${count} buttons in row`);
-    for (let i = 0; i < count; i++) {
-      const html = await allBtns.nth(i).evaluate(el => el.outerHTML);
-      logger.info(`Button ${i}: ${html.substring(0, 200)}`);
-    }
-    const threeDotBtn = row.locator('button').filter({ has: this.page.locator('svg.lucide-ellipsis-vertical') }).first();
-    await threeDotBtn.click({ timeout: 10000 });
-    await this.page.waitForTimeout(1000);
-    const deleteMenuItem = this.page.locator('[role="menuitem"]').filter({ hasText: /delete/i });
-    await deleteMenuItem.click({ timeout: 5000 });
-    await this.page.waitForTimeout(500);
-    await this.deleteButton.click({ timeout: 5000 });
+    logger.info(`Clicking Sub Module cell for module`);
+    await this.click(this.submodule)
+    
+  }
+
+
+ async saveSubModules()
+ {
+    await this.click(this.saveSubModule )
+
+    
+ }
+
+ async assertSubModule(subModuleName: string) {
+  const dataTable = this.page.locator('div.flex-1.overflow-auto table');
+
+  const cell = dataTable
+    .locator('tbody tr td')
+    .filter({ hasText: subModuleName })
+    .last();
+
+  await expect(cell).toBeVisible();
+  await expect(cell).toHaveText(subModuleName);
+}
+
+  async verifySubModule(moduleName: string, subModule: string) {
+    logger.info(`Verifying Sub Module '${subModule}' in module: ${moduleName}`);
+    const row = this.moduleRow(moduleName);
+    await expect(row).toContainText(subModule);
+    logger.info("Verified Sub Module");
   }
 }
