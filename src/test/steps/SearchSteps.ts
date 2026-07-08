@@ -12,13 +12,13 @@ Given('the admin is logged into the lms website',
 });
 
 Given("the admin navigates to the Course Management page",{ timeout: 20000 },async function (this: CustomWorld) {
-        await this.coursestructure.clickCourseManagement();
+        await this.courseManagementpage.clickCourseManagement();
     }
 );
 
 When("the admin enters a valid course name in the search box", async function (this: CustomWorld) {
 
-     await this.coursestructure.searchCourse("ML");
+     await this.courseManagementpage.searchCourse("ML");
 
 });
 
