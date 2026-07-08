@@ -96,8 +96,12 @@ async searchCourse(courseId: string) {
     await this.filldata(this.searchInput, courseId);
 }
 
-async verifyCourseNotListed() {
-    await this.page.screenshot({ path: 'debug-delete-search.png', fullPage: true });
-    await expect(this.noDataMessage).toBeVisible({ timeout: 15000 });
+getCourseRow(courseId: string) {
+    return this.page.locator(`//tr[.//span[normalize-space()='${courseId}']]`);
 }
+
+async verifyCourseNotListed(courseId: string) {
+    await expect(this.getCourseRow(courseId)).toHaveCount(0);
+}
+
 }

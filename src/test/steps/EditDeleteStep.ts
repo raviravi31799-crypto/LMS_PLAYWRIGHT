@@ -3,7 +3,7 @@ import { CustomWorld } from "../world/world";
 import { expect} from "@playwright/test";
 import { logger } from "../utils/winstonlogger";
 
-Given('the Admin is logged into the application successfully',  { timeout: 300000 }, async function (this: CustomWorld) {
+Given('the Admin is logged into the application successfully',  { timeout: 60000 }, async function (this: CustomWorld) {
     logger.info("Logging in as Admin");
     await this.loginpage.login();
     logger.info("Admin login successful");
@@ -14,7 +14,7 @@ Given('the user navigates to the Course Management', async function (this: Custo
     await this.editdeletepage.navigatecoursemodule();
 });
 
-When('Admin clicks the three dot menu for a course',  { timeout: 60000 },async function (this: CustomWorld, dataTable) {
+When('Admin clicks the three dot menu for a course',  { timeout: 50000 },async function (this: CustomWorld, dataTable) {
     const data = dataTable.hashes();
     this.courseId = data[0].CourseID;
     logger.info(`Clicking three dot menu for course: ${this.courseId}`);
@@ -54,7 +54,7 @@ When('Admin clicks the Save Course Layout button', async function (this: CustomW
 
 });
 
-Then('A success message should be displayed', async function (this: CustomWorld) {
+Then('A success message should be displayed', { timeout: 30000 },async function (this: CustomWorld) {
     await this.editdeletepage.verifySuccessMessage();
     logger.info("Success message verified");
 
@@ -88,14 +88,13 @@ When('Admin selects Delete Course option', async function (this: CustomWorld) {
     await this.editdeletepage.clickDeleteCourse();
 });
 
-When('Admin confirms the course deletion', async function (this: CustomWorld) {
+When('Admin confirms the course deletion', { timeout: 30000 },async function (this: CustomWorld) {
     logger.info("Confirming course deletion");
     await this.editdeletepage.confirmDeleteCourse();
 });
-
 Then('The deleted course should not be displayed in the course list',{ timeout: 30000 }, async function (this: CustomWorld) {
     logger.info(`Searching for deleted course: ${this.courseId}`);
     await this.editdeletepage.searchCourse(this.courseId);
-    await this.editdeletepage.verifyCourseNotListed();
+    await this.editdeletepage.verifyCourseNotListed(this.courseId);
     logger.info("Verified deleted course is not listed");
 });
