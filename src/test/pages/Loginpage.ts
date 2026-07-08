@@ -27,10 +27,23 @@ export class Loginpage extends Basepage{
     await this.click(this.sigin);
     logger.info("Clicked on signin");
   }
+
   async dashboardpage(){
     const dashboardtext= await this.text.textContent();
     await expect(dashboardtext).toContain("Executive Overview");
     logger.info("Logged in successfully");
+
+  }
+
+  async login(){
+    await this.launch();
+    await this.enterdatas(
+      process.env.EMAIL!,
+      process.env.PASSWORD!
+    );
+    await this.clicksignin();
+    await this.dashboardpage();
+
 
   }
 }
