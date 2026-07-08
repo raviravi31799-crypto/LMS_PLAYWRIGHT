@@ -25,10 +25,7 @@
     "@types/node": "^26.1.0",
     "allure-playwright": "^3.10.2",
     "cross-env": "^10.1.0",
-<<<<<<< Updated upstream
-    "multiple-cucumber-html-reporter": "^3.10.0",
-=======
->>>>>>> Stashed changes
+
     "ts-node": "^10.9.2"
   },
   "dependencies": {
