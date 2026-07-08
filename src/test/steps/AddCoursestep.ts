@@ -1,10 +1,10 @@
-
+import { CourseManagementPage } from './../pages/CourseManagementPage';
 import { Given, When, Then, DataTable } from "@cucumber/cucumber";
 import { CustomWorld } from "../world/world";
 import addCourse from "../../../testdata/addCourse.json";
 
 When('the user clicks the Add Course button', async function () {
-  await this.coursepage.clickAddCourseBtn();
+  await this.CourseManagementPage.clickAddCourseBtn();
 });
 
 When('the user enters the course basic configuration',  { timeout: 50000 }, async function (dataTable) {

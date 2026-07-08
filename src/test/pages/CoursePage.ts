@@ -6,7 +6,6 @@ export class CoursePage extends Basepage{
     constructor(page:Page){
             super(page);
         }
-    private addCourseBtn=this.page.locator("//h1[normalize-space()='Course Structures']/following::button[1]");
     private courseClient = this.page.locator("//label[contains(normalize-space(),'Course Client')]/following::button[1]");
     private serviceType=this.page.locator("//label[contains(normalize-space(),'Service Type')]/following::button[1]");
     private serviceModel=this.page.locator("//label[contains(normalize-space(),'Service Model')]/following::button[1]");
@@ -14,9 +13,7 @@ export class CoursePage extends Basepage{
     private courseName=this.page.locator("//label[contains(normalize-space(),'Course Name')]/following::button[1]");
     private courseID=this.page.locator("//label[contains(normalize-space(),'Course ID')]/following::button[1]");
     private courseNext=this.page.locator("//label[contains(normalize-space(),'Course ID')]/following::button[2]");
-async clickAddCourseBtn(){
-    await this.addCourseBtn.click();
-}
+
 
 async enterBasicConfiguration(client: string,serviceType: string,serviceModel: string,category: string,courseName: string) {
 

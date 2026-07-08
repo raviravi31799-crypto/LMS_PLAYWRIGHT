@@ -19,7 +19,7 @@ module.exports={
     
 
     publishQuiet: true,
-    dryRun: false,
+    dryRun: true,
 
     format: [
         "progress-bar",
