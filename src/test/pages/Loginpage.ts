@@ -1,8 +1,7 @@
-import{Page} from "@playwright/test";
-import { Basepage } from "./Basepage";
-import { logger } from '../utils/winstonlogger';
+import { expect, Page } from "@playwright/test";
 import "../utils/envReader";
-import{expect} from "@playwright/test";
+import { logger } from '../utils/winstonlogger';
+import { Basepage } from "./Basepage";
 
 export class Loginpage extends Basepage{
     constructor(page:Page){
@@ -59,7 +58,5 @@ export class Loginpage extends Basepage{
     );
     await this.clicksignin();
     await this.dashboardpage();
-
-
   }
 }
