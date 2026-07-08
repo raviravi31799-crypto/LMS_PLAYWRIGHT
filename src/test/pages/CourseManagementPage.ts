@@ -8,7 +8,7 @@ export class CourseManagementPage extends Basepage {
         super(page);
     }
 
-    private searchedCourse = this.page.locator("/html/body/div[3]/div/main/div/div/div/div[2]/div/div/div/div[1]/div/table/tbody/tr/td[3]/span/button/span[2]");
+    private searchedCourse = this.page.locator("//span[text()='J-BTI-H-006']");
 
     async verifyCourseDisplayed() {
         await expect(this.searchedCourse).toContainText("J-BTI-H-006");
