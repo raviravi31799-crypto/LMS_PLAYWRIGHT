@@ -12,7 +12,8 @@ export class CourseManagementPage extends Basepage {
     private courseManagementMenu = this.page.locator('//div[@title="Course Management"]');
     private searchInput = this.page.locator('input[data-slot="input"]');
     private addCourseStructureBtn = this.page.locator('button:has-text("Add Course Structure")');
-
+    private addCourseBtn=this.page.locator("//h1[normalize-space()='Course Structures']/following::button[1]");
+ 
     async clickCourseManagement() {
     await this.click(this.courseManagementMenu);
     await this.page.waitForTimeout(1500);
@@ -36,5 +37,8 @@ export class CourseManagementPage extends Basepage {
     async verifyCourseDisplayed() {
         await expect(this.searchedCourse).toContainText("J-BTI-H-006");
         logger.info("Course displayed successfully");
+    }
+    async clickAddCourseBtn(){
+        await this.click(this.addCourseBtn);
     }
 }
