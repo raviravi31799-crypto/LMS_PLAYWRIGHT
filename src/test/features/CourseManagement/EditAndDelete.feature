@@ -18,3 +18,13 @@ Feature: Edit & Delete Course
     And Admin clicks the Later button
     When Admin clicks the View button
     Then The selected Sub Module, Topic, and Sub Topic should be displayed
+
+    @DeleteCourse
+  Scenario: Delete a course and verify it is removed from the course list
+    When Admin clicks the three dot menu for a course
+      | CourseID     |
+      | APL-AT-A-001 |
+  
+    And Admin selects Delete Course option
+    And Admin confirms the course deletion
+    Then The deleted course should not be displayed in the course list
