@@ -12,4 +12,4 @@ Scenario Outline: Verify admin can create a new service successfully
     Then the service should be created successfully
 Examples:
     | ServiceName         | Description                   |
-    | Digital Marketing  | online business growth solutions   |
+    | Marketing | online business growth solutions   |
