@@ -6,6 +6,9 @@ Feature: Search_Jagadeep
     And the admin navigates to the Course Management page
 
   Scenario: Search for an existing course successfully
-    When the admin enters a valid course name in the search box
+    When the admin enters a valid "<coursename>" in the search box
     Then the matching course should be displayed in the search results
 
+  Examples:
+      | coursename |
+      | ML  |

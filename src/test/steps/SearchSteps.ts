@@ -16,11 +16,10 @@ Given("the admin navigates to the Course Management page",{ timeout: 20000 },asy
     }
 );
 
-When("the admin enters a valid course name in the search box", async function (this: CustomWorld) {
-
-     await this.courseManagementpage.searchCourse("ML");
-
-});
+When("the admin enters a valid {string} in the search box",async function (this: CustomWorld, coursename: string) {
+    await this.courseManagementpage.searchCourse(coursename);
+  }
+);
 
 Then("the matching course should be displayed in the search results", async function (this: CustomWorld) {
 
