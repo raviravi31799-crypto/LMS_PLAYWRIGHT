@@ -12,6 +12,8 @@ export class Loginpage extends Basepage{
   private password=this.page.locator("//input[@id='password']");
   private sigin=this.page.locator("button[type='submit']");
   private text=this.page.locator("//div[@class='jsx-19ca30d8d511510e']/descendant::h1");
+  private warningtext=this.page.locator("//div[text()='Email is invalid']");
+  private errormsg=this.page.locator("//div[text()='Password is incorrect']");
 
 
   async launch(){
@@ -19,9 +21,9 @@ export class Loginpage extends Basepage{
     logger.info("Application launched succesfully");
   }
   async enterdatas(email:string,password:string){
-    await this.email.fill(email);
-    await this.password.fill(password);
-    logger.info("Valid login datas are entered");
+    await this.filldata(this.email,email);
+    await this.filldata(this.password,password);
+    logger.info("login datas are entered");
   }
   async clicksignin(){
     await this.click(this.sigin);
@@ -29,11 +31,25 @@ export class Loginpage extends Basepage{
   }
 
   async dashboardpage(){
-    const dashboardtext= await this.text.textContent();
+    const dashboardtext= await this.getText(this.text);
     await expect(dashboardtext).toContain("Executive Overview");
     logger.info("Logged in successfully");
 
   }
+  async getWarningtext(){
+      const msg=await this.getText(this.warningtext);
+      await expect(msg).toContain("Email is invalid");
+      
+      logger.info("Invalid login using invalid email is verified");
+  }
+    async Errortext() {
+      const error=await this.getText(this.errormsg);
+      await expect(error).toContain("Password is incorrect");
+      logger.info("Invalid login using invalid password is verified successfully");
+
+    }
+
+  
 
   async login(){
     await this.launch();

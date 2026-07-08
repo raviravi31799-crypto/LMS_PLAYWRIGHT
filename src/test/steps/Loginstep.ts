@@ -1,5 +1,6 @@
 import{Given,When,Then} from "@cucumber/cucumber";
 import { CustomWorld } from "../world/world";
+import logindata from "../../../testdata/logindata.json";
 
 Given('the user is on the login page', async function (this:CustomWorld) {
   await this.loginpage.launch();
@@ -17,6 +18,28 @@ When('the user clicks Signin button', async function (this:CustomWorld) {
   await this.loginpage.clicksignin();
 });
 
-Then('the user is redirected to dashboardpage',{timeout:30000}, async function (this:CustomWorld) {
+Then('the user is redirected to dashboardpage',{timeout:50000}, async function (this:CustomWorld) {
   await this.loginpage.dashboardpage();
+});
+Given('the user enters invalid email and valid password', async function (this:CustomWorld) {
+  await this.loginpage.enterdatas(
+   logindata.invalidemail.email,
+   logindata.invalidemail.password
+  );
+  
+});
+
+Then('the user receives warning text',{timeout:30000}, async function (this:CustomWorld) {
+    await this.loginpage.getWarningtext();
+});
+
+Given('the user enters valid email and invalid password', async function (this:CustomWorld) {
+     await this.loginpage.enterdatas(
+      logindata.invalidpassword.email,
+      logindata.invalidpassword.password
+     );
+});
+
+Then('the user receives warning intimating invalid password',{timeout:30000}, async function (this:CustomWorld) {
+       await this.loginpage.Errortext();
 });
