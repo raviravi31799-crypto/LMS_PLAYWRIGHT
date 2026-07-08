@@ -21,3 +21,13 @@ Feature: 7/7/2026_SRIRAM_K_ADD_COURSE_STRUCTURE
     Examples:
         | search | title            | description                 | skils  |
         | DEEPLEARNING | Machine Learning | Machine Learning Algorithms | Python |
+
+    # Scenario Outline: Verify that the user can add a new submodule for that course
+    #     And admin 
+
+
+    #     w-4 h-4 bg-white rounded-full shadow transition-transform duration-300 transform translate-x-0
+
+    #     //span[text()="More"]
+    #    
+    #    

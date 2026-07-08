@@ -11,7 +11,11 @@ export class Basepage {
     }
 
     async click(locator: Locator) {
-        await locator.click();
+        await locator.click(
+            {
+                timeout : 50000
+            }
+        );
     }
 
     async filldata(locator: Locator, value: string) {

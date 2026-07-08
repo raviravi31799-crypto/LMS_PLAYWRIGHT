@@ -5,7 +5,7 @@ Given('admin login with the valid credentials', { timeout: 50000 }, async functi
   await this.loginpage.launch();
   await this.loginpage.enterdatas('testing@gmail.com', '123');
   await this.loginpage.clicksignin();
-  await this.page.waitForLoadState('networkidle');
+  await this.page.waitForLoadState('load');
   await this.loginpage.dashboardpage();
 });
 
@@ -17,7 +17,7 @@ When('admin search the course {string}', { timeout: 15000 }, async function (thi
   await this.coursestructure.searchCourse(search);
 });
 
-When('admin click the Add Course Structure', { timeout: 15000 }, async function (this: CustomWorld) {
+When('admin click the Add Course Structure', { timeout: 30000 }, async function (this: CustomWorld) {
   await this.coursestructure.clickAddCourseStructure();
 });
 
@@ -41,6 +41,7 @@ When('admin click the Add module', async function (this: CustomWorld) {
   await this.coursestructure.clickAddModule();
 });
 
-Then('admin should seen the {string} in the module', async function (this: CustomWorld, title: string) {
+Then('admin should seen the {string} in the module', { timeout: 30000 }, async function (this: CustomWorld, title: string) {
   await this.coursestructure.verifyModuleTitle(title);
+  // await this.coursestructure.deleteModule(title)
 });

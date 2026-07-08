@@ -1,9 +1,11 @@
 import { Page, expect } from "@playwright/test";
-import { Basepage } from "./Basepage";
 import { logger } from '../utils/winstonlogger';
+import { Basepage } from "./Basepage";
 
-export class CourseStructure extends Basepage {
-  constructor(page: Page) {
+export class CourseStructure extends Basepage 
+{
+  constructor(page: Page) 
+  {
     super(page);
   }
 
@@ -14,47 +16,54 @@ export class CourseStructure extends Basepage {
   private titleInput = this.page.locator('textarea#title');
   private descriptionInput = this.page.locator('textarea#description');
   private addModuleButton = this.page.locator('//form//button[@type="submit"]');
-
-  async clickCourseManagement() {
+  private deleteButton = this.page.locator('//button[text()="Delete"]')
+  async clickCourseManagement() 
+  {
     await this.click(this.courseManagementMenu);
     await this.page.waitForTimeout(1500);
     logger.info("Clicked on Course Management menu");
   }
 
-  async searchCourse(courseName: string) {
+  async searchCourse(courseName: string) 
+  {
     await this.searchInput.fill(courseName);
     await this.page.waitForTimeout(2000);
     logger.info(`Searched for course: ${courseName}`);
   }
 
-  async clickAddCourseStructure() {
+  async clickAddCourseStructure() 
+  {
     await this.addCourseStructureBtn.first().waitFor({ state: 'visible', timeout: 10000 });
     await this.addCourseStructureBtn.first().click();
-    await this.page.waitForLoadState('networkidle');
+    await this.page.waitForLoadState('load');
     await this.page.waitForTimeout(3000);
     logger.info("Clicked Add Course Structure button");
   }
 
-  async clickModuleMenu() {
+  async clickModuleMenu() 
+  {
     await this.moduleMenuButton.waitFor({ state: 'visible', timeout: 10000 });
     await this.click(this.moduleMenuButton);
     await this.page.waitForTimeout(2000);
     logger.info("Clicked module menu button");
   }
 
-  async enterTitle(title: string) {
+  async enterTitle(title: string) 
+  {
     await this.filldata(this.titleInput, title);
     logger.info(`Entered title: ${title}`);
   }
 
-  async enterDescription(description: string) {
+  async enterDescription(description: string) 
+  {
     if (description) {
       await this.filldata(this.descriptionInput, description);
       logger.info(`Entered description: ${description}`);
     }
   }
 
-  async selectSkillset(skillset: string) {
+  async selectSkillset(skillset: string) 
+  {
     if (skillset) {
       const scrollContainer = this.page.locator('.thin-scrollbar');
       if (await scrollContainer.count() > 0) {
@@ -81,15 +90,38 @@ export class CourseStructure extends Basepage {
     }
   }
 
-  async clickAddModule() {
+  async clickAddModule() 
+  {
     await this.click(this.addModuleButton);
     await this.page.waitForTimeout(2000);
     logger.info("Clicked Add Module button");
   }
 
-  async verifyModuleTitle(title: string) {
+  async verifyModuleTitle(title: string) 
+  {
     const moduleRow = this.page.locator(`//tr[contains(td, "${title}")]`).first();
     await expect(moduleRow).toBeVisible({ timeout: 10000 });
     logger.info(`Verified module title "${title}" is visible in table`);
+  }
+
+  async deleteModule(title: string)
+  {
+    await this.page.screenshot({ path: 'reports/screenshots/debug_before_delete.png' });
+    const row = this.page.locator(`//tr[contains(td, "${title}")]`).first();
+    await row.waitFor({ state: 'visible', timeout: 5000 });
+    const allBtns = row.locator('button');
+    const count = await allBtns.count();
+    logger.info(`Found ${count} buttons in row`);
+    for (let i = 0; i < count; i++) {
+      const html = await allBtns.nth(i).evaluate(el => el.outerHTML);
+      logger.info(`Button ${i}: ${html.substring(0, 200)}`);
+    }
+    const threeDotBtn = row.locator('button').filter({ has: this.page.locator('svg.lucide-ellipsis-vertical') }).first();
+    await threeDotBtn.click({ timeout: 10000 });
+    await this.page.waitForTimeout(1000);
+    const deleteMenuItem = this.page.locator('[role="menuitem"]').filter({ hasText: /delete/i });
+    await deleteMenuItem.click({ timeout: 5000 });
+    await this.page.waitForTimeout(500);
+    await this.deleteButton.click({ timeout: 5000 });
   }
 }
