@@ -28,5 +28,12 @@ async enterBasicConfiguration(client: string,serviceType: string,serviceModel: s
 }
 async clickNext() {
     await this.courseNext.click();
+
+    await expect(
+        this.page.getByRole("heading", {
+            name: /Course Hierarchy/
+        })
+    ).toBeVisible();
+
 }
 }

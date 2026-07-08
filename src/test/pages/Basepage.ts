@@ -52,4 +52,14 @@ export class Basepage {
     async selectSkill(skill: string) {
         await this.page.getByText(skill, { exact: true }).click();
     }
+ async multiSelect(locator: Locator, values: string[]) {
+
+    await locator.click();
+
+    for (const value of values) {
+        await this.page.getByText(value, { exact: true }).click({timeout:50000});
+    }
+
+    await this.page.keyboard.press("Escape");
+}
 }

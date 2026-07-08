@@ -11,12 +11,11 @@
     "courseLevel": "Beginner",
     "description": "Frontend Development Course",
 
-    "pedagogy": {
-      "iDo": "Lecture",
-      "weDo": "Practical",
-      "youDo": "Assessments"
-    },
-
+  "pedagogy": {
+    "iDo": ["Lecture"],
+    "weDo": ["Practical"],
+    "youDo": ["Assessments"]
+  },
     "resourceType": {
       "iDo": [
         "Video",

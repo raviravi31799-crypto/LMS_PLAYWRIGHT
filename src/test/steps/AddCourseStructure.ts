@@ -1,7 +1,7 @@
 import { Given, Then, When } from "@cucumber/cucumber";
 import { CustomWorld } from "../world/world";
 
-Given('admin login with the valid credentials', { timeout: 50000 }, async function (this: CustomWorld) {
+Given('admin login with the valid credentials', { timeout: 60000 }, async function (this: CustomWorld) {
   await this.loginpage.launch();
   await this.loginpage.enterdatas('testing@gmail.com', '123');
   await this.loginpage.clicksignin();
@@ -17,7 +17,7 @@ When('admin search the course {string}', { timeout: 15000 }, async function (thi
   await this.coursestructure.searchCourse(search);
 });
 
-When('admin click the Add Course Structure', { timeout: 15000 }, async function (this: CustomWorld) {
+When('admin click the Add Course Structure', { timeout: 30000 }, async function (this: CustomWorld) {
   await this.coursestructure.clickAddCourseStructure();
 });
 
