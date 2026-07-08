@@ -1,9 +1,11 @@
 import { Page, expect } from "@playwright/test";
-import { Basepage } from "./Basepage";
 import { logger } from '../utils/winstonlogger';
+import { Basepage } from "./Basepage";
 
-export class CourseStructure extends Basepage {
-  constructor(page: Page) {
+export class CourseStructure extends Basepage 
+{
+  constructor(page: Page) 
+  {
     super(page);
   }
 
@@ -14,47 +16,81 @@ export class CourseStructure extends Basepage {
   private titleInput = this.page.locator('textarea#title');
   private descriptionInput = this.page.locator('textarea#description');
   private addModuleButton = this.page.locator('//form//button[@type="submit"]');
+  private lastRow = this.page.locator("//table//tbody//tr").last()
+  private deleteButton = this.page.locator('//button[text()="Delete"]')
+  private moreButton = this.page.getByRole('button', { name: 'More' });
+  private submodule = this.page.locator('//button[@title="Add New Sub Module"]').last()
+  private lastSubModule = this.page.locator("//table//tbody/tr[1]/td[2]");
 
-  async clickCourseManagement() {
+  private hierarchyActionsToggle = this.page.locator(
+  '//span[normalize-space()="Hierarchy Actions"]/ancestor::label//div[contains(@class,"w-9 h-4")]');
+
+  private saveSubModule = this.page.locator('//button[@type="submit"]')
+
+  private hierarchyLabel = this.page.locator(
+    '//span[normalize-space()="Hierarchy Actions"]/ancestor::label'
+  );
+
+  private hierarchyCheckbox = this.page.locator(
+    '//span[normalize-space()="Hierarchy Actions"]/ancestor::label//input[@type="checkbox"]'
+  );
+
+  private moduleRow = (moduleName: string) =>
+    this.page.locator(
+      `//table//tbody//tr[td[normalize-space()="${moduleName}"]]`
+    );
+
+  private subModuleCell = (moduleName: string) =>
+    this.page.locator(
+      `//table//tbody//tr[td[normalize-space()="${moduleName}"]]/td[2]`
+    );
+  async clickCourseManagement() 
+  {
     await this.click(this.courseManagementMenu);
     await this.page.waitForTimeout(1500);
     logger.info("Clicked on Course Management menu");
   }
 
-  async searchCourse(courseName: string) {
-    await this.searchInput.fill(courseName);
+  async searchCourse(courseName: string) 
+  {
+    await this.filldata(this.searchInput,courseName);
     await this.page.waitForTimeout(2000);
     logger.info(`Searched for course: ${courseName}`);
   }
 
-  async clickAddCourseStructure() {
+  async clickAddCourseStructure() 
+  {
     await this.addCourseStructureBtn.first().waitFor({ state: 'visible', timeout: 10000 });
     await this.addCourseStructureBtn.first().click();
-    await this.page.waitForLoadState('networkidle');
+    await this.page.waitForLoadState('load');
     await this.page.waitForTimeout(3000);
     logger.info("Clicked Add Course Structure button");
   }
 
-  async clickModuleMenu() {
+  async clickModuleMenu() 
+  {
     await this.moduleMenuButton.waitFor({ state: 'visible', timeout: 10000 });
     await this.click(this.moduleMenuButton);
     await this.page.waitForTimeout(2000);
     logger.info("Clicked module menu button");
   }
 
-  async enterTitle(title: string) {
+  async enterTitle(title: string) 
+  {
     await this.filldata(this.titleInput, title);
     logger.info(`Entered title: ${title}`);
   }
 
-  async enterDescription(description: string) {
+  async enterDescription(description: string) 
+  {
     if (description) {
       await this.filldata(this.descriptionInput, description);
       logger.info(`Entered description: ${description}`);
     }
   }
 
-  async selectSkillset(skillset: string) {
+  async selectSkillset(skillset: string) 
+  {
     if (skillset) {
       const scrollContainer = this.page.locator('.thin-scrollbar');
       if (await scrollContainer.count() > 0) {
@@ -81,15 +117,76 @@ export class CourseStructure extends Basepage {
     }
   }
 
-  async clickAddModule() {
+  async clickAddModule() 
+  {
     await this.click(this.addModuleButton);
     await this.page.waitForTimeout(2000);
     logger.info("Clicked Add Module button");
   }
 
   async verifyModuleTitle(title: string) {
-    const moduleRow = this.page.locator(`//tr[contains(td, "${title}")]`).first();
-    await expect(moduleRow).toBeVisible({ timeout: 10000 });
-    logger.info(`Verified module title "${title}" is visible in table`);
+  
+
+    await expect(this.lastRow).toContainText(title);
+
+    logger.info(`Verified '${title}' is added as the last module.`);
+}
+
+  
+
+  async addModule()
+  {
+    await this.clickModuleMenu()
+    await this.enterTitle("deepLearning")
+    await this.enterDescription("suprevised deepLearning")
+    await this.selectSkillset("Python")
+    await this.clickAddModule()
+
+    await this.click(this.moreButton);
+    await this.click(this.hierarchyActionsToggle);
+
+    
+    await this.page.locator('body').click({
+      position: { x: 50, y: 50 }
+});
+
+    
+
+  }
+
+  
+
+  async clickSubModule() 
+  {
+    logger.info(`Clicking Sub Module cell for module`);
+    await this.click(this.submodule)
+    
+  }
+
+
+ async saveSubModules()
+ {
+    await this.click(this.saveSubModule )
+
+    
+ }
+
+ async assertSubModule(subModuleName: string) {
+  const dataTable = this.page.locator('div.flex-1.overflow-auto table');
+
+  const cell = dataTable
+    .locator('tbody tr td')
+    .filter({ hasText: subModuleName })
+    .last();
+
+  await expect(cell).toBeVisible();
+  await expect(cell).toHaveText(subModuleName);
+}
+
+  async verifySubModule(moduleName: string, subModule: string) {
+    logger.info(`Verifying Sub Module '${subModule}' in module: ${moduleName}`);
+    const row = this.moduleRow(moduleName);
+    await expect(row).toContainText(subModule);
+    logger.info("Verified Sub Module");
   }
 }

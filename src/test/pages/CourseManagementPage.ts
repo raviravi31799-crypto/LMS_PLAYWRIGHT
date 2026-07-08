@@ -40,5 +40,5 @@ export class CourseManagementPage extends Basepage {
     }
     async clickAddCourseBtn(){
         await this.click(this.addCourseBtn);
-}
+    }
 }
