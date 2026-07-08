@@ -8,6 +8,7 @@ import { CoursePage } from '../pages/CoursePage';
 import { CourseHierarchyPage } from '../pages/CourseHierarchyPage';
 import { CourseManagementPage } from '../pages/CourseManagementPage';
 import { EditDeletepage } from '../pages/EditDeletepage';
+import { ServiceModelPage } from '../pages/ServiceModelPage';
 
 let browser: Browser;
 BeforeAll(async () => {
@@ -27,6 +28,8 @@ Before(async function (this: CustomWorld, scenario) {
     this.coursehierarchypage=new CourseHierarchyPage(this.page);
     this.coursepage = new CoursePage(this.page); 
     this.courseManagementpage = new CourseManagementPage(this.page);
+    this.servicemodelpage=new ServiceModelPage(this.page);
+
 });
 
 After(async function (this: CustomWorld, scenario) {
