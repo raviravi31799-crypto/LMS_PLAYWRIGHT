@@ -8,7 +8,30 @@ export class CourseManagementPage extends Basepage {
         super(page);
     }
 
-    private searchedCourse = this.page.locator("/html/body/div[3]/div/main/div/div/div/div[2]/div/div/div/div[1]/div/table/tbody/tr/td[3]/span/button/span[2]");
+    private searchedCourse = this.page.locator("//span[text()='J-BTI-H-006']");
+    private courseManagementMenu = this.page.locator('//div[@title="Course Management"]');
+    private searchInput = this.page.locator('input[data-slot="input"]');
+    private addCourseStructureBtn = this.page.locator('button:has-text("Add Course Structure")');
+
+    async clickCourseManagement() {
+    await this.click(this.courseManagementMenu);
+    await this.page.waitForTimeout(1500);
+    logger.info("Clicked on Course Management menu");
+    }
+
+    async searchCourse(courseName: string) {
+    await this.searchInput.fill(courseName);
+    await this.page.waitForTimeout(2000);
+    logger.info(`Searched for course: ${courseName}`);
+    }
+
+    async clickAddCourseStructure() {
+    await this.addCourseStructureBtn.first().waitFor({ state: 'visible', timeout: 10000 });
+    await this.addCourseStructureBtn.first().click();
+    await this.page.waitForLoadState('networkidle');
+    await this.page.waitForTimeout(3000);
+    logger.info("Clicked Add Course Structure button");
+    }
 
     async verifyCourseDisplayed() {
         await expect(this.searchedCourse).toContainText("J-BTI-H-006");
