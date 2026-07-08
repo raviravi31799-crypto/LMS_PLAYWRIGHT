@@ -34,23 +34,13 @@ async enterCourseHierarchy(data: any) {
         await this.description.fill(data.description);
         await this.module.click();
         await this.submodule.click();
-        const count = await this.page.locator("button[role='combobox']").count();
-console.log("Combobox Count:", count);
-        console.log("I Do");
-await this.multiSelect(this.iDoDropdown, data.pedagogy.iDo);
-console.log("We Do");
-console.log("We Do Count:", await this.weDoDropdown.count());
+        await this.multiSelect(this.iDoDropdown, data.pedagogy.iDo);
+        await this.validateSelectedValue(data.pedagogy.iDo);
+        await this.multiSelect(this.weDoDropdown, data.pedagogy.weDo);
+        await this.validateSelectedValue(data.pedagogy.weDo);
+        await this.multiSelect(this.youDoDropdown, data.pedagogy.youDo);
+        await this.validateSelectedValue(data.pedagogy.youDo);
 
-await this.weDoDropdown.highlight(); // Optional (Playwright 1.20+)
-await this.page.screenshot({
-    path: "beforeWeDo.png",
-    fullPage: true
-});
-await expect(this.weDoDropdown).toBeVisible({ timeout: 50000 });
-await this.multiSelect(this.weDoDropdown, data.pedagogy.weDo);
-
-console.log("You Do");
-await this.multiSelect(this.youDoDropdown, data.pedagogy.youDo);
         for (const skill of data.skills.coreProgramming) {
             await this.selectSkill(skill);
         }
@@ -82,6 +72,9 @@ async clicksaveLayout(){
 async verifycourseadded(){
     await expect(this.addCourseStructure).toBeVisible();
     await this.later.click();
+}
+async validateSelectedValue(value: string) {
+    await expect(this.page.locator("span.font-medium")).toContainText(value);
 }
 
 }

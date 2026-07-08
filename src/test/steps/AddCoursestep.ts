@@ -1,10 +1,14 @@
-import { CourseManagementPage } from './../pages/CourseManagementPage';
+import { CoursePage } from './../pages/CoursePage';
 import { Given, When, Then, DataTable } from "@cucumber/cucumber";
 import { CustomWorld } from "../world/world";
 import addCourse from "../../../testdata/addCourse.json";
 
+Given('the user is logged-in with the valid credentials',{ timeout: 60000 }, async function () {
+  await this.loginpage.login();
+});
+
 When('the user clicks the Add Course button', async function () {
-  await this.CourseManagementPage.clickAddCourseBtn();
+  await this.courseManagementpage.clickAddCourseBtn();
 });
 
 When('the user enters the course basic configuration',  { timeout: 50000 }, async function (dataTable) {
@@ -23,8 +27,8 @@ When('the user enters the course basic configuration',  { timeout: 50000 }, asyn
     );
 });
 
-When('the user clicks the Next button', async function () {
-      await this.coursepage.clickNext();
+When('the user clicks the Next button', async function (this:CustomWorld) {
+      await this.coursepage.clickNext(true);
 });
 When('the user enters the course hierarchy details',{ timeout: 120000 },async function (this: CustomWorld) {
 
@@ -50,4 +54,15 @@ Then('the course should be created successfully',  { timeout: 50000 },async func
     await this.coursehierarchypage.verifyCourseCreated();
 
 });
+Then('the user should see a validation message for the mandatory Course Name field', async function (this:CustomWorld) {
+    await this.coursepage.verifyerrormsg();
+});
+
+Then('the user should remain on the Add Course page', async function (this:CustomWorld) {
+    await this.coursepage.verifyCoursePage();
+});
+When('the user clicks the Next button without navigating', async function () {
+  await this.coursePage.clickNext(false);
+});
+
 

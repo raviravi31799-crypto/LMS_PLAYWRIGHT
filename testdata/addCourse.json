@@ -11,22 +11,30 @@
     "courseLevel": "Beginner",
     "description": "Frontend Development Course",
 
-  "pedagogy": {
-    "iDo": ["Lecture"],
-    "weDo": ["Practical"],
-    "youDo": ["Assessments"]
-  },
+    "pedagogy": {
+      "iDo": {
+        "index": 0,
+        "value": "Live Classes"
+      },
+      "weDo": {
+        "index": 0,
+        "value": "Practical"
+      },
+      "youDo": {
+        "index": 0,
+        "value": "Assessments"
+      }
+    },
+
     "resourceType": {
       "iDo": [
         "Video",
         "PPT",
         "PDF"
       ],
-
       "weDo": [
         "Video"
       ],
-
       "youDo": [
         "Notes"
       ]
@@ -37,14 +45,12 @@
         "C",
         "Java"
       ],
-
       "frontend": [
         "HTML",
         "CSS",
         "JavaScript",
         "React"
       ],
-
       "database": [
         "MongoDB"
       ]

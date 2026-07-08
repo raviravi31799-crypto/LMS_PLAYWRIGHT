@@ -1,4 +1,3 @@
-@Harini
 @ServiceManagement
 Feature: Service Model Management
 Background:

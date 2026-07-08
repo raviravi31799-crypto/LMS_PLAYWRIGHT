@@ -43,7 +43,5 @@ export class Loginpage extends Basepage{
     );
     await this.clicksignin();
     await this.dashboardpage();
-
-
   }
 }
