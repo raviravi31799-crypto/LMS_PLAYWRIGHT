@@ -11,6 +11,7 @@
     "Harini": "cucumber-js --tags @mandatoryempty",
     "jagadeep": "cucumber-js --tags @jagadeep",
     "Subha": "cucumber-js --tags @Subha",
+    
     "parallel": "cucumber-js --parallel 2",
     "re:fail": "cucumber-js -p rerun",
     "posttest": "npx ts-node src/test/utils/report.ts",
