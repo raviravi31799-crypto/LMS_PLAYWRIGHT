@@ -3,7 +3,7 @@ import { Given, When, Then, DataTable } from "@cucumber/cucumber";
 import { CustomWorld } from "../world/world";
 import addCourse from "../../../testdata/addCourse.json";
 
-Given('the user is logged-in with the valid credentials',{ timeout: 60000 }, async function () {
+Given('the user is logged-in with the valid credentials',{timeout:40000} ,async function () {
   await this.loginpage.login();
 });
 
@@ -62,7 +62,7 @@ Then('the user should remain on the Add Course page', async function (this:Custo
     await this.coursepage.verifyCoursePage();
 });
 When('the user clicks the Next button without navigating', async function () {
-  await this.coursePage.clickNext(false);
+  await this.coursepage.clickNext(false);
 });
 
 
