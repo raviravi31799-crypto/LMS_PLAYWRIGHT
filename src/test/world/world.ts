@@ -6,6 +6,8 @@ import { CourseStructure } from "../pages/AddCourseStructurePage";
 import { EditDeletepage } from "../pages/EditDeletepage";
 import { CoursePage } from "../pages/CoursePage";
 import { DynamicCourseCategoryPage } from '../pages/DynamicCourseCategoryPage';
+import { ServiceModelPage } from '../pages/ServiceModelPage';
+
 
 export class CustomWorld {
     browser!: Browser;
@@ -21,5 +23,6 @@ export class CustomWorld {
     courseManagementpage!:CourseManagementPage;
     editdeletepage!:EditDeletepage;
     dynamiccoursecategorypage!:DynamicCourseCategoryPage;
+    servicemodelpage!:ServiceModelPage;
 }
 
