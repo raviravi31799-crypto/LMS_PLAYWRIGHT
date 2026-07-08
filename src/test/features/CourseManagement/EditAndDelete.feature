@@ -8,7 +8,7 @@ Feature: Edit & Delete Course
   Scenario: Edit the course levels and verify they are displayed
     When Admin clicks the three dot menu for a course
     | CourseID     |
-    | PT-BTI-H-002 |
+    | PT-BTI-H-004 |
     When Admin selects Edit Course option
     And Admin clicks the Next button
     And Admin edits the course hierarchy by selecting a Sub Module, Topic, and Sub Topic

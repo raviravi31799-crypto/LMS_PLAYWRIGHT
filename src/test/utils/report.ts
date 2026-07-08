@@ -1,6 +1,6 @@
 const report = require("multiple-cucumber-html-reporter");
 report.generate({
-  jsonDir: "reports",
+  jsonDir: "reports/cucumber-json",
   reportPath: "reports/html",
   reportName: "Playwright BDD Report",
   pageTitle: "LMS-Authentication and course Management",
