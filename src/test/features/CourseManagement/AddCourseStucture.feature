@@ -38,6 +38,14 @@ Feature: 7/7/2026_SRIRAM_K_ADD_COURSE_STRUCTURE
         | search | title            | description                 | skils  |
         | DL DEMO | Machine Learning | Machine Learning Algorithms | Python |
 
+    @print
+    Scenario: Verify the print functionality
+        And admin click the Add Course Structure
+        And admin click the print button
+        And admin click the excel button
+        And admin save the excel seet 
+        Then admin shoud view the module details in the excel sheet
+
 
         
        

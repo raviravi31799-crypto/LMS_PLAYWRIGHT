@@ -6,15 +6,15 @@ Given('admin login with the valid credentials', { timeout: 500000 }, async funct
 });
 
 When('admin clicks the Course Management menu',{ timeout: 15000 }, async function (this: CustomWorld) {
-  await this.coursestructure.clickCourseManagement();
+  await this.courseManagementpage.clickCourseManagement();
 });
 
 When('admin search the course {string}', { timeout: 15000 }, async function (this: CustomWorld, search: string) {
-  await this.coursestructure.searchCourse(search);
+  await this.courseManagementpage.searchCourse(search);
 });
 
 When('admin click the Add Course Structure', { timeout: 30000 }, async function (this: CustomWorld) {
-  await this.coursestructure.clickAddCourseStructure();
+  await this.courseManagementpage.clickAddCourseStructure();
 });
 
 When('admin click the module menu', { timeout: 15000 }, async function (this: CustomWorld) {
@@ -57,4 +57,24 @@ When('admin click the Add submodulemodule',{timeout : 50000} , async function (t
 
 Then('admin should seen the {string} in the submodule', { timeout: 30000 }, async function (this: CustomWorld, title: string) {
   await this.coursestructure.assertSubModule(title)
+});
+
+When('admin click the print button', async function () {
+  // Write code here that turns the phrase above into concrete actions
+  return 'pending';
+});
+
+When('admin click the excel button', async function () {
+  // Write code here that turns the phrase above into concrete actions
+  return 'pending';
+});
+
+When('admin save the excel seet', async function () {
+  // Write code here that turns the phrase above into concrete actions
+  return 'pending';
+});
+
+Then('admin shoud view the module details in the excel sheet', async function () {
+  // Write code here that turns the phrase above into concrete actions
+  return 'pending';
 });
