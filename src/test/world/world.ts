@@ -1,4 +1,4 @@
-import { courseHierarchyPage } from './../pages/CourseHierarchyPage';
+import { CourseHierarchyPage } from './../pages/CourseHierarchyPage';
 import { CourseManagementPage } from './../pages/CourseManagementPage';
 import { Browser, BrowserContext, Page } from "@playwright/test";
 import { Loginpage } from "../pages/Loginpage";
@@ -16,7 +16,7 @@ export class CustomWorld {
     loginpage!: Loginpage;
     coursestructure!: CourseStructure;
     coursepage!: CoursePage;
-    coursehierarchypage!:courseHierarchyPage;
+    coursehierarchypage!:CourseHierarchyPage;
     courseManagementpage!:CourseManagementPage;
     editdeletepage!:EditDeletepage;
 }

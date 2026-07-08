@@ -42,11 +42,14 @@ export class Basepage {
         return await locator.allTextContents();
     }
 
-
-    async select(locator: Locator, value: string) {
-         await locator.click();
-         await this.page.getByRole("option", { name: value, exact: true }).click();
+    async select(dropdown: Locator, value: string) {
+    if (!value?.trim()) {
+        return;
     }
+
+    await dropdown.click();
+    await this.page.getByRole('option', { name: value, exact: true }).click();
+}
     async enableResources(section: string, resources: string[]) {
         for (const resource of resources) {
             const toggle = this.page.locator(`//div[contains(.,'${resource}')]//button`);
@@ -57,4 +60,29 @@ export class Basepage {
     async selectSkill(skill: string) {
         await this.page.getByText(skill, { exact: true }).click();
     }
+//  async multiSelect(locator: Locator, values: string[]) {
+
+//     await locator.click();
+
+//     for (const value of values) {
+//         await this.page.getByText(value, { exact: true }).click({timeout:50000});
+//     }
+
+//     await this.page.keyboard.press("Escape");
+// }
+async multiSelect(dropdown: Locator, value: string) {
+
+    await dropdown.click();
+
+    const listBox = this.page.locator('[role="listbox"]').last();
+
+    await listBox
+        .locator("label")
+        .filter({ hasText: value })
+        .first()
+        .click();
+
+    // Close the dropdown
+    await this.page.mouse.click(10, 10);
+}
 }
