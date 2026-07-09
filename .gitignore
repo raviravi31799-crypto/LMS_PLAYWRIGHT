@@ -6,7 +6,7 @@ reports/
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
- rerun/
+ rerun/rerun.txt
  allure-results/
 
 

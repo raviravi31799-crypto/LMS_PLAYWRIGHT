@@ -43,3 +43,11 @@ Given('the user enters valid email and invalid password', async function (this:C
 Then('the user receives warning intimating invalid password',{timeout:50000}, async function (this:CustomWorld) {
        await this.loginpage.Errortext();
 });
+
+When('the user enters {string} and {string}', async function (this:CustomWorld,email, password) {
+     await this.loginpage.enterdatas(email,password);
+});
+
+Then('the browser displays {string} validation', async function (this:CustomWorld,message) {
+  await this.loginpage.getvalidationmessage(message);
+});
