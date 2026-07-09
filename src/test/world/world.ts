@@ -15,6 +15,7 @@ export class CustomWorld {
     page!: Page;
     courseId!: string;
     categoryName!: string;
+  
 
     loginpage!: Loginpage;
     coursestructure!: CourseStructure;
