@@ -8,8 +8,8 @@ Background:
 Scenario: Verify user can create a new course successfully
 When the user clicks the Add Course button
 And the user enters the course basic configuration
-  | Client | ServiceType                | ServiceModel | Category                 | CourseName |
-  | PSG Tech  | Business to institution | TD           | Software Development     | Frontend   |
+  | Client | ServiceType         | ServiceModel | Category              | CourseName |
+| PSG Tech | Automation Testing | Automation   | Software Development  | Frontend   |
 And the user clicks the Next button
 And the user enters the course hierarchy details
 And the user clicks the Preview & Create button

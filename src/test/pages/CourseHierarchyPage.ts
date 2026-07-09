@@ -14,10 +14,9 @@ export class CourseHierarchyPage extends Basepage {
     }
 
     private preview = this.page.locator("//button[normalize-space()='Preview & Create']");
-    private iDo = this.page.locator("(//button[@role='combobox'])[2]").first();
-    private weDo = this.page.locator("(//button[@role='combobox'])[3]").first();
-    private youDo = this.page.locator("(//button[@role='combobox'])[4]").first();
-
+    private iDo = this.page.locator("//h3[normalize-space()='I Do' or contains(.,'I Do')]/ancestor::div[contains(@class,'border')][1]//button[@role='combobox']").first();
+private weDo = this.page.locator("//h3[contains(.,'We Do')]/ancestor::div[contains(@class,'border')][1]//button[@role='combobox']").first();
+private youDo = this.page.locator("//h3[contains(.,'You Do')]/ancestor::div[contains(@class,'border')][1]//button[@role='combobox']").first();
     private courseLayoutPreview = this.page.locator("//div[@data-slot='dialog-header']//h2");
     private saveLayout = this.page.locator("//button[normalize-space()='Save Course Layout']");
     private later = this.page.locator("//button[normalize-space()='Later']");

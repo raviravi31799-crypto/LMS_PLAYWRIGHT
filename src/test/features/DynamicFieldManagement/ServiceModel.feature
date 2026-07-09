@@ -12,7 +12,7 @@ Scenario Outline: Verify admin can create a new service successfully
     Then the service should be created successfully
 Examples:
     | ServiceName         | Description            |
-    | Data Management     | To oraganize the data  |
+    | Data                | To oraganize the data  |
 
 @DuplicateService
 Scenario: Verify admin cannot create a duplicate service
@@ -20,11 +20,10 @@ Scenario: Verify admin cannot create a duplicate service
     And the admin enters the service details
     And the admin clicks the Create Service button
     Then an error toast message should be displayed
-    
+
 @SearchService
 Scenario Outline: Verify the exact service is displayed after searching
-  Given admin login with the valid credentials
-  When the admin navigates to the Service Model page
+  When the admin clicks the Add Service button
   And the admin searches for the service "<serviceName>"
   Then the exact service "<serviceName>" should be displayed
 
