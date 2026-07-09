@@ -17,6 +17,17 @@ export class DynamicCourseCategoryPage extends Basepage {
     closeButton = this.page.locator("//button[normalize-space()='Close' and not(@data-slot='dialog-close')]");
     categoryNameColumn = this.page.locator("//table//tbody//tr/td[1]");
     categorySearchInput = this.page.locator("//input[@placeholder='Search by name, description, code or courses...']");
+    courseBadges = this.page.locator("//table//tbody//tr/td[3]//span");
+
+    async searchCourse(courseName: string) {
+        await this.filldata(this.categorySearchInput, courseName);
+        await this.page.waitForLoadState("networkidle");
+    }
+
+    async verifyCourseDisplayed(courseName: string) {
+        const names = await this.getAllTextContents(this.courseBadges);
+        return names.some(name => name.includes(courseName));
+    }
 
     async navigateToDynamicFieldsManagement() {
         await this.click(this.dynamicFieldSettingsIcon);
