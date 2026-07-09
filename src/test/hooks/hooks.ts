@@ -11,6 +11,7 @@ import { EditDeletepage } from '../pages/EditDeletepage';
 import { Logoutpage } from '../pages/Logoutpage';
 import { ServiceModelPage } from '../pages/ServiceModelPage';
 import { DynamicCourseCategoryPage } from '../pages/DynamicCourseCategoryPage';
+import { paginationpage } from '../pages/Paginationpage';
 
 
 
@@ -33,10 +34,9 @@ Before(async function (this: CustomWorld, scenario) {
     this.coursepage = new CoursePage(this.page); 
     this.courseManagementpage = new CourseManagementPage(this.page);
     this.logoutpage=new Logoutpage(this.page);
-    this.servicemodelpage=new ServiceModelPage(this.page);
-
     this.dynamiccoursecategorypage = new DynamicCourseCategoryPage(this.page);
     this.servicemodelpage=new ServiceModelPage(this.page);
+    this.paginationpage=new paginationpage(this.page);
 
 });
 
