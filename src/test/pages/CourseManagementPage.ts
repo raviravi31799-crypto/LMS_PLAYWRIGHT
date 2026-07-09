@@ -55,11 +55,14 @@ export class CourseManagementPage extends Basepage {
         await expect(this.searchedCourse).toContainText("J-BTI-H-006");
         logger.info("Course displayed successfully");
     }
-    
-    async searchInputByJson(data:string)
-    {
-        await this.filldata(this.searchInput , data)
+
+    async verifyCourseNotFound(){
+        await expect(this.emptyTableMessage).toBeVisible();
     }
+
+    async navigateToNextPage(){
+        await this.nextButton.click();
+    }    
     async clickAddCourseBtn(){
         await this.click(this.addCourseBtn);
     }
