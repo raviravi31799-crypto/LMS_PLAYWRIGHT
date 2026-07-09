@@ -32,6 +32,10 @@ export class PedagogyPage extends Basepage {
 
     private deletedElementName = "";
 
+    private lastRowEditButton = this.page.locator("//table//tbody/tr[last()]//button[contains(@title,'Edit')]");
+
+    private updateElementButton = this.page.locator("//button[contains(text(),'Update') or contains(text(),'Save')]");
+    
     async navigateToDynamicFieldSettings() {
         await this.click(this.dynamicFieldSettings);
         logger.info("Navigated to Dynamic Field Settings");
@@ -149,5 +153,32 @@ export class PedagogyPage extends Basepage {
         expect(exists).toBeFalsy();
 
         logger.info(`${this.deletedElementName} deleted successfully`);
+    }
+
+    async updatePedagogyElement(newName: string) {
+        logger.info("Navigating to last page to find the element to edit");
+
+        while (true) {
+            const disabled = await this.nextPageButton.getAttribute("disabled");
+            if (disabled !== null) {
+                break;
+            }
+            await this.click(this.nextPageButton);
+            await this.page.waitForTimeout(1000);
+        }
+
+        await this.click(this.lastRowEditButton);
+
+        await this.elementName.clear();
+        await this.filldata(this.elementName, newName);
+
+        await this.click(this.updateElementButton);
+        await this.page.waitForLoadState("networkidle");
+        
+        logger.info(`Element successfully updated to: ${newName}`);
+    }
+
+    async verifyElementUpdated(newName: string) {
+        await this.verifyElementCreated(newName);
     }
 }

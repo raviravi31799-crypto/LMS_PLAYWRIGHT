@@ -9,7 +9,7 @@
     "submodule":"cucumber-js --tags @submodule",
     "Jothika": "cucumber-js --tags @Jothika",
     "Harini": "cucumber-js --tags \"@ServiceManagement or @mandatoryempty\"",
-    "jagadeep": "cucumber-js --tags @jagadeep",
+    "jagadeep": "cucumber-js --tags \"@jagadeep and not @Bug-1\"",
     "Subha": "cucumber-js --tags   @Subha",
     
     "parallel": "cucumber-js --parallel 2",

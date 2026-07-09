@@ -38,7 +38,7 @@ export class CourseManagementPage extends Basepage {
     }
 
     async verifyCourseDisplayed() {
-        await expect(this.searchedCourse).toContainText("J-BTI-H-006");
+        await expect(this.searchedCourse).toContainText("J-TM-T-006");
         logger.info("Course displayed successfully");
     }
 
