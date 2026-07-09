@@ -19,3 +19,10 @@ When the user clicks Signin button
 Then the user receives warning text
 
 
+Scenario:Invalid login with invalid password
+And the user enters valid email and invalid password
+When the user clicks Signin button 
+Then the user receives warning intimating invalid password
+
+
+
