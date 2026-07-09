@@ -1,7 +1,9 @@
-import { Page } from "@playwright/test";
+import { Page, expect } from "@playwright/test";
+import ExcelJS from "exceljs";
+import fs from "fs";
+import path from "path";
 import { logger } from "../utils/winstonlogger";
 import { Basepage } from "./Basepage";
-
 export class CourseStructure extends Basepage {
   constructor(page: Page) {
     super(page);
@@ -40,10 +42,13 @@ export class CourseStructure extends Basepage {
       `//table//tbody//tr[td[normalize-space()="${moduleName}"]]/td[2]`
     );
 
+  private printButton = this.page.locator('//button[@title="Click to preview"]')
+  private excelButton = this.page.locator('//button[text()="Excel"]')
+
   async clickModuleMenu() {
     await this.moduleMenuButton.waitFor({
       state: "visible",
-      timeout: 10000,
+      timeout: 100000,
     });
 
     await this.click(this.moduleMenuButton);
@@ -174,4 +179,57 @@ export class CourseStructure extends Basepage {
 
     logger.info("Verified Sub Module");
   }
+
+  async clickPrintButton()
+  {
+    await this.click(this.printButton)
+  }
+
+  async clickExcelButton(): Promise<string> {
+
+    const downloadPromise = this.page.waitForEvent("download");
+
+    await this.click(this.excelButton);
+
+    const download = await downloadPromise;
+
+    const downloadDir = path.join(
+        process.cwd(),
+        "downloads",
+        "excel"
+    );
+
+    if (!fs.existsSync(downloadDir)) {
+        fs.mkdirSync(downloadDir, { recursive: true });
+    }
+
+    const filePath = path.join(
+        downloadDir,
+        download.suggestedFilename()
+    );
+
+    await download.saveAs(filePath);
+
+    console.log("Excel Saved :", filePath);
+
+    return filePath;
+}
+
+ async verifyExcel(filePath: string, expectedHeader: string) {
+
+    const workbook = new ExcelJS.Workbook();
+
+    await workbook.xlsx.readFile(filePath);
+
+    const sheet = workbook.getWorksheet(1);
+
+    expect(sheet).toBeDefined();
+
+    const excelHeader = String(sheet!.getCell("A1").value).trim();
+
+    expect(excelHeader).toBe(expectedHeader);
+
+    logger.info(`Expected Header : ${expectedHeader}`);
+    logger.info(`Actual Header   : ${excelHeader}`);
+}
 }

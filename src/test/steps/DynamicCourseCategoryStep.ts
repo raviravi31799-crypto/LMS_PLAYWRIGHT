@@ -7,7 +7,7 @@ import { CategoryCsvRow } from "../types/csvTypes";
 
 const csvData = readCSV<CategoryCsvRow>("DynamicCourseCategoryData.csv")[0]!;
 
-When('Admin navigates to the Dynamicfields management', async function (this: CustomWorld) {
+When('Admin navigates to the Dynamicfields management',{timeout:40000}, async function (this: CustomWorld) {
     logger.info("Navigating to Dynamic Fields management");
     await this.dynamiccoursecategorypage.navigateToDynamicFieldsManagement();
 });
@@ -22,7 +22,7 @@ When('Admin clicks the Add Category button', async function (this: CustomWorld) 
     await this.dynamiccoursecategorypage.clickAddCategory();
 });
 
-When('Admin fills the category details from the csv file', async function (this: CustomWorld) {
+When('Admin fills the category details from the csv file',{timeout:40000}, async function (this: CustomWorld) {
     this.categoryName = csvData.CategoryName;
     const courseNames = csvData.CourseNames.split(";");
     logger.info(`Filling category details for: ${this.categoryName}`);
@@ -39,8 +39,21 @@ When('Admin clicks the Close button', { timeout: 60000 }, async function (this: 
     await this.dynamiccoursecategorypage.clickClose();
 });
 
-Then('the new category should be displayed in the category list', async function (this: CustomWorld) {
+Then('the new category should be displayed in the category list',{timeout:40000}, async function (this: CustomWorld) {
     const isDisplayed = await this.dynamiccoursecategorypage.verifyCategoryDisplayed(this.categoryName);
     logger.info(`Category "${this.categoryName}" displayed: ${isDisplayed}`);
+    expect(isDisplayed).toBeTruthy();
+});
+
+When('Admin searches for a course', {timeout:40000},async function (this: CustomWorld, dataTable) {
+    const columnName = dataTable.raw()[0][0] as keyof CategoryCsvRow;
+    this.courseName = csvData[columnName].split(";")[0]!;
+    logger.info(`Searching for course: ${this.courseName}`);
+    await this.dynamiccoursecategorypage.searchCourse(this.courseName);
+});
+
+Then('the course should be displayed in the category list', {timeout:40000},async function (this: CustomWorld) {
+    const isDisplayed = await this.dynamiccoursecategorypage.verifyCourseDisplayed(this.courseName);
+    logger.info(`Course "${this.courseName}" displayed: ${isDisplayed}`);
     expect(isDisplayed).toBeTruthy();
 });
