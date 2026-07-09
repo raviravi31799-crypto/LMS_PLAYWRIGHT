@@ -9,7 +9,7 @@ private addpopup=this.page.locator("//h3[text()='Add New Service']");
 private serviceName = this.page.getByPlaceholder("e.g., 'Software Development'");
 private serviceDescription = this.page.getByPlaceholder("Describe the service...");
 private createServiceBtn = this.page.getByRole('button', { name: 'Create Service' });
-private toast=this.page.locator("//div[@id='8']");
+private duplicateToast = this.page.getByText("Request failed with status code 400");
 private successToast = this.page.getByText("Service created successfully");
 async clickDynamicSettingBtn(){
     await this.click(this.DynamicSettingBtn);
@@ -31,7 +31,7 @@ async clickCreateService(){
     await this.click(this.createServiceBtn);
 }
 async validduplicate(){
-    await expect(this.toast).toBeVisible({timeout:60000});
+    await expect(this.duplicateToast).toBeVisible({timeout:60000});
 }
 async validSuccess(){
     await expect(this.successToast).toBeVisible({timeout:60000});

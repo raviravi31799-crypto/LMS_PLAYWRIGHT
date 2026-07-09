@@ -9,23 +9,10 @@
 
   "courseHierarchy": {
     "courseLevel": "Beginner",
-    "description": "Frontend Development Course",
+    "description": "Frontend Development Course"
 
-    "pedagogy": {
-      "iDo": {
-        "index": 0,
-        "value": "Live Classes"
-      },
-      "weDo": {
-        "index": 0,
-        "value": "Practical"
-      },
-      "youDo": {
-        "index": 0,
-        "value": "Assessments"
-      }
-    },
-
+    
+},
     "resourceType": {
       "iDo": [
         "Video",
@@ -56,4 +43,3 @@
       ]
     }
   }
-}
