@@ -7,12 +7,14 @@ import { EditDeletepage } from "../pages/EditDeletepage";
 import { CoursePage } from "../pages/CoursePage";
 import { ServiceModelPage } from '../pages/ServiceModelPage';
 
+import { DynamicCourseCategoryPage } from '../pages/DynamicCourseCategoryPage';
 
 export class CustomWorld {
     browser!: Browser;
     context!: BrowserContext;
     page!: Page;
     courseId!: string;
+    categoryName!: string;
 
     loginpage!: Loginpage;
     coursestructure!: CourseStructure;
@@ -21,5 +23,6 @@ export class CustomWorld {
     courseManagementpage!:CourseManagementPage;
     editdeletepage!:EditDeletepage;
     servicemodelpage!:ServiceModelPage;
+    dynamiccoursecategorypage!:DynamicCourseCategoryPage;
 }
 
