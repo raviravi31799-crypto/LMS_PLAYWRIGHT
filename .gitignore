@@ -7,6 +7,10 @@ reports/
 /playwright/.cache/
 /playwright/.auth/
 /rerun/rerun.txt
+ rerun/rerun.txt
+ allure-results/
+
+
 # Playwright
 /playwright-report/
 /downloads/

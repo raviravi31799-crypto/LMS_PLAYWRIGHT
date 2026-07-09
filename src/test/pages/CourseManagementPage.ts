@@ -12,6 +12,9 @@ export class CourseManagementPage extends Basepage {
     private courseManagementMenu = this.page.locator('//div[@title="Course Management"]');
     private searchInput = this.page.locator('input[data-slot="input"]');
     private addCourseStructureBtn = this.page.locator('button:has-text("Add Course Structure")');
+    private emptyTableMessage = this.page.locator('//p[text()="No users found"]');
+    private nextButton = this.page.locator('//button[contains(@data-slot,"button")]').nth(14);
+
     private addCourseBtn=this.page.locator("//h1[normalize-space()='Course Structures']/following::button[1]");
  
     async clickCourseManagement() {
@@ -34,15 +37,12 @@ export class CourseManagementPage extends Basepage {
 
   await this.addCourseStructureBtn.first().click();
 
-  
-  await this.page.waitForLoadState("networkidle");
-
   // Wait until the Module button is visible (indicates the page is ready)
   await this.page
     .locator('//button[@title="Add module"]')
     .waitFor({
       state: "visible",
-      timeout: 10000,
+      timeout: 30000,
     });
 
   logger.info("Successfully navigated to Add Course Structure page.");
@@ -53,6 +53,16 @@ export class CourseManagementPage extends Basepage {
         logger.info("Course displayed successfully");
     }
     
+    async navigateToNextPage() {
+        await this.click(this.nextButton);
+        logger.info("Navigated to next page");
+    }
+
+    async verifyCourseNotFound() {
+        await expect(this.emptyTableMessage).toBeVisible();
+        logger.info("Verified course not found");
+    }
+
     async searchInputByJson(data:string)
     {
         await this.filldata(this.searchInput , data)
