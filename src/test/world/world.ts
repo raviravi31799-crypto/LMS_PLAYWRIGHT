@@ -5,13 +5,14 @@ import { Loginpage } from "../pages/Loginpage";
 import { CourseStructure } from "../pages/AddCourseStructurePage";
 import { EditDeletepage } from "../pages/EditDeletepage";
 import { CoursePage } from "../pages/CoursePage";
-
+import { DynamicCourseCategoryPage } from '../pages/DynamicCourseCategoryPage';
 
 export class CustomWorld {
     browser!: Browser;
     context!: BrowserContext;
     page!: Page;
     courseId!: string;
+    categoryName!: string;
 
     loginpage!: Loginpage;
     coursestructure!: CourseStructure;
@@ -19,5 +20,6 @@ export class CustomWorld {
     coursehierarchypage!:CourseHierarchyPage;
     courseManagementpage!:CourseManagementPage;
     editdeletepage!:EditDeletepage;
+    dynamiccoursecategorypage!:DynamicCourseCategoryPage;
 }
 
