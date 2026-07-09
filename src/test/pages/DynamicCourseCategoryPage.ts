@@ -18,6 +18,35 @@ export class DynamicCourseCategoryPage extends Basepage {
     categoryNameColumn = this.page.locator("//table//tbody//tr/td[1]");
     categorySearchInput = this.page.locator("//input[@placeholder='Search by name, description, code or courses...']");
     courseBadges = this.page.locator("//table//tbody//tr/td[3]//span");
+    editMenuItem = this.page.locator("//div[@role='menuitem'][normalize-space()='Edit']");
+    updateCategoryButton = this.page.locator("//button[normalize-space()='Update Category']");
+
+    getThreeDotButton(categoryName: string) {
+        return this.page.locator(
+            `(//tr[.//td[1][normalize-space()='${categoryName}']]//button)[last()]`
+        );
+    }
+
+    async searchCategoryByName(categoryName: string) {
+        await this.filldata(this.categorySearchInput, categoryName);
+        await this.page.waitForLoadState("networkidle");
+    }
+
+    async clickThreeDot(categoryName: string) {
+        await this.click(this.getThreeDotButton(categoryName));
+    }
+
+    async clickEdit() {
+        await this.click(this.editMenuItem);
+    }
+
+    async updateCategoryName(newCategoryName: string) {
+        await this.filldata(this.categoryNameInput, newCategoryName);
+    }
+
+    async clickUpdateCategory() {
+        await this.click(this.updateCategoryButton);
+    }
 
     async searchCourse(courseName: string) {
         await this.filldata(this.categorySearchInput, courseName);
