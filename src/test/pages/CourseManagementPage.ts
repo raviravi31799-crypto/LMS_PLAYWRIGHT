@@ -48,6 +48,7 @@ export class CourseManagementPage extends Basepage {
 
     async navigateToNextPage(){
         await this.nextButton.click();
+    }    
     async clickAddCourseBtn(){
         await this.click(this.addCourseBtn);
     }
