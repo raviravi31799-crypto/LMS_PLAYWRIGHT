@@ -47,8 +47,9 @@ Feature: 7/7/2026_SRIRAM_K_ADD_COURSE_STRUCTURE
         And admin save the excel seet 
         Then admin shoud view the module details in the excel sheet
 
-
-
+    @Duplicate
+    Scenario: Verify the module Duplicate functionality
+        And admin search the 
         
        
        
