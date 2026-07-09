@@ -13,8 +13,11 @@ export class CustomWorld {
     browser!: Browser;
     context!: BrowserContext;
     page!: Page;
+
+
     courseId!: string;
     categoryName!: string;
+    courseName!: string;
   
 
     loginpage!: Loginpage;

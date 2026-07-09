@@ -14,3 +14,9 @@ Background:
     And Admin clicks the Create Category button
     And Admin clicks the Close button
     Then the new category should be displayed in the category list
+
+  @SearchCourse
+  Scenario: Search a course and verify it is displayed
+    When Admin searches for a course
+      | CourseNames |
+    Then the course should be displayed in the category list
