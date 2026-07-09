@@ -6,7 +6,7 @@ import { CourseStructure } from "../pages/AddCourseStructurePage";
 import { EditDeletepage } from "../pages/EditDeletepage";
 import { CoursePage } from "../pages/CoursePage";
 import {Logoutpage} from "../pages/Logoutpage";
-import { ServiceModelPage } from '../pages/ServiceModelPage';
+
 
 import { DynamicCourseCategoryPage } from '../pages/DynamicCourseCategoryPage';
 import { ServiceModelPage } from '../pages/ServiceModelPage';
@@ -29,6 +29,6 @@ export class CustomWorld {
     logoutpage!:Logoutpage;
     servicemodelpage!:ServiceModelPage;
     dynamiccoursecategorypage!:DynamicCourseCategoryPage;
-    servicemodelpage!:ServiceModelPage;
+    
 }
 
