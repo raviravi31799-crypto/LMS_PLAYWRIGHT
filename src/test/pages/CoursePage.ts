@@ -6,7 +6,7 @@ export class CoursePage extends Basepage{
     constructor(page:Page){
             super(page);
         }
-    private addCourseBtn=this.page.locator("//h1[normalize-space()='Course Structures']/following::button[1]");
+    private coursePageTitle=this.page.locator("//span[text()='Create New Course Setup']");
     private courseClient = this.page.locator("//label[contains(normalize-space(),'Course Client')]/following::button[1]");
     private serviceType=this.page.locator("//label[contains(normalize-space(),'Service Type')]/following::button[1]");
     private serviceModel=this.page.locator("//label[contains(normalize-space(),'Service Model')]/following::button[1]");
@@ -14,19 +14,48 @@ export class CoursePage extends Basepage{
     private courseName=this.page.locator("//label[contains(normalize-space(),'Course Name')]/following::button[1]");
     private courseID=this.page.locator("//label[contains(normalize-space(),'Course ID')]/following::button[1]");
     private courseNext=this.page.locator("//label[contains(normalize-space(),'Course ID')]/following::button[2]");
-async clickAddCourseBtn(){
-    await this.addCourseBtn.click();
-}
+    private error=this.page.locator("//span[text()='Please enter a course name']");
 
 async enterBasicConfiguration(client: string,serviceType: string,serviceModel: string,category: string,courseName: string) {
+    if (client?.trim()) {
+        await this.select(this.courseClient, client);
+    }
+    if (serviceType?.trim()) {
+        await this.select(this.serviceType, serviceType);
+    }
+    if (serviceModel?.trim()) {
+        await this.select(this.serviceModel, serviceModel);
+    }
+    if (category?.trim()) {
+        await this.select(this.category, category);
+    }
+    if (courseName?.trim()) {
+        await this.select(this.courseName, courseName);
+    }
 
-    await this.select(this.courseClient, client);
-    await this.select(this.serviceType, serviceType);
-    await this.select(this.serviceModel, serviceModel);
-    await this.select(this.category, category);
-    await this.select(this.courseName,courseName);
+    logger.info("Course basic configuration entered successfully.");
 }
-async clickNext() {
+
+async clickNext(expectNavigation = true) {
     await this.courseNext.click();
+    logger.info("Clicked the Next button.");
+
+    if (expectNavigation) {
+        await expect(
+            this.page.getByRole("heading", { name: /Course Hierarchy/ })
+        ).toBeVisible();
+
+        logger.info("Navigated to the Course Hierarchy page.");
+    }
+}
+
+async verifyerrormsg() {
+    await expect(this.error).toBeVisible();
+    logger.info("Mandatory field validation message displayed.");
+}
+
+async verifyCoursePage() {
+    await expect(this.coursePageTitle).toBeVisible();
+    logger.info("Verified user remains on the Create New Course Setup page.");
 }
 }

@@ -6,14 +6,17 @@
   "scripts": {
     "test": "cucumber-js",
     "sriram": "cucumber-js --tags @sriram",
+    "submodule":"cucumber-js --tags @submodule",
     "Jothika": "cucumber-js --tags @Jothika",
-    "Harini": "cucumber-js --tags @Harini",
+    "Harini": "cucumber-js --tags \"@ServiceManagement or @mandatoryempty\"",
     "jagadeep": "cucumber-js --tags @jagadeep",
-    "Subha": "cucumber-js --tags @Subha",
+    "Subha": "cucumber-js --tags  @Subha",
+    
     "parallel": "cucumber-js --parallel 2",
     "re:fail": "cucumber-js -p rerun",
     "posttest": "npx ts-node src/test/utils/report.ts",
-    "test:qa": "cross-env TEST_ENV=qa cucumber-js"
+    "test:qa": "cross-env TEST_ENV=qa cucumber-js",
+    "print" : "cucumber-js --tags @print"
   },
   "keywords": [],
   "author": "",

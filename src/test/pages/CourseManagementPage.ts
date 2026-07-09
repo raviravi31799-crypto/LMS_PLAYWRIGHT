@@ -15,6 +15,8 @@ export class CourseManagementPage extends Basepage {
     private emptyTableMessage = this.page.locator('//p[text()="No users found"]');
     private nextButton = this.page.locator('//button[contains(@data-slot,"button")]').nth(14);
 
+    private addCourseBtn=this.page.locator("//h1[normalize-space()='Course Structures']/following::button[1]");
+ 
     async clickCourseManagement() {
     await this.click(this.courseManagementMenu);
     await this.page.waitForTimeout(1500);
@@ -46,5 +48,8 @@ export class CourseManagementPage extends Basepage {
 
     async navigateToNextPage(){
         await this.nextButton.click();
+    }
+    async clickAddCourseBtn(){
+        await this.click(this.addCourseBtn);
     }
 }
