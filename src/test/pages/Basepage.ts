@@ -1,4 +1,4 @@
-import { Locator, Page } from "@playwright/test";
+import { Locator, Page, expect } from "@playwright/test";
 
 
 export class Basepage {
@@ -60,6 +60,18 @@ export class Basepage {
     async selectSkill(skill: string) {
         await this.page.getByText(skill, { exact: true }).click();
     }
+
+     async assertContainsText(locator: Locator, expected: string) {
+        await expect(locator).toContainText(expected);
+    }
+
+    async assertText(locator: Locator, expected: string) {
+        await expect(locator).toHaveText(expected);
+    }
+
+    async assertVisible(locator: Locator) {
+        await expect(locator).toBeVisible();
+    }
 //  async multiSelect(locator: Locator, values: string[]) {
 
 //     await locator.click();
@@ -84,5 +96,8 @@ async multiSelect(dropdown: Locator, value: string) {
 
     // Close the dropdown
     await this.page.mouse.click(10, 10);
+}
+      async pressEnter(locator: Locator) {
+        await locator.press("Enter");
 }
 }

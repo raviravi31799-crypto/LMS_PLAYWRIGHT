@@ -1,31 +1,26 @@
-import { Page, expect } from "@playwright/test";
-import { logger } from '../utils/winstonlogger';
+import { Page } from "@playwright/test";
+import { logger } from "../utils/winstonlogger";
 import { Basepage } from "./Basepage";
 
-export class CourseStructure extends Basepage 
-{
-  constructor(page: Page) 
-  {
+export class CourseStructure extends Basepage {
+  constructor(page: Page) {
     super(page);
   }
 
-  private courseManagementMenu = this.page.locator('//div[@title="Course Management"]');
-  private searchInput = this.page.locator('input[data-slot="input"]');
-  private addCourseStructureBtn = this.page.locator('button:has-text("Add Course Structure")');
   private moduleMenuButton = this.page.locator('//button[@title="Add module"]');
   private titleInput = this.page.locator('textarea#title');
   private descriptionInput = this.page.locator('textarea#description');
   private addModuleButton = this.page.locator('//form//button[@type="submit"]');
-  private lastRow = this.page.locator("//table//tbody//tr").last()
-  private deleteButton = this.page.locator('//button[text()="Delete"]')
-  private moreButton = this.page.getByRole('button', { name: 'More' });
-  private submodule = this.page.locator('//button[@title="Add New Sub Module"]').last()
-  private lastSubModule = this.page.locator("//table//tbody/tr[1]/td[2]");
+  private lastRow = this.page.locator("//table//tbody//tr").last();
+  private deleteButton = this.page.locator('//button[text()="Delete"]');
+  private moreButton = this.page.getByRole("button", { name: "More" });
+  private submodule = this.page.locator('//button[@title="Add New Sub Module"]').last();
 
   private hierarchyActionsToggle = this.page.locator(
-  '//span[normalize-space()="Hierarchy Actions"]/ancestor::label//div[contains(@class,"w-9 h-4")]');
+    '//span[normalize-space()="Hierarchy Actions"]/ancestor::label//div[contains(@class,"w-9 h-4")]'
+  );
 
-  private saveSubModule = this.page.locator('//button[@type="submit"]')
+  private saveSubModule = this.page.locator('//button[@type="submit"]');
 
   private hierarchyLabel = this.page.locator(
     '//span[normalize-space()="Hierarchy Actions"]/ancestor::label'
@@ -44,149 +39,139 @@ export class CourseStructure extends Basepage
     this.page.locator(
       `//table//tbody//tr[td[normalize-space()="${moduleName}"]]/td[2]`
     );
-  async clickCourseManagement() 
-  {
-    await this.click(this.courseManagementMenu);
-    await this.page.waitForTimeout(1500);
-    logger.info("Clicked on Course Management menu");
-  }
 
-  async searchCourse(courseName: string) 
-  {
-    await this.filldata(this.searchInput,courseName);
-    await this.page.waitForTimeout(2000);
-    logger.info(`Searched for course: ${courseName}`);
-  }
+  async clickModuleMenu() {
+    await this.moduleMenuButton.waitFor({
+      state: "visible",
+      timeout: 10000,
+    });
 
-  async clickAddCourseStructure() 
-  {
-    await this.addCourseStructureBtn.first().waitFor({ state: 'visible', timeout: 10000 });
-    await this.addCourseStructureBtn.first().click();
-    await this.page.waitForLoadState('load');
-    await this.page.waitForTimeout(3000);
-    logger.info("Clicked Add Course Structure button");
-  }
-
-  async clickModuleMenu() 
-  {
-    await this.moduleMenuButton.waitFor({ state: 'visible', timeout: 10000 });
     await this.click(this.moduleMenuButton);
     await this.page.waitForTimeout(2000);
+
     logger.info("Clicked module menu button");
   }
 
-  async enterTitle(title: string) 
-  {
+  async enterTitle(title: string) {
     await this.filldata(this.titleInput, title);
     logger.info(`Entered title: ${title}`);
   }
 
-  async enterDescription(description: string) 
-  {
+  async enterDescription(description: string) {
     if (description) {
       await this.filldata(this.descriptionInput, description);
       logger.info(`Entered description: ${description}`);
     }
   }
 
-  async selectSkillset(skillset: string) 
-  {
+  async selectSkillset(skillset: string) {
     if (skillset) {
-      const scrollContainer = this.page.locator('.thin-scrollbar');
-      if (await scrollContainer.count() > 0) {
-        await scrollContainer.evaluate(el => el.scrollTop = el.scrollHeight);
+      const scrollContainer = this.page.locator(".thin-scrollbar");
+
+      if ((await scrollContainer.count()) > 0) {
+        await scrollContainer.evaluate(
+          (el) => (el.scrollTop = el.scrollHeight)
+        );
         await this.page.waitForTimeout(1500);
       }
-      const radio = this.page.locator(`//td[text()="${skillset}"]/preceding-sibling::td//input[@type="radio"]`);
-      const radioAlt = this.page.locator(`//label[text()="${skillset}"]/preceding::input[@type="radio"]`).first();
-      const radioByText = this.page.locator(`input[type="radio"]:right-of(:text("${skillset}"))`).first();
-      const radioByTextLeft = this.page.locator(`input[type="radio"]:left-of(:text("${skillset}"))`).first();
-      if (await radio.count() > 0) {
+
+      const radio = this.page.locator(
+        `//td[text()="${skillset}"]/preceding-sibling::td//input[@type="radio"]`
+      );
+
+      const radioAlt = this.page
+        .locator(
+          `//label[text()="${skillset}"]/preceding::input[@type="radio"]`
+        )
+        .first();
+
+      const radioByText = this.page
+        .locator(`input[type="radio"]:right-of(:text("${skillset}"))`)
+        .first();
+
+      const radioByTextLeft = this.page
+        .locator(`input[type="radio"]:left-of(:text("${skillset}"))`)
+        .first();
+
+      if (await radio.count()) {
         await radio.click();
-      } else if (await radioByTextLeft.count() > 0) {
+      } else if (await radioByTextLeft.count()) {
         await radioByTextLeft.click();
-      } else if (await radioByText.count() > 0) {
+      } else if (await radioByText.count()) {
         await radioByText.click();
-      } else if (await radioAlt.count() > 0) {
+      } else if (await radioAlt.count()) {
         await radioAlt.click();
       } else {
         await this.page.locator(`text="${skillset}"`).first().click();
       }
+
       await this.page.waitForTimeout(1000);
+
       logger.info(`Selected skillset: ${skillset}`);
     }
   }
 
-  async clickAddModule() 
-  {
+  async clickAddModule() {
     await this.click(this.addModuleButton);
     await this.page.waitForTimeout(2000);
+
     logger.info("Clicked Add Module button");
   }
 
   async verifyModuleTitle(title: string) {
-  
-
-    await expect(this.lastRow).toContainText(title);
+    await this.assertContainsText(this.lastRow, title);
 
     logger.info(`Verified '${title}' is added as the last module.`);
-}
+  }
 
-  
-
-  async addModule()
-  {
-    await this.clickModuleMenu()
-    await this.enterTitle("deepLearning")
-    await this.enterDescription("suprevised deepLearning")
-    await this.selectSkillset("Python")
-    await this.clickAddModule()
+  async addModule() {
+    await this.clickModuleMenu();
+    await this.enterTitle("deepLearning");
+    await this.enterDescription("suprevised deepLearning");
+    await this.selectSkillset("Python");
+    await this.clickAddModule();
 
     await this.click(this.moreButton);
     await this.click(this.hierarchyActionsToggle);
 
-    
-    await this.page.locator('body').click({
-      position: { x: 50, y: 50 }
-});
-
-    
-
+    await this.page.locator("body").click({
+      position: { x: 50, y: 50 },
+    });
   }
 
-  
-
-  async clickSubModule() 
-  {
-    logger.info(`Clicking Sub Module cell for module`);
-    await this.click(this.submodule)
-    
+  async clickSubModule() {
+    logger.info("Clicking Sub Module");
+    await this.click(this.submodule);
   }
 
+  async saveSubModules() {
+    await this.click(this.saveSubModule);
+    logger.info("Clicked Save Sub Module");
+  }
 
- async saveSubModules()
- {
-    await this.click(this.saveSubModule )
+  async assertSubModule(subModuleName: string) {
+    const dataTable = this.page.locator("div.flex-1.overflow-auto table");
 
-    
- }
+    const cell = dataTable
+      .locator("tbody tr td")
+      .filter({ hasText: subModuleName })
+      .last();
 
- async assertSubModule(subModuleName: string) {
-  const dataTable = this.page.locator('div.flex-1.overflow-auto table');
+    await this.assertVisible(cell);
+    await this.assertText(cell, subModuleName);
 
-  const cell = dataTable
-    .locator('tbody tr td')
-    .filter({ hasText: subModuleName })
-    .last();
-
-  await expect(cell).toBeVisible();
-  await expect(cell).toHaveText(subModuleName);
-}
+    logger.info(`Verified Sub Module '${subModuleName}'`);
+  }
 
   async verifySubModule(moduleName: string, subModule: string) {
-    logger.info(`Verifying Sub Module '${subModule}' in module: ${moduleName}`);
+    logger.info(
+      `Verifying Sub Module '${subModule}' in module '${moduleName}'`
+    );
+
     const row = this.moduleRow(moduleName);
-    await expect(row).toContainText(subModule);
+
+    await this.assertContainsText(row, subModule);
+
     logger.info("Verified Sub Module");
   }
 }
