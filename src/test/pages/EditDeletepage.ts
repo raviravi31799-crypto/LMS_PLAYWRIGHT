@@ -19,7 +19,11 @@ export class EditDeletepage extends Basepage {
     topicCheckbox = this.page.locator("//input[@id='topic-checkbox']");
     subTopicCheckbox = this.page.locator("//input[@id='subtopic-checkbox']");
     loadingSpinner = this.page.locator("//div[contains(text(),'Loading course data')]");
-    modalLoadingOverlay = this.page.locator("//div[@role='dialog']//div[contains(@class,'flex-1') and contains(@class,'items-center') and contains(@class,'justify-center')]");
+    modalLoadingOverlay = this.page.locator("//div[@role='dialog']//div[contains(@class,'flex-1') and contains(@class,'items-center') and contains(@class,'justify-center')]");   
+    deleteCourseOption = this.page.locator("//button[normalize-space()='Delete Course' and not(ancestor::div[@role='dialog'])]");
+    confirmDeleteButton = this.page.locator("//div[@role='dialog']//button[normalize-space()='Delete Course']");
+    noDataMessage = this.page.locator("//p[normalize-space()='No data matches your current criteria']"); 
+    searchInput = this.page.locator("//input[@placeholder='Search courses, codes, clients, or categories...']");
  async navigatecoursemodule(){
        await this.click(this.cousemodule);
   }
@@ -74,6 +78,30 @@ getViewButton(courseId: string) {
 
 async clickView(courseId: string) {
     await this.click(this.getViewButton(courseId));
+}
+
+
+async clickDeleteCourse() {
+    await this.click(this.deleteCourseOption);
+}
+
+async confirmDeleteCourse() {
+    await this.confirmDeleteButton.waitFor({ state: "visible" });
+    await this.click(this.confirmDeleteButton);
+    await this.confirmDeleteButton.waitFor({ state: "hidden", timeout: 15000 });
+    await this.page.waitForLoadState("networkidle");
+}
+
+async searchCourse(courseId: string) {
+    await this.filldata(this.searchInput, courseId);
+}
+
+getCourseRow(courseId: string) {
+    return this.page.locator(`//tr[.//span[normalize-space()='${courseId}']]`);
+}
+
+async verifyCourseNotListed(courseId: string) {
+    await expect(this.getCourseRow(courseId)).toHaveCount(0);
 }
 
 }

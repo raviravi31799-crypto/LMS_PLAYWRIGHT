@@ -12,6 +12,9 @@ export class CourseManagementPage extends Basepage {
     private courseManagementMenu = this.page.locator('//div[@title="Course Management"]');
     private searchInput = this.page.locator('input[data-slot="input"]');
     private addCourseStructureBtn = this.page.locator('button:has-text("Add Course Structure")');
+    private emptyTableMessage = this.page.locator('//p[text()="No users found"]');
+    private nextButton = this.page.locator('//button[contains(@data-slot,"button")]').nth(14);
+
     private addCourseBtn=this.page.locator("//h1[normalize-space()='Course Structures']/following::button[1]");
  
     async clickCourseManagement() {

@@ -56,18 +56,21 @@
 
 # Checklist
 
-- [ ] Code Executed Successfully
-- [ ] Test Cases Passed
-- [ ] No Hardcoded Values Added (URLs, credentials, waits)
-- [ ] Reusable Page Object Methods Utilized
-- [ ] Step Definitions Follow Naming Convention
-- [ ] Locators Verified & Stable
-- [ ] Logging Added Where Necessary (winston)
-- [ ] No Unwanted Files Added (node_modules, reports, rerun, .env)
-- [ ] Rerun/Reports Folders Not Committed
-- [ ] Ready For Review
+# Review Checklist
 
----
+- [ ] Feature implementation matches the requirement
+- [ ] Acceptance criteria are covered
+- [ ] Positive and negative scenarios included
+- [ ] Existing functionality is not impacted
+- [ ] Code is modular and maintainable
+- [ ] Page Object Model principles followed
+- [ ] Reusable utilities leveraged
+- [ ] Appropriate assertions added
+- [ ] Test execution completed successfully
+- [ ] Reports reviewed
+- [ ] No merge conflicts
+- [ ] Ready for approval
+
 
 # Notes
 -
