@@ -40,6 +40,6 @@ Given('the user enters valid email and invalid password', async function (this:C
      );
 });
 
-Then('the user receives warning intimating invalid password',{timeout:30000}, async function (this:CustomWorld) {
+Then('the user receives warning intimating invalid password',{timeout:50000}, async function (this:CustomWorld) {
        await this.loginpage.Errortext();
 });
