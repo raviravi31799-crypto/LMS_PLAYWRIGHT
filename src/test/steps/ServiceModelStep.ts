@@ -34,7 +34,7 @@ When('the admin enters the service details', async function () {
 });
 
 Then('an error toast message should be displayed', async function () {
-            await this.servicemodelpage.validDuplicate();
+            await this.servicemodelpage.validduplicate();
 
 
 });
