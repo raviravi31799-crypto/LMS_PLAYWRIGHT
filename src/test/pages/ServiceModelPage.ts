@@ -54,4 +54,14 @@ export class ServiceModelPage extends Basepage {
         await expect(this.successToast).toBeVisible({ timeout: 60000 });
         logger.info("Service created successfully");
     }
+    async searchServiceName(serviceName: string) {
+        logger.info(`Searching for service: ${serviceName}`);
+        await this.filldata(this.searchService, serviceName);
+    }
+
+    async verifyExactService(serviceName: string) {
+        const service = this.page.locator(`//td//div[normalize-space()='${serviceName}']`);
+        await expect(service).toBeVisible({ timeout: 30000 });
+        logger.info(`Verified exact service: ${serviceName}`);
+    }
 }
