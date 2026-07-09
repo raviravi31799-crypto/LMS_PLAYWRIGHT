@@ -97,4 +97,7 @@ async multiSelect(dropdown: Locator, value: string) {
     // Close the dropdown
     await this.page.mouse.click(10, 10);
 }
+      async pressEnter(locator: Locator) {
+        await locator.press("Enter");
+}
 }
