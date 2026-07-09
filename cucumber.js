@@ -24,7 +24,6 @@ format: [
   "progress-bar",
   "html:reports/cucumber-html/cucumber-report.html",
   "json:reports/cucumber-json/cucumber-report.json",
-  "allure-cucumberjs/reporter",
   "rerun:rerun/rerun.txt"
 ]
     },

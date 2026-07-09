@@ -32,6 +32,3 @@ When the user clicks Add Course button
 And the user clicks the Next button without navigating
 Then the user should see the error message to fill the field
 And the user should remain on the Add Course page
-
-
-
