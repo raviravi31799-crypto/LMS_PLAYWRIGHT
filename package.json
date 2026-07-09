@@ -10,7 +10,7 @@
     "Jothika": "cucumber-js --tags @Jothika",
     "Harini": "cucumber-js --tags \"@ServiceManagement or @mandatoryempty\"",
     "jagadeep": "cucumber-js --tags @jagadeep",
-    "Subha": "cucumber-js --tags   @SearchCourse",
+    "Subha": "cucumber-js --tags   @Subha",
     
     "parallel": "cucumber-js --parallel 2",
     "re:fail": "cucumber-js -p rerun",
@@ -26,7 +26,7 @@
     "@cucumber/cucumber": "^13.0.0",
     "@playwright/test": "^1.61.1",
     "@types/node": "^26.1.0",
-    "allure-playwright": "^3.10.2",
+    "allure-cucumberjs": "^3.10.2",
     "cross-env": "^10.1.0",
     "ts-node": "^10.9.2"
   },
