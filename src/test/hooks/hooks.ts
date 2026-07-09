@@ -10,9 +10,9 @@ import { CourseManagementPage } from '../pages/CourseManagementPage';
 import { EditDeletepage } from '../pages/EditDeletepage';
 import { Logoutpage } from '../pages/Logoutpage';
 import { ServiceModelPage } from '../pages/ServiceModelPage';
-
 import { DynamicCourseCategoryPage } from '../pages/DynamicCourseCategoryPage';
-import { ServiceModelPage } from '../pages/ServiceModelPage';
+
+
 
 let browser: Browser;
 BeforeAll(async () => {
