@@ -6,9 +6,11 @@ import { CourseStructure } from "../pages/AddCourseStructurePage";
 import { EditDeletepage } from "../pages/EditDeletepage";
 import { CoursePage } from "../pages/CoursePage";
 import { PedagogyPage } from '../pages/PedagogyPage';
+import {Logoutpage} from "../pages/Logoutpage";
 import { ServiceModelPage } from '../pages/ServiceModelPage';
-
 import { DynamicCourseCategoryPage } from '../pages/DynamicCourseCategoryPage';
+
+
 
 export class CustomWorld {
     browser!: Browser;
@@ -16,6 +18,7 @@ export class CustomWorld {
     page!: Page;
     courseId!: string;
     categoryName!: string;
+  
 
     loginpage!: Loginpage;
     coursestructure!: CourseStructure;
@@ -24,7 +27,9 @@ export class CustomWorld {
     courseManagementpage!:CourseManagementPage;
     editdeletepage!:EditDeletepage;
     pedagogyPage!:PedagogyPage;
+    logoutpage!:Logoutpage;
     servicemodelpage!:ServiceModelPage;
     dynamiccoursecategorypage!:DynamicCourseCategoryPage;
+    
 }
 

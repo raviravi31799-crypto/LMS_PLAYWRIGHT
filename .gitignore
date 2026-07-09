@@ -6,6 +6,9 @@ reports/
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
-/rerun
+ rerun/
+ allure-results/
+
+
 # Playwright
 /playwright-report/

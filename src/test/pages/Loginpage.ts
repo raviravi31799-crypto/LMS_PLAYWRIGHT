@@ -12,6 +12,7 @@ export class Loginpage extends Basepage{
   private sigin=this.page.locator("button[type='submit']");
   private text=this.page.locator("//div[@class='jsx-19ca30d8d511510e']/descendant::h1");
   private warningtext=this.page.locator("//div[text()='Email is invalid']");
+  private errormsg=this.page.locator("//div[text()='Password is incorrect']");
 
 
   async launch(){
@@ -36,10 +37,18 @@ export class Loginpage extends Basepage{
   }
   async getWarningtext(){
       const msg=await this.getText(this.warningtext);
-      await expect(msg).toBe("Email is invalid");
+      await expect(msg).toContain("Email is invalid");
+      
       logger.info("Invalid login using invalid email is verified");
-
   }
+    async Errortext() {
+      const error=await this.getText(this.errormsg);
+      await expect(error).toContain("Password is incorrect");
+      logger.info("Invalid login using invalid password is verified successfully");
+
+    }
+
+  
 
   async login(){
     await this.launch();

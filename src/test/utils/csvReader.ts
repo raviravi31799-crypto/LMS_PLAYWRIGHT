@@ -2,8 +2,7 @@ import fs from "fs";
 import path from "path";
 import { parse } from "csv-parse/sync";
 
-export function readCSV(fileName: string): Record<string, string>[] {
-  //const filePath = path.resolve(__dirname, "../testdata", fileName);
+export function readCSV<T>(fileName: string): T[] {
   const filePath = path.resolve(__dirname, "../../../testdata", fileName);
   const fileContent = fs.readFileSync(filePath, "utf8");
 
@@ -11,5 +10,5 @@ export function readCSV(fileName: string): Record<string, string>[] {
     columns: true,
     skip_empty_lines: true,
     trim: true,
-  }) as Record<string, string>[];
+  }) as T[];
 }

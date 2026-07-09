@@ -1,0 +1,18 @@
+<<<<<<< HEAD
+=======
+src\test\features\CourseManagement\AddCourseStucture.feature:42
+src\test\features\CourseManagement\EditAndDelete.feature:23
+src\test\features\CourseManagement\Search.feature:25
+src\test\features\CourseManagement\AddCourseStucture.feature:23
+src\test\features\CourseManagement\AddCourseStucture.feature:42
+src\test\features\DynamicFieldManagement\ServiceModel.feature:15
+src\test\features\CourseManagement\Search.feature:25
+src\test\features\CourseManagement\AddCourseStucture.feature:23
+src\test\features\CourseManagement\AddCourseStucture.feature:42
+src\test\features\DynamicFieldManagement\ServiceModel.feature:15
+src\test\features\CourseManagement\AddCourseStucture.feature:42
+src\test\features\CourseManagement\EditAndDelete.feature:23
+src\test\features\CourseManagement\Search.feature:25
+src\test\features\CourseManagement\AddCourseStucture.feature:23
+src\test\features\CourseManagement\AddCourseStucture.feature:42
+>>>>>>> ef99e8fccdf22ade480907400be27a702f55ee79
