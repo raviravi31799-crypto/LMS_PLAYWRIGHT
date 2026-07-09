@@ -1,5 +1,20 @@
+
 import { Given, Then, When } from "@cucumber/cucumber";
+import { expect } from "@playwright/test";
+import fs from "fs";
+
 import { CustomWorld } from "../world/world";
+
+import testData from "../../../testdata/addStructure.json";
+
+interface AddStructureData {
+  courseName: string;
+  header: string;
+}
+
+const data: AddStructureData = testData;
+
+let excelPath: string;
 
 Given('admin login with the valid credentials', { timeout: 500000 }, async function (this: CustomWorld) {
   await this.loginpage.login()
@@ -13,7 +28,7 @@ When('admin search the course {string}', { timeout: 15000 }, async function (thi
   await this.courseManagementpage.searchCourse(search);
 });
 
-When('admin click the Add Course Structure', { timeout: 30000 }, async function (this: CustomWorld) {
+When('admin click the Add Course Structure', { timeout: 120000 }, async function (this: CustomWorld) {
   await this.courseManagementpage.clickAddCourseStructure();
 });
 
@@ -59,22 +74,34 @@ Then('admin should seen the {string} in the submodule', { timeout: 30000 }, asyn
   await this.coursestructure.assertSubModule(title)
 });
 
-When('admin click the print button', async function () {
+When('admin search the course', { timeout: 30000 }, async function (this: CustomWorld) {
   // Write code here that turns the phrase above into concrete actions
-  return 'pending';
+  await this.courseManagementpage.searchInputByJson(
+      data.courseName
+    );
 });
 
-When('admin click the excel button', async function () {
+When('admin click the print button',{ timeout: 30000 } , async function (this : CustomWorld) {
   // Write code here that turns the phrase above into concrete actions
-  return 'pending';
+  await this.coursestructure.clickPrintButton()
 });
 
-When('admin save the excel seet', async function () {
+When('admin click the excel button', { timeout: 30000 },async function (this : CustomWorld) {
   // Write code here that turns the phrase above into concrete actions
-  return 'pending';
+  excelPath = await this.coursestructure.clickExcelButton();
 });
 
-Then('admin shoud view the module details in the excel sheet', async function () {
+When('admin save the excel seet', { timeout: 30000 },async function (this : CustomWorld) {
   // Write code here that turns the phrase above into concrete actions
-  return 'pending';
+  expect(fs.existsSync(excelPath)).toBeTruthy();
+
+  console.log("Excel Saved Successfully : " + excelPath);
+});
+
+Then('admin shoud view the module details in the excel sheet',{ timeout: 30000 }, async function (this : CustomWorld) {
+  // Write code here that turns the phrase above into concrete actions
+  await this.coursestructure.verifyExcel(
+      excelPath,
+      data.header
+    );
 });
