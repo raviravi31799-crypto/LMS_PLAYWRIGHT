@@ -9,5 +9,6 @@ reports/
  rerun/
  allure-results/
 
+
 # Playwright
 /playwright-report/
