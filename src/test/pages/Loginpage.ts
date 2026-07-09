@@ -35,20 +35,36 @@ export class Loginpage extends Basepage{
     logger.info("Logged in successfully");
 
   }
+
+  //Invalid login with invalid email
   async getWarningtext(){
       const msg=await this.getText(this.warningtext);
       await expect(msg).toContain("Email is invalid");
       
       logger.info("Invalid login using invalid email is verified");
   }
+  //Invalidlogin with invalid password
     async Errortext() {
       const error=await this.getText(this.errormsg);
       await expect(error).toContain("Password is incorrect");
       logger.info("Invalid login using invalid password is verified successfully");
 
     }
+    //invalid login with blank mandatory fields
+    async getvalidationmessage(message:string){
+      let validationMessage;
+       if (!await this.email.inputValue()) {
+       validationMessage =await this.email.evaluate((el: HTMLInputElement) => el.validationMessage);
+    } 
+    else {
+      validationMessage =await this.password.evaluate((el: HTMLInputElement) => el.validationMessage);
+    }
+     expect(validationMessage).toBe(message);
+     logger.info("Invalid login with blank mandatory fields is verified");
+  }
 
-  
+
+  //Reusable login method
 
   async login(){
     await this.launch();
