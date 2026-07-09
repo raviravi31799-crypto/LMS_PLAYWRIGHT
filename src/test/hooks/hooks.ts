@@ -6,7 +6,7 @@ import { CourseManagementPage } from '../pages/CourseManagementPage';
 import { CoursePage } from '../pages/CoursePage';
 import { DynamicCourseCategoryPage } from '../pages/DynamicCourseCategoryPage';
 import { EditDeletepage } from '../pages/EditDeletepage';
-import { Loginpage } from '../pages/Loginpage';
+import { PedagogyPage } from '../pages/PedagogyPage';
 import { Logoutpage } from '../pages/Logoutpage';
 import { ServiceModelPage } from '../pages/ServiceModelPage';
 import { logger } from '../utils/winstonlogger';
@@ -32,6 +32,7 @@ Before(async function (this: CustomWorld, scenario) {
     this.coursehierarchypage=new CourseHierarchyPage(this.page);
     this.coursepage = new CoursePage(this.page); 
     this.courseManagementpage = new CourseManagementPage(this.page);
+    this.pedagogyPage = new PedagogyPage(this.page);
     this.logoutpage=new Logoutpage(this.page);
     this.servicemodelpage=new ServiceModelPage(this.page);
 
