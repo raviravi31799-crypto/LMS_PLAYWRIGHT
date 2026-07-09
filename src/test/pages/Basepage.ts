@@ -34,7 +34,7 @@ export class Basepage {
 
     
     async getText(locator: Locator)  {
-        return await locator.innerText();
+        return await locator.textContent();
     }
 
    
