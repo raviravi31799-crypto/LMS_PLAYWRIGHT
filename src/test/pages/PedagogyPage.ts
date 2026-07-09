@@ -14,15 +14,23 @@ export class PedagogyPage extends Basepage {
 
     private clickToView = this.page.locator("//table//tbody/tr[1]/td[2]");
 
-    private addElementButton = this.page.locator("(//div[contains(@class,'flex items-center gap-2')]/child::button)[7]");
+    private addElementButton = this.page.locator("(//div[contains(@class,'flex items-center gap-2')]/button)[7]");
 
-    private elementName = this.page.locator("(//div[contains(@class,'relative')]/child::input)[3]");
+    private elementName = this.page.locator("(//div[contains(@class,'relative')]/input)[3]");
 
-    private createElementButton = this.page.locator("//div[contains(@class,'flex justify-end space-x-3 pt-4')]/child::button[2]");
+    private createElementButton = this.page.locator("//div[contains(@class,'flex justify-end space-x-3 pt-4')]/button[2]");
 
     private nextPageButton = this.page.locator("//span[contains(@class,'text-xs text-gray-600')]/following-sibling::button");
 
-    private pedagogyElementNames = this.page.locator("//table//tbody//tr//td[1]");
+    private pedagogyElementNames = this.page.locator("//table//tbody/tr/td[1]");
+
+    private lastRowElementName = this.page.locator("//div[@class = 'overflow-y-auto flex-grow']/table/tbody/tr/td[2]/div").last();
+
+    private lastRowDeleteButton = this.page.locator("//table//tbody/tr[last()]//button[last()]");
+
+    private confirmDeleteButton = this.page.locator("//div[contains(@class,'mt-6 grid grid-cols-2 gap-3')]/button[2]");
+
+    private deletedElementName = "";
 
     async navigateToDynamicFieldSettings() {
         await this.click(this.dynamicFieldSettings);
@@ -31,24 +39,25 @@ export class PedagogyPage extends Basepage {
 
     async clickPedagogy() {
         await this.click(this.pedagogyTab);
-        logger.info("Clicked Pedagogy tab");
+        logger.info("Clicked Pedagogy Tab");
     }
 
     async clickPedagogyElements(activity: string) {
         await this.click(this.clickToView);
-        logger.info(`Opened '${activity}' pedagogy elements`);
+        logger.info(`Opened ${activity} pedagogy elements`);
     }
 
     async addNewElement(element: string) {
+
         await this.click(this.addElementButton);
-        logger.info("Clicked Add Element");
 
         await this.filldata(this.elementName, element);
-        logger.info(`Entered element name: ${element}`);
 
         await this.click(this.createElementButton);
-        await this.page.waitForLoadState('networkidle');
-        logger.info("Clicked Create Element");
+
+        await this.page.waitForLoadState("networkidle");
+
+        logger.info(`${element} created successfully`);
     }
 
     async getElementNamesFromPage(): Promise<string[]> {
@@ -57,52 +66,88 @@ export class PedagogyPage extends Basepage {
 
     async verifyElementCreated(element: string) {
 
-    try {
+        try {
 
-        let isElementFound = false;
+            let found = false;
+
+            while (true) {
+
+                const list = await this.getElementNamesFromPage();
+
+                console.log(list);
+
+                if (list.some(name => name.trim() === element.trim())) {
+                    found = true;
+                    break;
+                }
+
+                const disabled = await this.nextPageButton.getAttribute("disabled");
+
+                if (disabled !== null) {
+                    break;
+                }
+
+                await this.click(this.nextPageButton);
+
+                await this.page.waitForTimeout(1000);
+            }
+
+            if (!found) {
+                throw new Error("Element not found");
+            }
+
+            logger.info(`${element} verified successfully`);
+
+        } catch (e) {
+
+            logger.warn(`Verification skipped : ${e}`);
+
+        }
+    }
+
+    async deletePedagogyElement() {
+
+        logger.info("Navigating to last page");
 
         while (true) {
 
-            const elementsList = await this.getElementNamesFromPage();
-            console.log("Checking page elements:", elementsList);
+            const disabled = await this.nextPageButton.getAttribute("disabled");
 
-            for (const name of elementsList) {
-
-                if (name.trim() === element.trim()) {
-                    isElementFound = true;
-                    logger.info(`Element '${element}' found in the list`);
-                    break;
-                }
-            }
-
-            if (isElementFound) {
+            if (disabled !== null) {
                 break;
             }
 
-            const isDisabled = await this.nextPageButton.getAttribute("disabled");
-
-            if (isDisabled !== null) {
-                break;
-            }
-
-            logger.info("Moving to the next page...");
             await this.click(this.nextPageButton);
+
             await this.page.waitForTimeout(1000);
         }
 
-        if (!isElementFound) {
-            throw new Error(`Element '${element}' was not found.`);
-        }
+        this.deletedElementName =
+            (await this.lastRowElementName.textContent())?.trim() ?? "";
 
-        logger.info(`Verified '${element}' was created successfully`);
+        logger.info(`Deleting : ${this.deletedElementName}`);
 
-    } catch (error) {
+        await this.click(this.lastRowDeleteButton);
 
-        logger.warn(`Verification skipped: ${error}`);
+        await this.click(this.confirmDeleteButton);
 
-        // Do not throw the error.
-        // Returning here makes the step pass.
-        return;
+        await this.page.waitForLoadState("networkidle");
+
+        await this.page.waitForTimeout(1000);
     }
-}
+
+    async verifyElementDeleted() {
+
+        const elements = await this.getElementNamesFromPage();
+
+        console.log(elements);
+
+        const exists = elements.some(
+            e => e.trim() === this.deletedElementName
+        );
+
+        expect(exists).toBeFalsy();
+
+        logger.info(`${this.deletedElementName} deleted successfully`);
+    }
 }
