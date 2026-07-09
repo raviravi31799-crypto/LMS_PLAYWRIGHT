@@ -8,6 +8,8 @@ import { CoursePage } from '../pages/CoursePage';
 import { CourseHierarchyPage } from '../pages/CourseHierarchyPage';
 import { CourseManagementPage } from '../pages/CourseManagementPage';
 import { EditDeletepage } from '../pages/EditDeletepage';
+import { ServiceModelPage } from '../pages/ServiceModelPage';
+
 import { DynamicCourseCategoryPage } from '../pages/DynamicCourseCategoryPage';
 let browser: Browser;
 BeforeAll(async () => {
@@ -27,6 +29,8 @@ Before(async function (this: CustomWorld, scenario) {
     this.coursehierarchypage=new CourseHierarchyPage(this.page);
     this.coursepage = new CoursePage(this.page); 
     this.courseManagementpage = new CourseManagementPage(this.page);
+    this.servicemodelpage=new ServiceModelPage(this.page);
+
     this.dynamiccoursecategorypage = new DynamicCourseCategoryPage(this.page);
 });
 
