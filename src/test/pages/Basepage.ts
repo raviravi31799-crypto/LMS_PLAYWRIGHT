@@ -154,4 +154,23 @@ async pressEnter(locator: Locator) {
 
     await this.page.keyboard.press("Escape");
 }
+
+    async ClickUntilDisabled(nextButtonLocator: Locator): Promise<void> {
+    try {
+        let pageCount = 1;
+
+        while (true) {
+            const isDisabled = await nextButtonLocator.getAttribute("disabled");
+
+            if (isDisabled !== null) {
+                break;
+            }
+            await this.click(nextButtonLocator);
+            pageCount++;
+            await this.page.waitForTimeout(1000);
+        }
+    } catch (error) {
+        throw error;
+    }
+}
 }
