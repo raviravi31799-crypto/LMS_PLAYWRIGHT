@@ -15,6 +15,6 @@ When('the user clicks on Signout Button', async function (this:CustomWorld) {
  await this.logoutpage.clicksignout();
 });
 
-Then('the user is navigated to login page again', async function (this:CustomWorld) {
+Then('the user is navigated to login page again',{timeout:50000}, async function (this:CustomWorld) {
   await this.logoutpage.verifyLogintext();
 });

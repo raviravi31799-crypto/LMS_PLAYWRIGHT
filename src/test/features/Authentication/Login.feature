@@ -25,4 +25,16 @@ When the user clicks Signin button
 Then the user receives warning intimating invalid password
 
 
+@blank
+Scenario Outline: Login with blank mandatory fields
+  When the user enters "<email>" and "<password>"
+  When the user clicks Signin button
+  Then the browser displays "<message>" validation
+
+Examples:
+| email                 | password | message                     |
+|                       | 123      | Please fill out this field. |
+| testing3@gmail.com    |          | Please fill out this field. |
+
+
 
