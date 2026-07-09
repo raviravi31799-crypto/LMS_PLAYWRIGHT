@@ -10,7 +10,7 @@ export class Loginpage extends Basepage{
   private email=this.page.locator("//input[@id='email']");
   private password=this.page.locator("//input[@id='password']");
   private sigin=this.page.locator("button[type='submit']");
-  private text=this.page.locator("//div[@class='jsx-19ca30d8d511510e']/descendant::h1");
+  private text = this.page.getByRole('heading', { name: 'Executive Overview' });
   private warningtext=this.page.locator("//div[text()='Email is invalid']");
   private errormsg=this.page.locator("//div[text()='Password is incorrect']");
 
