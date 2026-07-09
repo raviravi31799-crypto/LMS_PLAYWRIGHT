@@ -11,5 +11,5 @@ Scenario Outline: Verify admin can create a new service successfully
     And the admin clicks the Create Service button
     Then the service should be created successfully
 Examples:
-    | ServiceName         | Description                   |
-    | Marketing | online business growth solutions   |
+    | ServiceName         | Description            |
+    | Data Management     | To oraganize the data  |

@@ -13,11 +13,14 @@ private iDoDropdown = this.page.locator(
 //private weDoDropdown = this.page.locator(
  // "//p[normalize-space()='Guided practice with instructor support']/following::button[@role='combobox'][1]"
 //);
+private weDoDropdown = this.page.locator(
+"//p[normalize-space()='Guided practice with instructor support']/following::button[@role='combobox'][1]"
+);
 private weDoSection = this.page.locator("div").filter({
     hasText: "Guided practice with instructor support"
 });
 
-private weDoDropdown = this.weDoSection.getByRole("combobox");
+//private weDoDropdown = this.weDoSection.getByRole("combobox");
 
 private youDoDropdown = this.page.locator(
   "//p[normalize-space()='Independent practice and application']/following::button[@role='combobox'][1]"
@@ -34,12 +37,18 @@ async enterCourseHierarchy(data: any) {
         await this.description.fill(data.description);
         await this.module.click();
         await this.submodule.click();
-        await this.multiSelect(this.iDoDropdown, data.pedagogy.iDo);
-        await this.validateSelectedValue(data.pedagogy.iDo);
-        await this.multiSelect(this.weDoDropdown, data.pedagogy.weDo);
-        await this.validateSelectedValue(data.pedagogy.weDo);
-        await this.multiSelect(this.youDoDropdown, data.pedagogy.youDo);
-        await this.validateSelectedValue(data.pedagogy.youDo);
+        // await this.multiSelect(this.iDoDropdown, data.pedagogy.iDo);
+        // await this.validateSelectedValue(data.pedagogy.iDo);
+        // await this.multiSelect(this.weDoDropdown, data.pedagogy.weDo);
+        // await this.validateSelectedValue(data.pedagogy.weDo);
+        // await this.multiSelect(this.youDoDropdown, data.pedagogy.youDo);
+        // await this.validateSelectedValue(data.pedagogy.youDo);
+        await this.multiSelect(this.iDoDropdown, data.pedagogy.iDo.value);
+        //await this.validateSelectedValue(data.pedagogy.iDo.value);
+        await this.multiSelect(this.weDoDropdown, data.pedagogy.weDo.value);
+        //await this.validateSelectedValue(data.pedagogy.weDo.value);
+        await this.multiSelect(this.youDoDropdown, data.pedagogy.youDo.value);
+        //await this.validateSelectedValue(data.pedagogy.youDo.value);
 
         for (const skill of data.skills.coreProgramming) {
             await this.selectSkill(skill);
