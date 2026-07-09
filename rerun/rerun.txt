@@ -1,1 +1,3 @@
+src\test\features\CourseManagement\Search.feature:25
+src\test\features\CourseManagement\AddCourseStucture.feature:23
 src\test\features\CourseManagement\AddCourseStucture.feature:42
