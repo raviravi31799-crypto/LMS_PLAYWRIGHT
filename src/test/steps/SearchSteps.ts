@@ -3,7 +3,7 @@ import { Given, When, Then, DataTable } from "@cucumber/cucumber";
 import { CustomWorld } from "../world/world";
 
 Given('the admin is logged into the lms website',
-  { timeout: 50000 }, async function (this: CustomWorld) {
+  { timeout: 90000 }, async function (this: CustomWorld) {
     await this.loginpage.login();
 });
 

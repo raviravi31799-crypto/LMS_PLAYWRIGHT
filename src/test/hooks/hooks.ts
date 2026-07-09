@@ -8,6 +8,7 @@ import { CoursePage } from '../pages/CoursePage';
 import { CourseHierarchyPage } from '../pages/CourseHierarchyPage';
 import { CourseManagementPage } from '../pages/CourseManagementPage';
 import { EditDeletepage } from '../pages/EditDeletepage';
+import { PedagogyPage } from '../pages/PedagogyPage';
 import { Logoutpage } from '../pages/Logoutpage';
 import { ServiceModelPage } from '../pages/ServiceModelPage';
 import { DynamicCourseCategoryPage } from '../pages/DynamicCourseCategoryPage';
@@ -32,6 +33,7 @@ Before(async function (this: CustomWorld, scenario) {
     this.coursehierarchypage=new CourseHierarchyPage(this.page);
     this.coursepage = new CoursePage(this.page); 
     this.courseManagementpage = new CourseManagementPage(this.page);
+    this.pedagogyPage = new PedagogyPage(this.page);
     this.logoutpage=new Logoutpage(this.page);
     this.servicemodelpage=new ServiceModelPage(this.page);
 
