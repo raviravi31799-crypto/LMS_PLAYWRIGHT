@@ -3,13 +3,9 @@ import { expect } from "@playwright/test";
 import { CustomWorld } from "../world/world";
 import { readCSV } from "../utils/csvReader";
 import { logger } from "../utils/winstonlogger";
+import { CategoryCsvRow } from "../types/csvTypes";
 
-interface CategoryCsvRow {
-    CategoryName: string;
-    CourseNames: string;
-    CategoryDescription: string;
-}
-const csvData = readCSV("DynamicCourseCategoryData.csv")[0] as unknown as CategoryCsvRow;
+const csvData = readCSV<CategoryCsvRow>("DynamicCourseCategoryData.csv")[0]!;
 
 When('Admin navigates to the Dynamicfields management', async function (this: CustomWorld) {
     logger.info("Navigating to Dynamic Fields management");
@@ -33,12 +29,12 @@ When('Admin fills the category details from the csv file', async function (this:
     await this.dynamiccoursecategorypage.fillCategoryDetails(this.categoryName, courseNames, csvData.CategoryDescription);
 });
 
-When('Admin clicks the Create Category button',{timeout:60000}, async function (this: CustomWorld) {
+When('Admin clicks the Create Category button', { timeout: 60000 }, async function (this: CustomWorld) {
     logger.info("Clicking Create Category button");
     await this.dynamiccoursecategorypage.clickCreateCategory();
 });
 
-When('Admin clicks the Close button', {timeout:60000},async function (this: CustomWorld) {
+When('Admin clicks the Close button', { timeout: 60000 }, async function (this: CustomWorld) {
     logger.info("Clicking Close button");
     await this.dynamiccoursecategorypage.clickClose();
 });
