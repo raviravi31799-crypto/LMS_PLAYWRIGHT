@@ -37,3 +37,12 @@ Then('an error toast message should be displayed', async function (this:CustomWo
             await this.servicemodelpage.validduplicate();
 });
 
+When('the admin searches for the service {string}', async function (string) {
+  // Write code here that turns the phrase above into concrete actions
+  return 'pending';
+});
+
+Then('the exact service {string} should be displayed', async function (string) {
+  // Write code here that turns the phrase above into concrete actions
+  return 'pending';
+});

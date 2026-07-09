@@ -13,7 +13,8 @@ export class ServiceModelPage extends Basepage {
     private createServiceBtn = this.page.getByRole("button", { name: "Create Service" });
     private duplicateToast = this.page.getByText("Request failed with status code 400");
     private successToast = this.page.getByText("Service created successfully");
-
+    private searchService = this.page.getByPlaceholder("Search services...");
+   // private service = this.page.locator(`//td//div[normalize-space()='${serviceName}']`);
     async clickDynamicSettingBtn() {
         logger.info("Navigating to Dynamic Field Settings");
         await this.click(this.DynamicSettingBtn);

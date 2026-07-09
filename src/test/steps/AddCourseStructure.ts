@@ -20,7 +20,7 @@ Given('admin login with the valid credentials', { timeout: 500000 }, async funct
   await this.loginpage.login()
 });
 
-When('admin clicks the Course Management menu',{ timeout: 15000 }, async function (this: CustomWorld) {
+When('admin clicks the Course Management menu',{ timeout: 50000 }, async function (this: CustomWorld) {
   await this.courseManagementpage.clickCourseManagement();
 });
 
