@@ -7,7 +7,7 @@ export class DynamicCourseCategoryPage extends Basepage {
         super(page);
     }
 
-    dynamicFieldSettingsIcon = this.page.locator("//div[@title='Dynamic Field Settings']");
+    dynamicFieldSettingsIcon = this.page.locator("//div[contains(@class,'p-1.5')]").nth(3);
     courseCategoryTab = this.page.locator("//*[normalize-space()='Course Category']");
     addCategoryButton = this.page.locator("//button[contains(.,'Add Category')]");
     categoryNameInput = this.page.locator("//input[@placeholder='Enter category name']");
