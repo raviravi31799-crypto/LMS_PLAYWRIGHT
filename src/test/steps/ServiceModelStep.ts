@@ -30,12 +30,9 @@ When('the admin enters the service details', async function () {
     const data = readCSV("AddDuplicateService.csv");
     await this.servicemodelpage.addServiceName(data[0]!.ServiceName);
     await this.servicemodelpage.addServiceDescription(data[0]!.Description);
-
 });
 
 Then('an error toast message should be displayed', async function () {
             await this.servicemodelpage.validduplicate();
-
-
 });
 
