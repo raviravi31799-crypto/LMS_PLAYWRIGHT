@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="ALL" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="77ef85be-5ce7-4de9-a68c-4bc28d9e959f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/rerun/rerun.txt" beforeDir="false" afterPath="$PROJECT_DIR$/rerun/rerun.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/features/CourseManagement/Search.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/features/CourseManagement/Search.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/pages/CourseManagementPage.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/pages/CourseManagementPage.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/steps/SearchSteps.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/steps/SearchSteps.ts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="92" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 4,
+  "fromUser": false
+}]]></component>
+  <component name="ProjectId" id="3GDTIgOintgXQmnUfbxlZRoqHNn" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "jagadeep",
+    "junie.onboarding.icon.badge.shown": "true",
+    "last_opened_file_path": "D:/Playwright_Projects/LMS_PLAYWRIGHT/LMS_PLAYWRIGHT",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "to.speed.mode.migration.done": "true",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-c59985aa861c-c2ffad84badb-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-261.24374.152" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="77ef85be-5ce7-4de9-a68c-4bc28d9e959f" name="Changes" comment="" />
+      <created>1783505061502</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1783505061502</updated>
+      <workItem from="1783505062543" duration="602000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
