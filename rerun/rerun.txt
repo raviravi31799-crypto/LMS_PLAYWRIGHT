@@ -1,3 +1,5 @@
+src\test\features\Authentication\Login.feature:9
+src\test\features\Authentication\Logout.feature:9
 src\test\features\CourseManagement\AddCourseStucture.feature:42
 src\test\features\CourseManagement\EditAndDelete.feature:23
 src\test\features\CourseManagement\Search.feature:25
