@@ -6,6 +6,7 @@ reports/
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
-
+/rerun/rerun.txt
 # Playwright
 /playwright-report/
+/downloads/

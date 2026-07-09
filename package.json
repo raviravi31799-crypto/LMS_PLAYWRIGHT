@@ -15,7 +15,8 @@
     "re:fail": "cucumber-js -p rerun",
     "posttest": "npx ts-node src/test/utils/report.ts",
     "test:qa": "cross-env TEST_ENV=qa cucumber-js",
-    "print" : "cucumber-js --tags @print"
+    "print" : "cucumber-js --tags @print",
+    "module":"cucumber-js --tags @module"
   },
   "keywords": [],
   "author": "",

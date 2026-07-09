@@ -1,6 +1,6 @@
-import { Page, Locator, expect } from "@playwright/test";
-import { Basepage } from "./Basepage";
+import { Page, expect } from "@playwright/test";
 import { logger } from "../utils/winstonlogger";
+import { Basepage } from "./Basepage";
 
 export class CourseManagementPage extends Basepage {
 
@@ -25,16 +25,35 @@ export class CourseManagementPage extends Basepage {
     logger.info(`Searched for course: ${courseName}`);
     }
 
-    async clickAddCourseStructure() {
-    await this.addCourseStructureBtn.first().waitFor({ state: 'visible', timeout: 10000 });
-    await this.addCourseStructureBtn.first().click();
-    await this.page.waitForLoadState('networkidle');
-    await this.page.waitForTimeout(3000);
-    logger.info("Clicked Add Course Structure button");
-    }
+  async clickAddCourseStructure() {
+  await this.addCourseStructureBtn.first().waitFor({
+    state: "visible",
+    timeout: 100000,
+  });
+
+  await this.addCourseStructureBtn.first().click();
+
+  
+  await this.page.waitForLoadState("networkidle");
+
+  // Wait until the Module button is visible (indicates the page is ready)
+  await this.page
+    .locator('//button[@title="Add module"]')
+    .waitFor({
+      state: "visible",
+      timeout: 10000,
+    });
+
+  logger.info("Successfully navigated to Add Course Structure page.");
+}
 
     async verifyCourseDisplayed() {
         await expect(this.searchedCourse).toContainText("J-BTI-H-006");
         logger.info("Course displayed successfully");
+    }
+    
+    async searchInputByJson(data:string)
+    {
+        await this.filldata(this.searchInput , data)
     }
 }
