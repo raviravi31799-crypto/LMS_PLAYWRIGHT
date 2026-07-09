@@ -9,7 +9,9 @@ import { CourseHierarchyPage } from '../pages/CourseHierarchyPage';
 import { CourseManagementPage } from '../pages/CourseManagementPage';
 import { EditDeletepage } from '../pages/EditDeletepage';
 import { Logoutpage } from '../pages/Logoutpage';
+import { ServiceModelPage } from '../pages/ServiceModelPage';
 
+import { DynamicCourseCategoryPage } from '../pages/DynamicCourseCategoryPage';
 let browser: Browser;
 BeforeAll(async () => {
     logger.info("Launching browser");
@@ -29,6 +31,9 @@ Before(async function (this: CustomWorld, scenario) {
     this.coursepage = new CoursePage(this.page); 
     this.courseManagementpage = new CourseManagementPage(this.page);
     this.logoutpage=new Logoutpage(this.page);
+    this.servicemodelpage=new ServiceModelPage(this.page);
+
+    this.dynamiccoursecategorypage = new DynamicCourseCategoryPage(this.page);
 });
 
 After(async function (this: CustomWorld, scenario) {

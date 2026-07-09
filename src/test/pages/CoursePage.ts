@@ -32,21 +32,30 @@ async enterBasicConfiguration(client: string,serviceType: string,serviceModel: s
     if (courseName?.trim()) {
         await this.select(this.courseName, courseName);
     }
+
+    logger.info("Course basic configuration entered successfully.");
 }
 
 async clickNext(expectNavigation = true) {
     await this.courseNext.click();
+    logger.info("Clicked the Next button.");
 
     if (expectNavigation) {
         await expect(
             this.page.getByRole("heading", { name: /Course Hierarchy/ })
         ).toBeVisible();
+
+        logger.info("Navigated to the Course Hierarchy page.");
     }
 }
-async verifyerrormsg(){
+
+async verifyerrormsg() {
     await expect(this.error).toBeVisible();
+    logger.info("Mandatory field validation message displayed.");
 }
-async verifyCoursePage(){
+
+async verifyCoursePage() {
     await expect(this.coursePageTitle).toBeVisible();
+    logger.info("Verified user remains on the Create New Course Setup page.");
 }
 }
