@@ -1,3 +1,4 @@
 src\test\features\DynamicFieldManagement\ServiceModel.feature:16:20
 src\test\features\CourseManagement\Search.feature:14:22
 src\test\features\DynamicFieldManagement\AddPedagogyElements.feature:10:15:20
+src\test\features\CourseManagement\Pagination.feature:10
