@@ -8,7 +8,11 @@
     "sriram": "cucumber-js --tags @sriram",
     "submodule": "cucumber-js --tags @submodule",
     "Jothika": "cucumber-js --tags @Jothika",
-    "Harini": "cucumber-js --tags \"@ServiceManagement or @mandatoryempty\"",
+    "Harini": "cucumber-js --tags @Harini",
+    
+   
+    
+   
     "jagadeep": "cucumber-js --tags \"@jagadeep and not @Bug-1\"",
     "Subha": "cucumber-js --tags   @Subha",
     "parallel": "cucumber-js --parallel 2",
