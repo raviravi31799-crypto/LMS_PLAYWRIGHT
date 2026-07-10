@@ -1,2 +1,8 @@
+<<<<<<< HEAD
 src\test\features\CourseManagement\EditAndDelete.feature:8:23
 src\test\features\DynamicFieldManagement\DynamicCouseCategory.feature:11:19:26
+=======
+src\test\features\DynamicFieldManagement\ServiceModel.feature:16:20
+src\test\features\CourseManagement\Search.feature:14:22
+src\test\features\DynamicFieldManagement\AddPedagogyElements.feature:10:15:20
+>>>>>>> 6203a2bdf378b2608d10d8502a03e0c032fd76fc

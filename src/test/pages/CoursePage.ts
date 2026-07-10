@@ -16,6 +16,7 @@ export class CoursePage extends Basepage{
     //private courseNext=this.page.locator("//label[contains(normalize-space(),'Course ID')]/following::button[2]");
     private courseNext = this.page.getByRole('button', { name: 'Next', exact: true });
     private error=this.page.locator("//span[text()='Please enter a course name']");
+    
 
 async enterBasicConfiguration(client: string,serviceType: string,serviceModel: string,category: string,courseName: string) {
     if (client?.trim()) {
