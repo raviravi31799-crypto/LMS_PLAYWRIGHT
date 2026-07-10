@@ -1,7 +1,8 @@
 module.exports={
     default: {
         formatOptions: {
-            "snippetInterface":"async-await"
+            "snippetInterface":"async-await",
+                "resultsDir": "allure-results"
         },
 
         
@@ -24,7 +25,8 @@ format: [
   "progress-bar",
   "html:reports/cucumber-html/cucumber-report.html",
   "json:reports/cucumber-json/cucumber-report.json",
-  "rerun:rerun/rerun.txt"
+  "rerun:rerun/rerun.txt",
+  "allure-cucumberjs/reporter"
 ]
     },
     rerun: {
