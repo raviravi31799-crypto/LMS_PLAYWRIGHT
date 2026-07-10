@@ -13,7 +13,8 @@ export class ServiceModelPage extends Basepage {
     private createServiceBtn = this.page.getByRole("button", { name: "Create Service" });
     private duplicateToast = this.page.getByText("Request failed with status code 400");
     private successToast = this.page.getByText("Service created successfully");
-
+    private searchService = this.page.getByPlaceholder("Search services...");
+   // private service = this.page.locator(`//td//div[normalize-space()='${serviceName}']`);
     async clickDynamicSettingBtn() {
         logger.info("Navigating to Dynamic Field Settings");
         await this.click(this.DynamicSettingBtn);
@@ -52,5 +53,15 @@ export class ServiceModelPage extends Basepage {
     async validSuccess() {
         await expect(this.successToast).toBeVisible({ timeout: 60000 });
         logger.info("Service created successfully");
+    }
+    async searchServiceName(serviceName: string) {
+        logger.info(`Searching for service: ${serviceName}`);
+        await this.filldata(this.searchService, serviceName);
+    }
+
+    async verifyExactService(serviceName: string) {
+        const service = this.page.locator(`//td//div[normalize-space()='${serviceName}']`);
+        await expect(service).toBeVisible({ timeout: 30000 });
+        logger.info(`Verified exact service: ${serviceName}`);
     }
 }

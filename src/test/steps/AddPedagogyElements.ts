@@ -1,7 +1,7 @@
 import { When, Then } from "@cucumber/cucumber";
 import { CustomWorld } from "../world/world";
 import { readCSV } from "../utils/csvReader";
-import { pedagogyElement } from "../types/pedagogy";
+import { pedagogyElement } from "../types/csvTypes";
 import * as fs from "fs";
 import * as path from "path";
 

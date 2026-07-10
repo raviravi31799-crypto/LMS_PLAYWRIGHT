@@ -59,3 +59,13 @@ When('the user clicks the Next button without navigating', async function () {
 });
 
 
+Then('the user should see the error message to fill the field', async function () {
+  // Write code here that turns the phrase above into concrete actions
+  return 'pending';
+});
+When('the user clicks Add Course button', async function () {
+  // Write code here that turns the phrase above into concrete actions
+  return 'pending';
+});
+
+

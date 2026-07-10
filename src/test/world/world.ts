@@ -7,6 +7,7 @@ import { EditDeletepage } from "../pages/EditDeletepage";
 import { CoursePage } from "../pages/CoursePage";
 import { PedagogyPage } from '../pages/PedagogyPage';
 import {Logoutpage} from "../pages/Logoutpage";
+import { paginationpage } from '../pages/Paginationpage';
 
 
 import { ServiceModelPage } from '../pages/ServiceModelPage';
@@ -36,7 +37,6 @@ export class CustomWorld {
     logoutpage!:Logoutpage;
     servicemodelpage!:ServiceModelPage;
     dynamiccoursecategorypage!:DynamicCourseCategoryPage;
-   
-    
+    paginationpage!:paginationpage;
 }
 
