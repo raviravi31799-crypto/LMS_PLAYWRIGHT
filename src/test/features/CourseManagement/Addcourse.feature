@@ -21,7 +21,7 @@ Scenario: Verify user cannot create a course when a mandatory field is left empt
 When the user clicks the Add Course button
 And the user enters the course basic configuration
   | Client   | ServiceType            | ServiceModel | Category             | CourseName |
-  | PSG Tech | Business to institution | TD           | Software Development |            |
+  | PSG Tech | Business to institution | TD          | Software Development |            |
 And the user clicks the Next button without navigating
 Then the user should see a validation message for the mandatory Course Name field
 And the user should remain on the Add Course page

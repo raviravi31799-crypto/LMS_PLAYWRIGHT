@@ -8,9 +8,9 @@
     "sriram": "cucumber-js --tags @sriram",
     "submodule":"cucumber-js --tags @submodule",
     "Jothika": "cucumber-js --tags @Jothika",
-    "Harini": "cucumber-js --tags \"@ServiceManagement or @mandatoryempty\"",
+    "Harini": "cucumber-js --tags \"@mandatoryempty or @ServiceManagement\"",
     "jagadeep": "cucumber-js --tags @jagadeep",
-    "Subha": "cucumber-js --tags   @Subha",
+    "Subha": "cucumber-js --tags   @EditCourseCategory",
     
     "parallel": "cucumber-js --parallel 2",
     "re:fail": "cucumber-js -p rerun",
