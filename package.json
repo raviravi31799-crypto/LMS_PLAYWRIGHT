@@ -17,7 +17,9 @@
     "posttest": "npx ts-node src/test/utils/report.ts",
     "test:qa": "cross-env TEST_ENV=qa cucumber-js",
     "print" : "cucumber-js --tags @print",
-    "module":"cucumber-js --tags @module"
+    "module":"cucumber-js --tags @module",
+    "Duplicate":"cucumber-js --tags @Duplicate",
+    "preview":"cucumber-js --tags @preview"
   },
   "keywords": [],
   "author": "",

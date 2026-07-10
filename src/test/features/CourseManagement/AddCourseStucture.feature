@@ -47,8 +47,21 @@ Feature: 7/7/2026_SRIRAM_K_ADD_COURSE_STRUCTURE
         And admin save the excel seet 
         Then admin shoud view the module details in the excel sheet
 
+    @Duplicate
+    Scenario: Verify the module Duplicate functionality
+        And admin search the new course for dublicate
+        And admin click the Add Course Structure
+        And admin click the similar course button
+        And admin change the mode to the all course
+        And admin search the existed course for dublicate
+        And admin choose the hierarchy level
+        And admin Select module no rows to duplicate
+        And admin click the dublicate structure button
+        Then admin should seen the pop message
 
-
-        
-       
-       
+    @preview
+    Scenario: Verify the Preview functionality
+        And admin search the course for Preview
+        And admin click the Add Course Structure
+        And admin click the Preview button
+        Then admin shoud seen the Complete hierarchy view
