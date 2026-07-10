@@ -6,7 +6,7 @@
   "scripts": {
     "test": "cucumber-js",
     "sriram": "cucumber-js --tags @sriram",
-    "submodule":"cucumber-js --tags @submodule",
+    "submodule": "cucumber-js --tags @submodule",
     "Jothika": "cucumber-js --tags @Jothika",
     "Harini": "cucumber-js --tags \"@mandatoryempty or @ServiceManagement\"",
     "jagadeep": "cucumber-js --tags @jagadeep",
@@ -16,6 +16,7 @@
     "re:fail": "cucumber-js -p rerun",
     "posttest": "npx ts-node src/test/utils/report.ts",
     "test:qa": "cross-env TEST_ENV=qa cucumber-js",
+
     "print" : "cucumber-js --tags @print",
     "module":"cucumber-js --tags @module",
     "Duplicate":"cucumber-js --tags @Duplicate",
@@ -30,6 +31,7 @@
     "@playwright/test": "^1.61.1",
     "@types/node": "^26.1.0",
     "allure-cucumberjs": "^3.10.2",
+    "allure-js-commons": "^3.10.2",
     "cross-env": "^10.1.0",
     "ts-node": "^10.9.2"
   },
