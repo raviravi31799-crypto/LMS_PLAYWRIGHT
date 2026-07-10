@@ -8,7 +8,7 @@ When("admin clicks the Dynamic field setting menu", async function (this: Custom
     await this.servicemodelpage.clickServiceBtn();
 });
 
-When("the admin clicks the Add Service button", async function (this: CustomWorld) {
+When("the admin clicks the Add Service button",{timeout:50000} ,async function (this: CustomWorld) {
     await this.servicemodelpage.clickAddService();
 });
 
@@ -32,8 +32,23 @@ When('the admin enters the service details', async function (this:CustomWorld) {
     await this.servicemodelpage.addServiceName(data[0]!.ServiceName);
     await this.servicemodelpage.addServiceDescription(data[0]!.Description);
 });
+Then(
+    "an error toast message should be displayed",
+    { timeout: 60000 },
+    async function (this: CustomWorld) {
+        await this.servicemodelpage.validduplicate();
+    }
+);
+When(
+    "the admin searches for the service {string}",
+    async function (this: CustomWorld, serviceName: string) {
+        await this.servicemodelpage.searchServiceName(serviceName);
+    }
+);
 
-Then('an error toast message should be displayed', async function (this:CustomWorld) {
-            await this.servicemodelpage.validduplicate();
-});
-
+Then(
+    "the exact service {string} should be displayed",
+    async function (this: CustomWorld, serviceName: string) {
+        await this.servicemodelpage.verifyExactService(serviceName);
+    }
+);

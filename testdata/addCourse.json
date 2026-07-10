@@ -1,11 +1,11 @@
 {
   "basicConfiguration": {
-    "client": "PSG Tech",
-    "serviceType": "Business to institution",
-    "serviceModel": "TD",
-    "category": "Software Development",
-    "courseName": "Frontend"
-  },
+  "client": "PSG Tech",
+  "serviceType": "Automation Testing",
+  "serviceModel": "Automation",
+  "category": "Software Development",
+  "courseName": "Frontend"
+},
 
   "courseHierarchy": {
     "courseLevel": "Beginner",

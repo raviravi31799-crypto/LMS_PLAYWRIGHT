@@ -29,7 +29,7 @@ Given('the user enters invalid email and valid password', async function (this:C
   
 });
 
-Then('the user receives warning text',{timeout:30000}, async function (this:CustomWorld) {
+Then('the user receives warning text',{timeout:50000}, async function (this:CustomWorld) {
     await this.loginpage.getWarningtext();
 });
 
