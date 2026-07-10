@@ -12,7 +12,7 @@ Scenario Outline: Verify admin can create a new service successfully
     Then the service should be created successfully
 Examples:
     | ServiceName         | Description            |
-    | AI-Oriented         | AI fundamentals basic |
+    | AI-Oriented course         | AI fundamentals basic |
 
 @DuplicateService
 Scenario: Verify admin cannot create a duplicate service

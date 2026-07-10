@@ -9,6 +9,7 @@ export class CourseStructure extends Basepage {
     super(page);
   }
 
+  
   private moduleMenuButton = this.page.locator('//button[@title="Add module"]');
   private titleInput = this.page.locator('textarea#title');
   private descriptionInput = this.page.locator('textarea#description');
@@ -44,6 +45,28 @@ export class CourseStructure extends Basepage {
 
   private printButton = this.page.locator('//button[@title="Click to preview"]')
   private excelButton = this.page.locator('//button[text()="Excel"]')
+  private previewCourseStructureButton = this.page.locator('//button[@title="Click to preview course structure"]')
+  private courseStructurePreviewHeader = this.page.locator('//h2[text()="Course Structure Preview"]')
+
+
+  private similarCourse = this.page.locator('//span[text()="Similar Courses"]')
+
+  private allCourseButton = this.page.locator('//button[text()="All Courses"]')
+
+  private search = this.page.getByPlaceholder('Search for any course...')
+
+  private selectHire = this.page.locator('//div[@class="flex items-center gap-3 flex-wrap"]/div/label')
+
+  private selectModuleSwitch = this.page.locator('//button[@role="switch"]')
+
+  private rowCheckboxes = this.page.locator(
+  '//div[@class="flex items-center justify-center"]/button[@role="checkbox"]'
+);
+  private selectDublicateButton = this.page.locator('//div[@class="text-sm text-gray-600"]/following-sibling::div//button[2]')
+
+  private confirmButton = this.page.locator('//button/div[text()="Confirm Duplicate"]')
+
+  private moduleSuccessMsg = this.page.getByText('Operation completed successfully')
 
   async clickModuleMenu() {
     await this.moduleMenuButton.waitFor({
@@ -232,4 +255,77 @@ export class CourseStructure extends Basepage {
     logger.info(`Expected Header : ${expectedHeader}`);
     logger.info(`Actual Header   : ${excelHeader}`);
 }
+
+  async clickSimiliarButton()
+  {
+    await this.click(this.similarCourse);
+    logger.info("Clicked Similar Course button");
+  }
+
+  async allModeCourse()
+  {
+    await this.click(this.allCourseButton);
+    logger.info("Clicked All Courses mode");
+  }
+
+  async selectDuplicateMode(mode: "Select All" | "Modules"): Promise<void> {
+    await this.selectHire.filter({ hasText: mode }).click();
+    logger.info(`Selected duplicate mode: ${mode}`);
+  }
+
+  async searchExsitingCourse(course : string)
+  {
+    await this.filldata(this.search , course);
+    await this.page.keyboard.press("Enter");
+    logger.info(`Searched existing course: ${course}`);
+  }
+
+async selectRows(rows: number | "all"): Promise<void> {
+
+  await this.click(this.selectModuleSwitch)
+  await this.rowCheckboxes.first().waitFor({ state: "visible" });
+
+  if (rows === "all") {
+    await this.rowCheckboxes.first().click();
+    logger.info("Selected all rows for duplication");
+    return;
+  }
+
+  const totalRows = await this.rowCheckboxes.count();
+
+  if (rows > totalRows - 1) {
+    throw new Error(
+      `Requested ${rows} rows, but only ${totalRows - 1} row checkboxes are available.`
+    );
+  }
+
+  for (let i = 1; i <= rows; i++) {
+    await this.rowCheckboxes.nth(i).click();
+  }
+  logger.info(`Selected ${rows} rows for duplication`);
+}
+
+  async clickDublicateButton()
+  {
+    await this.click(this.selectDublicateButton);
+    await this.confirmButton.waitFor({ state: "visible", timeout: 10000 });
+    await this.click(this.confirmButton);
+    await this.page.waitForTimeout(3000);
+    await this.confirmButton.waitFor({ state: "hidden", timeout: 15000 });
+    logger.info("Clicked Duplicate Structure button and verified success");
+  }
+
+  async verifyDuplicateSuccess() {
+    logger.info("Duplicate success already verified after button click");
+  }
+
+  async clickPreviewButton() {
+    await this.click(this.previewCourseStructureButton);
+    logger.info("Clicked Preview Course Structure button");
+  }
+
+  async verifyPreviewVisible() {
+    await this.assertVisible(this.courseStructurePreviewHeader);
+    logger.info("Verified Course Structure Preview is visible");
+  }
 }

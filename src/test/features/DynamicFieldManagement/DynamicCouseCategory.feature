@@ -20,3 +20,14 @@ Background:
     When Admin searches for a course
       | CourseNames |
     Then the course should be displayed in the category list
+
+   
+  @EditCourseCategory
+  Scenario: Edit a course category name and verify the updated name is displayed
+    When Admin clicks the three dot menu for a category
+      | CourseNames  |
+    And Admin selects Edit option
+    And Admin updates the category name
+    And Admin clicks the Update Category button
+    And Admin clicks the Close button
+    Then the updated category should be displayed in the category list 
