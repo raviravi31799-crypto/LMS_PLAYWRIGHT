@@ -10,11 +10,11 @@ module.exports={
         ],
         require: [
             "src/test/hooks/*.ts",
-            "src/test/steps/DynamicCourseCategory.ts",
+            "src/test/steps/*.ts",
         ],
 
         paths: [
-             "src/test/features/DynamicFieldManagement/DynamicCouseCategory.feature"
+             "src/test/features/**/*.feature"
          ],
     
 

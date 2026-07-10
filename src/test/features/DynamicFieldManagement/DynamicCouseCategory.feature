@@ -15,14 +15,14 @@ Background:
     And Admin clicks the Close button
     Then the new category should be displayed in the category list
 
-  @SearchCourse
+  @DynamicSearchCourseCategory
   Scenario: Search a course and verify it is displayed
     When Admin searches for a course
       | CourseNames |
     Then the course should be displayed in the category list
 
    
-  @EditCourseCategory
+  @DynamicEditCourseCategory
   Scenario: Edit a course category name and verify the updated name is displayed
     When Admin clicks the three dot menu for a category
       | CourseNames  |
