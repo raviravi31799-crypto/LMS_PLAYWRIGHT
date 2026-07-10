@@ -1,3 +1,4 @@
+src\test\features\DynamicFieldManagement\DynamicCouseCategory.feature:26
 src\test\features\DynamicFieldManagement\ServiceModel.feature:18
 src\test\features\Authentication\Login.feature:9
 src\test\features\Authentication\Logout.feature:9
