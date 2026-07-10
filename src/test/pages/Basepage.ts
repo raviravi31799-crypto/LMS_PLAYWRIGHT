@@ -79,20 +79,11 @@ async multiSelect(dropdown: Locator, value: string) {
     await dropdown.scrollIntoViewIfNeeded();
     await dropdown.click();
 
-    const option = this.page
-        .locator("[role='listbox']")
-        .last()
-        .locator("label")
-        .filter({ hasText: value })
-        .first();
+    const option = this.page.locator("[role='listbox']").last().locator("label").filter({ hasText: value }).first();
 
     await option.waitFor({ state: "visible" });
     await option.click();
-
-    // Close the dropdown
     await this.page.keyboard.press("Escape");
-
-    // Wait for the UI to stabilize
     await this.page.waitForTimeout(500);
 }
 async pressEnter(locator: Locator) {
