@@ -54,10 +54,9 @@ Then('the user should see a validation message for the mandatory Course Name fie
 Then('the user should remain on the Add Course page', async function (this:CustomWorld) {
     await this.coursepage.verifyCoursePage();
 });
-When('the user clicks the Next button without navigating', async function () {
+When('the user clicks the Next button without navigating', async function (this:CustomWorld) {
   await this.coursepage.clickNext(false);
 });
-
 
 Then('the user should see the error message to fill the field', async function () {
   // Write code here that turns the phrase above into concrete actions
