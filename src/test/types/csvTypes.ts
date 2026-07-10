@@ -3,3 +3,7 @@ export interface CategoryCsvRow {
     CourseNames: string;
     CategoryDescription: string;
 }
+export interface ServiceData {
+    ServiceName: string;
+    Description: string;
+}
