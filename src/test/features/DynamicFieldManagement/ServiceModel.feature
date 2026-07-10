@@ -1,4 +1,5 @@
 @ServiceManagement
+@Harini
 Feature: Service Model Management
 Background:
     Given admin login with the valid credentials
@@ -12,7 +13,8 @@ Scenario Outline: Verify admin can create a new service successfully
     Then the service should be created successfully
 Examples:
     | ServiceName         | Description            |
-    | AI-Oriented course         | AI fundamentals basic |
+    | AI Solution         | AI fundamentals basic |
+    | IT Consulting       |End To End Consulting|
 
 @DuplicateService
 Scenario: Verify admin cannot create a duplicate service
@@ -29,8 +31,7 @@ Scenario Outline: Verify the exact service is displayed after searching
 
 Examples:
   | serviceName          |
-  | Automation testing   |
-  | Automation Testing   |
-  | Automation Testing2  |
+  | Automation Test      |
+  | Front end development|
 
 

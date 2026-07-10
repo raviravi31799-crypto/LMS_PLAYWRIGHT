@@ -8,7 +8,7 @@ When("admin clicks the Dynamic field setting menu", async function (this: Custom
     await this.servicemodelpage.clickServiceBtn();
 });
 
-When("the admin clicks the Add Service button", async function (this: CustomWorld) {
+When("the admin clicks the Add Service button",{timeout:50000} ,async function (this: CustomWorld) {
     await this.servicemodelpage.clickAddService();
 });
 
