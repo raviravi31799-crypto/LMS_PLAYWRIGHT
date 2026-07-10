@@ -8,8 +8,8 @@ Background:
 Scenario: Verify user can create a new course successfully
 When the user clicks the Add Course button
 And the user enters the course basic configuration
-  | Client | ServiceType                | ServiceModel | Category                 | CourseName |
-  | PSG Tech  | Business to institution | TD           | Software Development     | Frontend   |
+  | Client | ServiceType         | ServiceModel | Category              | CourseName |
+| PSG Tech | Automation Testing | Automation   | Software Development  | Frontend   |
 And the user clicks the Next button
 And the user enters the course hierarchy details
 And the user clicks the Preview & Create button
@@ -24,4 +24,11 @@ And the user enters the course basic configuration
   | PSG Tech | Business to institution | TD          | Software Development |            |
 And the user clicks the Next button without navigating
 Then the user should see a validation message for the mandatory Course Name field
+And the user should remain on the Add Course page
+
+@emptyfield 
+Scenario:Verify user cannot create a course when all filed is empty
+When the user clicks Add Course button
+And the user clicks the Next button without navigating
+Then the user should see the error message to fill the field
 And the user should remain on the Add Course page
