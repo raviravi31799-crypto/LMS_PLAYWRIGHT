@@ -4,7 +4,7 @@ Feature: Dynamic Course Category
     
 Background:
      Given the Admin is logged into the application successfully
-     When Admin navigates to the Dynamicfields management
+     When admin clicks the Dynamic field setting menu
      And Admin navigates to the CourseCategory menu 
      
   @DynamicAddCourseCategory
