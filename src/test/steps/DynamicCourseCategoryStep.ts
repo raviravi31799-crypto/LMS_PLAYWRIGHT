@@ -9,7 +9,7 @@ const csvRows = readCSV<CategoryCsvRow>("DynamicCourseCategoryData.csv");
 const addCsvData = csvRows[0]!;
 const searchEditCsvData = csvRows[1]!;
 
-When('Admin navigates to the Dynamicfields management', {timeout: 40000}, async function (this: CustomWorld) {
+When('admin clicks the Dynamic field setting menu', {timeout: 40000}, async function (this: CustomWorld) {
     logger.info("Navigating to Dynamic Fields management");
     await this.dynamiccoursecategorypage.navigateToDynamicFieldsManagement();
 });
