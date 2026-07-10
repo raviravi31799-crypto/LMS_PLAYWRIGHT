@@ -12,3 +12,6 @@ export interface ServiceData {
     ServiceName: string;
     Description: string;
 }
+export interface pedagogyElement{
+    newName: string;
+}
