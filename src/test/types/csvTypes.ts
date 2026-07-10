@@ -8,3 +8,7 @@ export interface AddStructureData {
     courseName: string;
     header: string;
 }
+export interface ServiceData {
+    ServiceName: string;
+    Description: string;
+}
