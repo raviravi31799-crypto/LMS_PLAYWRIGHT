@@ -14,7 +14,7 @@ module.exports={
         ],
 
         paths: [
-             "src/test/features/**/DynamicCourseCategory.feature"
+             "src/test/features/DynamicFieldManagement/DynamicCourseCategory.feature"
          ],
     
 
