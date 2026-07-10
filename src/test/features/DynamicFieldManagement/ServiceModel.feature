@@ -13,8 +13,8 @@ Scenario Outline: Verify admin can create a new service successfully
     Then the service should be created successfully
 Examples:
     | ServiceName         | Description            |
-    | AI Solution         | AI fundamentals basic |
-    | IT Consulting       |End To End Consulting|
+    | AI Automation        | AI fundamentals basic |
+    | IT Services      |End To End Consulting|
 
 @DuplicateService
 Scenario: Verify admin cannot create a duplicate service
