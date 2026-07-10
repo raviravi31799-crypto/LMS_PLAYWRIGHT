@@ -37,15 +37,12 @@ export class CourseManagementPage extends Basepage {
 
   await this.addCourseStructureBtn.first().click();
 
-  
-  await this.page.waitForLoadState("networkidle");
-
   // Wait until the Module button is visible (indicates the page is ready)
   await this.page
     .locator('//button[@title="Add module"]')
     .waitFor({
       state: "visible",
-      timeout: 10000,
+      timeout: 30000,
     });
 
   logger.info("Successfully navigated to Add Course Structure page.");
@@ -55,14 +52,21 @@ export class CourseManagementPage extends Basepage {
         await expect(this.searchedCourse).toContainText("J-BTI-H-006");
         logger.info("Course displayed successfully");
     }
-
-    async verifyCourseNotFound(){
-        await expect(this.emptyTableMessage).toBeVisible();
+    
+    async navigateToNextPage() {
+        await this.click(this.nextButton);
+        logger.info("Navigated to next page");
     }
 
-    async navigateToNextPage(){
-        await this.nextButton.click();
-    }    
+    async verifyCourseNotFound() {
+        await expect(this.emptyTableMessage).toBeVisible();
+        logger.info("Verified course not found");
+    }
+
+    async searchInputByJson(data:string)
+    {
+        await this.filldata(this.searchInput , data)
+    }
     async clickAddCourseBtn(){
         await this.click(this.addCourseBtn);
     }

@@ -57,3 +57,34 @@ Then('the course should be displayed in the category list', {timeout:40000},asyn
     logger.info(`Course "${this.courseName}" displayed: ${isDisplayed}`);
     expect(isDisplayed).toBeTruthy();
 });
+
+When('Admin clicks the three dot menu for a category', async function (this: CustomWorld, dataTable) {
+    const columnName = dataTable.raw()[0][0] as keyof CategoryCsvRow;
+    const searchTerm = csvData[columnName].split(";")[0]!;
+    this.courseName = csvData.CourseNames;
+    logger.info(`Searching using: ${searchTerm}, then clicking three dot for category: ${this.courseName}`);
+    await this.dynamiccoursecategorypage.searchCategoryByName(searchTerm);
+    await this.dynamiccoursecategorypage.clickThreeDot(this.courseName);
+});
+
+When('Admin selects Edit option', async function (this: CustomWorld) {
+    logger.info("Selecting Edit option");
+    await this.dynamiccoursecategorypage.clickEdit();
+});
+
+When('Admin updates the category name', async function (this: CustomWorld) {
+    this.updatedCategoryName = `${csvData.CategoryName}Updated`;
+    logger.info(`Updating category name to: ${this.updatedCategoryName}`);
+    await this.dynamiccoursecategorypage.updateCategoryName(this.updatedCategoryName);
+});
+
+When('Admin clicks the Update Category button', async function (this: CustomWorld) {
+    logger.info("Clicking Update Category button");
+    await this.dynamiccoursecategorypage.clickUpdateCategory();
+});
+
+Then('the updated category should be displayed in the category list', async function (this: CustomWorld) {
+    const isDisplayed = await this.dynamiccoursecategorypage.verifyCategoryDisplayed(this.updatedCategoryName);
+    logger.info(`Updated category "${this.updatedCategoryName}" displayed: ${isDisplayed}`);
+    expect(isDisplayed).toBeTruthy();
+});

@@ -1,18 +1,19 @@
-import { logger } from '../utils/winstonlogger';
-import { Before, After, BeforeAll, AfterAll } from "@cucumber/cucumber";
+import { After, AfterAll, Before, BeforeAll } from "@cucumber/cucumber";
 import { Browser, chromium } from "@playwright/test";
-import { CustomWorld } from "../world/world";
-import { Loginpage } from '../pages/Loginpage';
 import { CourseStructure } from '../pages/AddCourseStructurePage';
-import { CoursePage } from '../pages/CoursePage';
 import { CourseHierarchyPage } from '../pages/CourseHierarchyPage';
 import { CourseManagementPage } from '../pages/CourseManagementPage';
-import { EditDeletepage } from '../pages/EditDeletepage';
-import { PedagogyPage } from '../pages/PedagogyPage';
-import { Logoutpage } from '../pages/Logoutpage';
-import { ServiceModelPage } from '../pages/ServiceModelPage';
+import { CoursePage } from '../pages/CoursePage';
 import { DynamicCourseCategoryPage } from '../pages/DynamicCourseCategoryPage';
+import { EditDeletepage } from '../pages/EditDeletepage';
+import { Loginpage } from '../pages/Loginpage';
+import { Logoutpage } from '../pages/Logoutpage';
+import { PedagogyPage } from '../pages/PedagogyPage';
+import { ServiceModelPage } from '../pages/ServiceModelPage';
+
 import { paginationpage } from '../pages/Paginationpage';
+import { logger } from '../utils/winstonlogger';
+import { CustomWorld } from "../world/world";
 
 
 

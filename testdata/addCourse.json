@@ -1,31 +1,16 @@
 {
   "basicConfiguration": {
-    "client": "PSG Tech",
-    "serviceType": "Business to institution",
-    "serviceModel": "TD",
-    "category": "Software Development",
-    "courseName": "Frontend"
-  },
+  "client": "PSG Tech",
+  "serviceType": "Automation Testing",
+  "serviceModel": "Automation",
+  "category": "Software Development",
+  "courseName": "Frontend"
+},
 
   "courseHierarchy": {
     "courseLevel": "Beginner",
-    "description": "Frontend Development Course",
-
-    "pedagogy": {
-      "iDo": {
-        "index": 0,
-        "value": "Live Classes"
-      },
-      "weDo": {
-        "index": 0,
-        "value": "Practical"
-      },
-      "youDo": {
-        "index": 0,
-        "value": "Assessments"
-      }
-    },
-
+    "description": "Frontend Development Course" 
+},
     "resourceType": {
       "iDo": [
         "Video",
@@ -56,4 +41,3 @@
       ]
     }
   }
-}
