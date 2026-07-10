@@ -1,1 +1,2 @@
-src\test\features\Authentication\Login.feature:9:16:22
+src\test\features\CourseManagement\EditAndDelete.feature:8:23
+src\test\features\DynamicFieldManagement\DynamicCouseCategory.feature:11:19:26
