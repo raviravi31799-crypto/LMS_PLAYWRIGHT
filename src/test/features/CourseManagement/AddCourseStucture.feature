@@ -7,7 +7,7 @@ Feature: 7/7/2026_SRIRAM_K_ADD_COURSE_STRUCTURE
     Background:
         Given admin login with the valid credentials
         When admin clicks the Course Management menu
-
+    @module
     Scenario Outline: Verify that the user can add a new course structure module
         And admin search the course "<search>"
         And admin click the Add Course Structure
@@ -39,12 +39,14 @@ Feature: 7/7/2026_SRIRAM_K_ADD_COURSE_STRUCTURE
         | DL DEMO | Machine Learning | Machine Learning Algorithms | Python |
 
     @print
-    Scenario: Verify the print functionality
+    Scenario:Verify the print functionality
+        And admin search the course
         And admin click the Add Course Structure
         And admin click the print button
         And admin click the excel button
         And admin save the excel seet 
         Then admin shoud view the module details in the excel sheet
+
 
 
         

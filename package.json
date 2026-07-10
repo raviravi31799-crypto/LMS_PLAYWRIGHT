@@ -8,7 +8,7 @@
     "sriram": "cucumber-js --tags @sriram",
     "submodule":"cucumber-js --tags @submodule",
     "Jothika": "cucumber-js --tags @Jothika",
-    "Harini": "cucumber-js --tags \"@ServiceManagement or @mandatoryempty\"",
+    "Harini": "cucumber-js --tags \"@mandatoryempty or @ServiceManagement\"",
     "jagadeep": "cucumber-js --tags @jagadeep",
     "Subha": "cucumber-js --tags   @EditCourseCategory",
     
@@ -16,7 +16,8 @@
     "re:fail": "cucumber-js -p rerun",
     "posttest": "npx ts-node src/test/utils/report.ts",
     "test:qa": "cross-env TEST_ENV=qa cucumber-js",
-    "print" : "cucumber-js --tags @print"
+    "print" : "cucumber-js --tags @print",
+    "module":"cucumber-js --tags @module"
   },
   "keywords": [],
   "author": "",
