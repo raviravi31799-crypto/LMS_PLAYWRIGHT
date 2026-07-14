@@ -7,7 +7,7 @@ Given the user logged the application successfully
 And the user clicks on the Question bank option
 
 Scenario:Verify the creation of MCQ question with all mandatory fields and required option
-When the user clicks on createquestion and selects MCQ question
+When the user clicks on create question and selects MCQ question
 And enters the required details such as category,question,answerkey,enabling required
-When the user clicks on savequestions
+When the user clicks on save questions
 Then the user receives a success text regarding the question creation
