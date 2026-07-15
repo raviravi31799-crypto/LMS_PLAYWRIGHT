@@ -13,8 +13,8 @@ Scenario Outline: Verify admin can create a new service successfully
     Then the service should be created successfully
 Examples:
     | ServiceName         | Description            |
-    |       UI/UX Design  | Responsive Interface Design Services |
-    |    API Development       |End to end development|
+    |       Database  | Data Management|
+    |    Finance       |Fiancial development|
 
 @DuplicateService
 Scenario: Verify admin cannot create a duplicate service
@@ -31,7 +31,7 @@ Scenario Outline: Verify the exact service is displayed after searching
 
 Examples:
   | serviceName          |
-  | Automation Test      |
   | Front end development|
+  | Automation           |
 
 
