@@ -23,7 +23,7 @@ Feature: Edit & Delete Course
   Scenario: Delete a course and verify it is removed from the course list
     When Admin clicks the three dot menu for a course
       | CourseID          |
-      | APL-BTI-PT-001    |
+      | K-BTB-T-002       |
   
     And Admin selects Delete Course option
     And Admin confirms the course deletion
