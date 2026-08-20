@@ -8,7 +8,7 @@ Feature: Edit & Delete Course
   Scenario: Edit the course levels and verify they are displayed
     When Admin clicks the three dot menu for a course
     | CourseID     |
-    | J-BTI-H-006  |
+    | K-BTB-H-001  |
  
     When Admin selects Edit Course option
     And Admin clicks the Next button
@@ -22,8 +22,8 @@ Feature: Edit & Delete Course
 
   Scenario: Delete a course and verify it is removed from the course list
     When Admin clicks the three dot menu for a course
-      | CourseID       |
-      | J-AT-A-005     |
+      | CourseID          |
+      | APL-BTI-PT-001    |
   
     And Admin selects Delete Course option
     And Admin confirms the course deletion

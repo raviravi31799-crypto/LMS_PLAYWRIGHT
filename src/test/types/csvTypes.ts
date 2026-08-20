@@ -2,6 +2,7 @@ export interface CategoryCsvRow {
     CategoryName: string;
     CourseNames: string;
     CategoryDescription: string;
+    UpdatedCategoryName:string;
 }
 
 export interface AddStructureData {
