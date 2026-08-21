@@ -1,4 +1,4 @@
-@Jothika
+#@Jothika
 Feature:Pagination functionality of the application
 
 Description: This feature is to verify the pagination functionality of the application and ensure users can navigate between pages while viewing the correct set of records.
