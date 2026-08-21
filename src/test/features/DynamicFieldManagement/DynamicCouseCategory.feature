@@ -31,3 +31,11 @@ Background:
     And Admin clicks the Update Category button
     And Admin clicks the Close button
     Then the updated category should be displayed in the category list 
+
+  @DynamicDeleteCourseCategory
+  Scenario: Delete a course category and verify it is removed from the list
+    When Admin clicks the three dot menu for delete category 
+      | CourseNames  |
+    And Admin selects Delete option
+    And Admin confirms the category deletion
+    Then the course should no longer be displayed in the category list 
