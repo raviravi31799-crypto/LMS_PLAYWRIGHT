@@ -12,20 +12,17 @@ import { paginationpage } from '../pages/Paginationpage';
 
 import { ServiceModelPage } from '../pages/ServiceModelPage';
 import { DynamicCourseCategoryPage } from '../pages/DynamicCourseCategoryPage';
-
-
+import { QuizPage } from '../pages/quiz.page';
 
 export class CustomWorld {
     browser!: Browser;
     context!: BrowserContext;
     page!: Page;
 
-
     courseId!: string;
     categoryName!: string;
     courseName!: string;
     updatedCategoryName!:string;
-  
 
     loginpage!: Loginpage;
     coursestructure!: CourseStructure;
@@ -38,5 +35,7 @@ export class CustomWorld {
     servicemodelpage!:ServiceModelPage;
     dynamiccoursecategorypage!:DynamicCourseCategoryPage;
     paginationpage!:paginationpage;
+    quizPage!:QuizPage;
 }
+
 

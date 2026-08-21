@@ -59,6 +59,24 @@ Feature: 7/7/2026_SRIRAM_K_ADD_COURSE_STRUCTURE
         And admin click the dublicate structure button
         Then admin should seen the pop message
 
+    @invalidModule
+    Scenario Outline: Verify that the user cannot add a module without a title
+        And admin search the course "<search>"
+        And admin click the Add Course Structure
+        And admin click the module menu
+        And admin enter the title as "<title>"
+        And admin touch and blur the title field
+        And admin enter the description as "<description>"
+        And admin select the skillset as "<skils>"
+        And admin click the Add module
+        Then admin should see the title required error message
+
+    Examples:
+        | search  | title | description                 | skils  |
+        | ML DEMO |       | Machine Learning Algorithms | Python |
+        | ML DEMO |       |                             | Python |
+        | ML DEMO |       | Test description            |        |
+
     @preview
     Scenario: Verify the Preview functionality
         And admin search the course for Preview

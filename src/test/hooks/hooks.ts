@@ -10,12 +10,10 @@ import { Loginpage } from '../pages/Loginpage';
 import { Logoutpage } from '../pages/Logoutpage';
 import { PedagogyPage } from '../pages/PedagogyPage';
 import { ServiceModelPage } from '../pages/ServiceModelPage';
-
 import { paginationpage } from '../pages/Paginationpage';
+import { QuizPage } from '../pages/quiz.page';
 import { logger } from '../utils/winstonlogger';
 import { CustomWorld } from "../world/world";
-
-
 
 let browser: Browser;
 BeforeAll(async () => {
@@ -40,8 +38,9 @@ Before(async function (this: CustomWorld, scenario) {
     this.dynamiccoursecategorypage = new DynamicCourseCategoryPage(this.page);
     this.servicemodelpage=new ServiceModelPage(this.page);
     this.paginationpage=new paginationpage(this.page);
-
+    this.quizPage=new QuizPage(this.page);
 });
+
 
 After(async function (this: CustomWorld, scenario) {
     if (scenario.result?.status === "FAILED") {

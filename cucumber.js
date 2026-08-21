@@ -12,6 +12,7 @@ module.exports={
         require: [
             "src/test/hooks/*.ts",
             "src/test/steps/*.ts",
+            "src/test/support/**/*.ts"
         ],
 
         paths: [

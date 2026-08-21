@@ -53,6 +53,10 @@ When('admin enter the title as {string}', { timeout: 15000 }, async function (th
   await this.coursestructure.enterTitle(title);
 });
 
+When('admin touch and blur the title field', { timeout: 15000 }, async function (this: CustomWorld) {
+  await this.coursestructure.touchAndBlurTitle();
+});
+
 When('admin enter the description as {string}',{ timeout: 15000 }, async function (this: CustomWorld, description: string) {
   await this.coursestructure.enterDescription(description);
 });
@@ -171,4 +175,8 @@ When('admin click the Preview button', { timeout: 30000 }, async function (this:
 Then('admin shoud seen the Complete hierarchy view', { timeout: 30000 }, async function (this: CustomWorld) {
   
   await this.coursestructure.verifyPreviewVisible();
+});
+
+Then('admin should see the title required error message', { timeout: 30000 }, async function (this: CustomWorld) {
+  await this.coursestructure.verifyTitleRequiredError();
 });

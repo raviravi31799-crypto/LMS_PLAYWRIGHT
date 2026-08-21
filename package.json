@@ -6,6 +6,8 @@
   "scripts": {
     "test": "cucumber-js",
     "sriram": "cucumber-js --tags @sriram",
+    "mcq":"cucumber-js --tags @MCQ",
+    "truefalse": "cucumber-js --tags @TrueFalse",
     "submodule": "cucumber-js --tags @submodule",
     "Jothika": "cucumber-js --tags @Jothika",
     "Harini": "cucumber-js --tags @Harini",
@@ -23,6 +25,7 @@
     "module": "cucumber-js --tags @module",
     "Duplicate": "cucumber-js --tags @Duplicate",
     "preview": "cucumber-js --tags @preview",
+    "invalidModule": "cucumber-js --tags @invalidModule",
     "allure:generate": "allure generate allure-results --clean -o allure-report",
     "allure:open": "allure open allure-report",
     "allure": "npm test && npm run allure:generate && npm run allure:open"

@@ -1,14 +1,13 @@
 
-# Playwright
 node_modules/
 /test-results/
 reports/
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
- rerun/rerun.txt
- allure-results/
-
+rerun/rerun.txt
+allure-results/
+allure-report/
 
 # Playwright
 /playwright-report/

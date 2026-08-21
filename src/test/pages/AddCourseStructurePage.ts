@@ -67,6 +67,7 @@ export class CourseStructure extends Basepage {
   private confirmButton = this.page.locator('//button/div[text()="Confirm Duplicate"]')
 
   private moduleSuccessMsg = this.page.getByText('Operation completed successfully')
+  private titleRequiredError = this.page.locator('textarea#title:invalid')
 
   async clickModuleMenu() {
     await this.moduleMenuButton.waitFor({
@@ -83,6 +84,15 @@ export class CourseStructure extends Basepage {
   async enterTitle(title: string) {
     await this.filldata(this.titleInput, title);
     logger.info(`Entered title: ${title}`);
+  }
+
+  async touchAndBlurTitle() {
+    await this.titleInput.click();
+    await this.page.keyboard.type(' ');
+    await this.page.keyboard.press('Backspace');
+    await this.titleInput.press('Tab');
+    await this.page.waitForTimeout(2000);
+    logger.info("Touched and blurred title field");
   }
 
   async enterDescription(description: string) {
@@ -327,5 +337,22 @@ async selectRows(rows: number | "all"): Promise<void> {
   async verifyPreviewVisible() {
     await this.assertVisible(this.courseStructurePreviewHeader);
     logger.info("Verified Course Structure Preview is visible");
+  }
+
+  async verifyTitleRequiredError() {
+    const isValid = await this.page.evaluate(() => {
+      const ta = document.querySelector('textarea#title') as HTMLTextAreaElement;
+      return ta ? ta.validity.valid : true;
+    });
+    
+    expect(isValid).toBe(false);
+    logger.info("Verified title field is invalid (empty required field)");
+
+    const formStillOpen = await this.moduleMenuButton.isVisible().catch(() => false);
+    const addModuleVisible = await this.addModuleButton.isVisible().catch(() => false);
+    logger.info(`Module form still open: ${formStillOpen}, Add Module button visible: ${addModuleVisible}`);
+    
+    await this.assertVisible(this.titleRequiredError);
+    logger.info("Verified 'Title is required' validation - title field marked as invalid");
   }
 }
