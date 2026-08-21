@@ -67,15 +67,23 @@ export class DynamicCourseCategoryPage extends Basepage {
 
 
     // -----------------------------
-    // Edit Category
+    // Edit / Delete Category
     // -----------------------------
 
     editMenuItem = this.page.locator(
         "//div[@role='menuitem'][normalize-space()='Edit']"
     );
 
+    deleteMenuItem = this.page.locator(
+        "//div[@role='menuitem'][normalize-space()='Delete']"
+    );
+
     updateCategoryButton = this.page.locator(
         "//button[normalize-space()='Update Category']"
+    );
+
+    deleteConfirmationButton = this.page.locator(
+        "//button[normalize-space()='Delete']"
     );
 
 
@@ -400,5 +408,65 @@ export class DynamicCourseCategoryPage extends Basepage {
          * Keep this small wait before the verification.
          */
         await this.page.waitForTimeout(3000);
+    }
+
+
+    // ============================================================
+    // Delete Category
+    // ============================================================
+
+    async clickDelete() {
+
+        await this.deleteMenuItem.waitFor({
+            state: "visible",
+            timeout: 15000
+        });
+
+        await this.click(
+            this.deleteMenuItem
+        );
+    }
+
+
+    async confirmDeleteCategory() {
+
+        await this.deleteConfirmationButton.waitFor({
+            state: "visible",
+            timeout: 15000
+        });
+
+        await this.click(
+            this.deleteConfirmationButton
+        );
+
+        await this.page.waitForTimeout(3000);
+    }
+
+
+    async verifyCourseNotDisplayed(
+        courseName: string
+    ) {
+
+        await this.filldata(
+            this.categorySearchInput,
+            courseName
+        );
+
+        await this.page.waitForLoadState(
+            "networkidle"
+        );
+
+        const courseBadge =
+            this.courseBadges.filter({
+                hasText: courseName
+            });
+
+        await expect(
+            courseBadge
+        ).toHaveCount(0, {
+            timeout: 15000
+        });
+
+        return true;
     }
 }

@@ -9,6 +9,7 @@ const csvRows = readCSV<CategoryCsvRow>("DynamicCourseCategoryData.csv");
 
 const addCsvData = csvRows[0]!;
 const searchEditCsvData = csvRows[1]!;
+const deleteCsvData = csvRows[2]!;
 
 
 // ============================================================
@@ -37,9 +38,11 @@ When('Admin clicks the Add Category button', async function (this: CustomWorld) 
 
 When('Admin fills the category details from the csv file', { timeout: 40000 }, async function (this: CustomWorld) {
 
-    this.categoryName = `${addCsvData.CategoryName}_${Date.now()}`;
+    this.categoryName =
+        `${addCsvData.CategoryName}_${Date.now()}`;
 
-    const courseNames = addCsvData.CourseNames.split(";");
+    const courseNames =
+        addCsvData.CourseNames.split(";");
 
     logger.info(
         `Filling category details for: ${this.categoryName}`
@@ -89,7 +92,7 @@ Then('the new category should be displayed in the category list', { timeout: 400
 
 
 // ============================================================
-// Search Course
+// Search Course - Edit
 // ============================================================
 
 When('Admin searches for a course', { timeout: 40000 }, async function (this: CustomWorld, dataTable) {
@@ -98,7 +101,8 @@ When('Admin searches for a course', { timeout: 40000 }, async function (this: Cu
         dataTable.raw()[0][0] as keyof CategoryCsvRow;
 
     this.courseName =
-        searchEditCsvData[columnName].split(";")[0]!;
+        searchEditCsvData[columnName]
+            .split(";")[0]!;
 
     logger.info(
         `Searching for course: ${this.courseName}`
@@ -126,7 +130,7 @@ Then('the course should be displayed in the category list', { timeout: 40000 }, 
 
 
 // ============================================================
-// Click Three Dot for Category
+// Click Three Dot - Edit Category
 // ============================================================
 
 When('Admin clicks the three dot menu for a category', { timeout: 40000 }, async function (this: CustomWorld, dataTable) {
@@ -135,41 +139,31 @@ When('Admin clicks the three dot menu for a category', { timeout: 40000 }, async
         dataTable.raw()[0][0] as keyof CategoryCsvRow;
 
     /*
-     * The feature passes:
+     * Edit uses CSV row 2:
      *
-     * | CourseNames |
-     *
-     * CSV:
      * Aiml,BFS;DL,AI is important,Aiml_Updated
      *
-     * Therefore:
      * CourseNames -> BFS;DL
      * First course -> BFS
      */
 
     const courseName =
-        searchEditCsvData[columnName].split(";")[0]!;
+        searchEditCsvData[columnName]
+            .split(";")[0]!;
 
     this.courseName = courseName;
 
     logger.info(
-        `Searching using course: ${courseName}, then clicking three dot for its category`
+        `Searching using Edit course: ${courseName}, then clicking three dot`
     );
 
-    /*
-     * Search using the course name.
-     */
     await this.dynamiccoursecategorypage.searchCourse(
         courseName
     );
 
     /*
-     * Click the three-dot button from the SAME row
-     * that contains the course.
-     *
-     * We do NOT use categoryName = "Aiml"
-     * because the category name may already have been
-     * changed by previous test executions.
+     * Click the three-dot button from the
+     * SAME row that contains the course.
      */
     await this.dynamiccoursecategorypage.clickThreeDotForCourse(
         courseName
@@ -225,6 +219,82 @@ Then('the updated category should be displayed in the category list', { timeout:
 
     logger.info(
         `Updated category "${this.updatedCategoryName}" displayed: ${isDisplayed}`
+    );
+
+    expect(isDisplayed).toBeTruthy();
+});
+
+
+// ============================================================
+// Delete Category
+// ============================================================
+
+When('Admin clicks the three dot menu for delete category', { timeout: 40000 }, async function (this: CustomWorld) {
+
+    /*
+     * Delete uses CSV row 3:
+     *
+     * IT,FSWD,developing a website,
+     *
+     * CourseNames -> FSWD
+     */
+
+    const courseName =
+        deleteCsvData.CourseNames
+            .split(";")[0]!;
+
+    this.courseName = courseName;
+
+    logger.info(
+        `Searching using Delete course: ${courseName}, then clicking three dot`
+    );
+
+    /*
+     * Search using Delete-specific CSV data.
+     */
+    await this.dynamiccoursecategorypage.searchCourse(
+        courseName
+    );
+
+    /*
+     * Click the three-dot button from the
+     * SAME row that contains FSWD.
+     */
+    await this.dynamiccoursecategorypage.clickThreeDotForCourse(
+        courseName
+    );
+});
+
+
+When('Admin selects Delete option', { timeout: 40000 }, async function (this: CustomWorld) {
+
+    logger.info("Selecting Delete option");
+
+    await this.dynamiccoursecategorypage.clickDelete();
+});
+
+
+When('Admin confirms the category deletion', { timeout: 40000 }, async function (this: CustomWorld) {
+
+    logger.info("Confirming category deletion");
+
+    await this.dynamiccoursecategorypage.confirmDeleteCategory();
+});
+
+
+// ============================================================
+// Verify Deleted Category
+// ============================================================
+
+Then('the category should no longer be displayed in the category list', { timeout: 40000 }, async function (this: CustomWorld) {
+
+    const isDisplayed =
+        await this.dynamiccoursecategorypage.verifyCourseNotDisplayed(
+            this.courseName
+        );
+
+    logger.info(
+        `Course "${this.courseName}" is no longer displayed after category deletion: ${isDisplayed}`
     );
 
     expect(isDisplayed).toBeTruthy();
