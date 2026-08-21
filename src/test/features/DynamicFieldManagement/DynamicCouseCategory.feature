@@ -34,7 +34,7 @@ Background:
 
   @DynamicDeleteCourseCategory
   Scenario: Delete a course category and verify it is removed from the list
-    When Admin clicks the three dot menu for a category
+    When Admin clicks the three dot menu for delete category 
       | CourseNames  |
     And Admin selects Delete option
     And Admin confirms the category deletion

@@ -1,4 +1,4 @@
 CategoryName,CourseNames,CategoryDescription,UpdatedCategoryName
 Devops,Jenkins;GithubActions,CICD is very useful,Devops_Updated
-Aiml,BFS;DL,AI is important,Aiml_Updated
-IT,FSWD,developing a website
+Aiml,BFS;DFS,AI is important,Aiml_Updated
+IT,FSWD,developing a website,

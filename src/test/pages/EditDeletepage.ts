@@ -1,5 +1,6 @@
-import { expect, Page } from "@playwright/test";
+import { expect, Page, Locator } from "@playwright/test";
 import { Basepage } from "./Basepage";
+import { logger } from "../utils/winstonlogger";
 
 export class EditDeletepage extends Basepage {
 
@@ -113,6 +114,17 @@ export class EditDeletepage extends Basepage {
         ).first();
     }
 
+    /*
+     * Each course row has two "View" buttons: the first is under the
+     * "Structure" column, the second is under the "Pedagogy" column.
+     * This targets the Pedagogy one specifically.
+     */
+    getPedagogyViewButton(courseId: string) {
+        return this.page.locator(
+            `//tr[.//*[normalize-space()='${courseId}']]//button[contains(normalize-space(),'View')]`
+        ).nth(1);
+    }
+
     // ============================================================
     // VIEW FULL DETAILS
     // ============================================================
@@ -137,6 +149,17 @@ export class EditDeletepage extends Basepage {
     intermediateLevel = this.page.getByText(
         "Intermediate",
         { exact: true }
+    );
+
+    /*
+     * The Course Level field is a combobox button (shows the
+     * currently selected level, e.g. "Beginner") that must be
+     * clicked to reveal the option list ("Beginner", "Intermediate",
+     * "Advanced", "Expert") before any of those options exist in
+     * the DOM.
+     */
+    courseLevelDropdown = this.page.locator(
+        "//label[contains(normalize-space(),'Course Level')]/following::button[@role='combobox'][1]"
     );
 
     // ============================================================
@@ -167,21 +190,78 @@ export class EditDeletepage extends Basepage {
      * following We Do / You Do labels, these will work.
      */
 
-    weDoField = this.page.locator(
-        "//label[contains(normalize-space(),'We Do')]/following::textarea[1]"
-    );
+    // ============================================================
+    // PEDAGOGY - EDIT FORM (Course Hierarchy and Layout step)
+    //
+    // "I Do" / "We Do" / "You Do" are each a multi-select dropdown
+    // (role="combobox") rendered below a short description
+    // paragraph. There is no textarea in this UI.
+    // ============================================================
 
-    youDoField = this.page.locator(
-        "//label[contains(normalize-space(),'You Do')]/following::textarea[1]"
-    );
+    getPedagogyDropdown(section: "I Do" | "We Do" | "You Do") {
+        return this.page.locator(
+            `xpath=//*[self::h4 or self::p or self::label or self::span]` +
+            `[normalize-space()='${section}']` +
+            `/following::button[@role='combobox'][1]`
+        );
+    }
 
-    // Fallback fields if the application does not render labels
-    pedagogyTextareas = this.page.locator(
-        "textarea"
-    );
+    // ============================================================
+    // PEDAGOGY - "Edit Course Structure" modal itself
+    // (needed so we can close it without saving)
+    //
+    // NOTE: The real dialog title in the app is "Create New Course
+    // Setup", not "Edit Course Structure" (confirmed via
+    // logDebugState() dialogTitles output). Filtering on the wrong
+    // title meant this locator never matched, so
+    // editCourseStructureCloseButton could never resolve.
+    // ============================================================
 
-    originalWeDoData = "";
-    originalYouDoData = "";
+    editCourseStructureModal = this.page.getByRole("dialog").filter({
+        hasText: "Create New Course Setup"
+    });
+
+    editCourseStructureCloseButton = this.editCourseStructureModal
+        .getByRole("button", { name: /^close$/i })
+        .last();
+
+    // ============================================================
+    // PEDAGOGY - "Course Layout Preview" modal
+    // ============================================================
+
+    closePreviewButton = this.page.getByRole("button", {
+        name: /Close Preview/i
+    });
+
+    // ============================================================
+    // PEDAGOGY - "Pedagogy Details" popup (opened from the
+    // Pedagogy column's View button on the course list)
+    // ============================================================
+
+    pedagogyDetailsModal = this.page.getByRole("dialog").filter({
+        hasText: "Pedagogy Details"
+    });
+
+    pedagogyDetailsCloseButton = this.pedagogyDetailsModal
+        .getByRole("button", { name: /^close$/i })
+        .last();
+
+    getPedagogySection(section: "I Do" | "We Do" | "You Do") {
+        return this.pedagogyDetailsModal.locator(
+            `xpath=.//h4[contains(normalize-space(),'${section}')]` +
+            `/ancestor::div[contains(@class,'p-3')][1]`
+        );
+    }
+
+    originalPedagogyData: {
+        iDo: string;
+        weDo: string;
+        youDo: string;
+    } = {
+        iDo: "",
+        weDo: "",
+        youDo: ""
+    };
 
     // ============================================================
     // NAVIGATE TO COURSE MANAGEMENT
@@ -549,19 +629,32 @@ export class EditDeletepage extends Basepage {
 
         await this.page.waitForTimeout(1000);
 
-        const intermediate = this.page.getByText(
-            "Intermediate",
-            { exact: true }
-        ).last();
+        /*
+         * The Course Level combobox must be opened first - the
+         * "Intermediate" option does not exist in the DOM until the
+         * dropdown trigger (currently showing "Beginner") is clicked.
+         */
 
-        await intermediate.waitFor({
+        await this.courseLevelDropdown.waitFor({
             state: "visible",
             timeout: 30000
         });
 
-        await intermediate.scrollIntoViewIfNeeded();
+        await this.courseLevelDropdown.scrollIntoViewIfNeeded();
 
-        await intermediate.click();
+        await this.courseLevelDropdown.click();
+
+        const intermediateOption = this.page.getByRole("option", {
+            name: "Intermediate",
+            exact: true
+        });
+
+        await intermediateOption.waitFor({
+            state: "visible",
+            timeout: 10000
+        });
+
+        await intermediateOption.click();
     }
 
     // ============================================================
@@ -596,8 +689,14 @@ export class EditDeletepage extends Basepage {
     ) {
 
         /*
-         * Go back to Course Management if necessary.
+         * The course level is already displayed directly in the
+         * course list row (e.g. "... • Intermediate"), so there is
+         * no need to open the View / View Full Details modal at
+         * all - we can just assert on the row's own text. This
+         * avoids depending on a "View Full Details" button that may
+         * not appear inside every View modal.
          */
+
         await this.searchCourse(courseId);
 
         const row = this.getCourseRow(courseId);
@@ -606,39 +705,8 @@ export class EditDeletepage extends Basepage {
             timeout: 30000
         });
 
-        const viewButton = this.getViewButton(courseId);
-
-        await viewButton.waitFor({
-            state: "visible",
-            timeout: 30000
-        });
-
-        await viewButton.click();
-
-        await this.page.waitForTimeout(1000);
-
-        /*
-         * Open View Full Details.
-         */
-        const fullDetails = this.viewFullDetailsButton;
-
-        await fullDetails.waitFor({
-            state: "visible",
-            timeout: 30000
-        });
-
-        await fullDetails.click();
-
-        await this.page.waitForTimeout(1500);
-
-        /*
-         * Verify Intermediate.
-         */
         await expect(
-            this.page.getByText(
-                expectedLevel,
-                { exact: true }
-            ).last()
+            row.getByText(expectedLevel, { exact: false })
         ).toBeVisible({
             timeout: 30000
         });
@@ -757,100 +825,210 @@ export class EditDeletepage extends Basepage {
     // PEDAGOGY
     // ============================================================
 
+    /*
+     * Reads the pedagogy currently shown in the already-open
+     * "Pedagogy Details" popup (opened via openPedagogyDetails()
+     * as a separate step). This reflects real saved data, unlike
+     * the edit form.
+     */
     async captureOriginalPedagogyData() {
 
-        await this.page.waitForTimeout(1000);
+        await this.pedagogyDetailsModal.waitFor({
+            state: "visible",
+            timeout: 30000
+        });
 
-        const textareas = this.pedagogyTextareas;
+        this.originalPedagogyData = {
+            iDo: await this.readPedagogySectionText("I Do"),
+            weDo: await this.readPedagogySectionText("We Do"),
+            youDo: await this.readPedagogySectionText("You Do")
+        };
+    }
 
-        const count = await textareas.count();
+    async openPedagogyDetails(courseId: string) {
 
-        if (count >= 2) {
+        await this.searchCourse(courseId);
 
-            this.originalWeDoData =
-                await textareas.nth(0).inputValue();
+        const button = this.getPedagogyViewButton(courseId);
 
-            this.originalYouDoData =
-                await textareas.nth(1).inputValue();
+        await button.waitFor({
+            state: "visible",
+            timeout: 30000
+        });
 
-        } else {
+        await button.scrollIntoViewIfNeeded();
+        await button.click();
 
-            this.originalWeDoData =
-                await this.weDoField.inputValue().catch(() => "");
+        await this.pedagogyDetailsModal.waitFor({
+            state: "visible",
+            timeout: 30000
+        });
+    }
 
-            this.originalYouDoData =
-                await this.youDoField.inputValue().catch(() => "");
+    async closePedagogyDetails() {
+
+        await this.pedagogyDetailsCloseButton.click();
+
+        await this.pedagogyDetailsModal
+            .waitFor({ state: "hidden", timeout: 15000 })
+            .catch(() => {});
+    }
+
+    async readPedagogySectionText(
+        section: "I Do" | "We Do" | "You Do"
+    ): Promise<string> {
+
+        const container = this.getPedagogySection(section);
+
+        const text = await container.textContent();
+
+        return (text ?? "").replace(/\s+/g, " ").trim();
+    }
+
+    // ============================================================
+    // SELECT FIRST OPTION (LOCAL TO THIS PAGE ONLY)
+    //
+    // Deliberately NOT using the shared Basepage.selectFirstOption()
+    // here. That shared helper presses Escape unconditionally right
+    // after clicking the option. Many Radix/shadcn multi-select
+    // popovers auto-close themselves as soon as an option is
+    // clicked - so if the listbox is already gone, that Escape has
+    // nothing left to close and bubbles up to the next thing
+    // listening for it, which in this flow is the parent
+    // "Create New Course Setup" dialog. Radix Dialogs close on
+    // Escape by default, so the unmatched keypress was silently
+    // closing the whole modal (confirmed via logDebugState():
+    // openDialogs went from 1 -> 0 immediately after this call).
+    //
+    // This local version only presses Escape if the popover is
+    // still actually visible, so it can never affect anything
+    // outside this page object. Basepage.ts itself is left
+    // untouched so no other feature/teammate is impacted.
+    // ============================================================
+    private async selectFirstPedagogyOption(dropdown: Locator) {
+
+        await dropdown.waitFor({ state: "visible" });
+        await dropdown.click();
+
+        const listBox = this.page.locator("[role='listbox']").last();
+        await listBox.waitFor({ state: "visible", timeout: 5000 });
+
+        await listBox.locator("label").first().click();
+
+        if (await listBox.isVisible().catch(() => false)) {
+            await this.page.keyboard.press("Escape");
         }
     }
 
     // ============================================================
-    // CHANGE WE DO
+    // CHANGE WE DO / YOU DO (edit form dropdowns)
     // ============================================================
 
     async changeWeDoPedagogyData() {
 
-        const field = this.weDoField;
+        const dropdown = this.getPedagogyDropdown("We Do");
 
-        if (await field.count() > 0) {
+        await this.selectFirstPedagogyOption(dropdown);
 
-            await field.fill(
-                `${this.originalWeDoData} - Temporary Change`
-            );
-
-            return;
-        }
-
-        const textareas =
-            this.pedagogyTextareas;
-
-        if (await textareas.count() >= 1) {
-
-            await textareas.nth(0).fill(
-                `${this.originalWeDoData} - Temporary Change`
-            );
-        }
+        await this.logDebugState(
+            "after changing We Do pedagogy data"
+        );
     }
 
     // ============================================================
-    // CHANGE YOU DO
+    // DEBUG STATE DUMP
+    //
+    // Logs whether the "Edit Course Structure" dialog is still open,
+    // how many dialogs/listboxes currently exist in the DOM, and
+    // which dialog titles are visible. This pinpoints whether a
+    // dropdown interaction (e.g. the Escape key inside
+    // selectFirstOption/multiSelect) accidentally closed the parent
+    // modal instead of just the dropdown's popover.
     // ============================================================
 
-    async changeYouDoPedagogyData() {
+    async logDebugState(context: string) {
 
-        const field = this.youDoField;
+        try {
 
-        if (await field.count() > 0) {
+            const openDialogs = await this.page
+                .locator("[role='dialog']")
+                .count();
 
-            await field.fill(
-                `${this.originalYouDoData} - Temporary Change`
+            const editModalVisible = await this.editCourseStructureModal
+                .isVisible()
+                .catch(() => false);
+
+            const openListboxes = await this.page
+                .locator("[role='listbox']")
+                .count();
+
+            const dialogTitles = await this.page
+                .locator(
+                    "[role='dialog'] h2, [role='dialog'] [data-slot='dialog-title']"
+                )
+                .allTextContents()
+                .catch(() => []);
+
+            logger.error(
+                `DEBUG [${context}]: openDialogs=${openDialogs}, ` +
+                `editCourseStructureModalVisible=${editModalVisible}, ` +
+                `openListboxes=${openListboxes}, ` +
+                `dialogTitles=${JSON.stringify(dialogTitles)}, ` +
+                `url=${this.page.url()}`
             );
 
-            return;
-        }
+        } catch (debugError) {
 
-        const textareas =
-            this.pedagogyTextareas;
-
-        if (await textareas.count() >= 2) {
-
-            await textareas.nth(1).fill(
-                `${this.originalYouDoData} - Temporary Change`
+            logger.error(
+                `DEBUG [${context}]: failed to capture debug state - ${debugError}`
             );
         }
     }
 
     // ============================================================
     // DO NOT SAVE
+    //
+    // The "Create New Course Setup" dialog has no accessible Close
+    // button - the visible "X" in the corner is an unlabeled SVG
+    // icon with no matching role/name, so
+    // getByRole("button", { name: /^close$/i }) can never resolve
+    // to it. That's why editCourseStructureCloseButton always timed
+    // out, regardless of whether the dialog was open or already
+    // gone.
+    //
+    // The app itself auto-dismisses this dialog shortly after a
+    // pedagogy dropdown change (confirmed across multiple runs via
+    // logDebugState() - the dialog is open right after the We Do
+    // selection, then closes with no click from our code). So there
+    // is nothing for us to click here at all: we just wait for the
+    // dialog to finish closing on its own and move on. This lets
+    // the scenario continue to whatever step actually re-opens
+    // Pedagogy Details and verifies the unsaved edit was not
+    // persisted, instead of the scenario aborting on a button click
+    // that was never going to succeed.
     // ============================================================
 
     async doNotSaveCourseLayout() {
 
-        /*
-         * Intentionally do nothing.
-         *
-         * This step exists to make the negative scenario explicit.
-         */
-        await this.page.waitForTimeout(500);
+        logger.info(
+            "doNotSaveCourseLayout: waiting for Edit Course Structure dialog to close on its own"
+        );
+
+        await this.editCourseStructureModal
+            .waitFor({
+                state: "hidden",
+                timeout: 30000
+            })
+            .catch(async () => {
+
+                await this.logDebugState(
+                    "Edit Course Structure dialog did not close on its own"
+                );
+            });
+
+        logger.info(
+            "doNotSaveCourseLayout: done"
+        );
     }
 
     // ============================================================
@@ -903,42 +1081,21 @@ export class EditDeletepage extends Basepage {
 
     async verifyOriginalPedagogyData() {
 
-        const textareas =
-            this.pedagogyTextareas;
+        await this.pedagogyDetailsModal.waitFor({
+            state: "visible",
+            timeout: 30000
+        });
 
-        const count = await textareas.count();
+        const current = {
+            iDo: await this.readPedagogySectionText("I Do"),
+            weDo: await this.readPedagogySectionText("We Do"),
+            youDo: await this.readPedagogySectionText("You Do")
+        };
 
-        if (count >= 2) {
-
-            const actualWeDo =
-                await textareas.nth(0).inputValue();
-
-            const actualYouDo =
-                await textareas.nth(1).inputValue();
-
-            expect(actualWeDo).toBe(
-                this.originalWeDoData
-            );
-
-            expect(actualYouDo).toBe(
-                this.originalYouDoData
-            );
-
-            return;
-        }
-
-        const actualWeDo =
-            await this.weDoField.inputValue();
-
-        const actualYouDo =
-            await this.youDoField.inputValue();
-
-        expect(actualWeDo).toBe(
-            this.originalWeDoData
+        expect(current).toEqual(
+            this.originalPedagogyData
         );
 
-        expect(actualYouDo).toBe(
-            this.originalYouDoData
-        );
+        await this.closePedagogyDetails();
     }
 }

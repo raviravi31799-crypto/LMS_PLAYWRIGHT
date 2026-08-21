@@ -1,2 +1,1 @@
-src\test\features\CourseManagement\EditAndDelete.feature:26:42:61:80:90
-src\test\features\DynamicFieldManagement\DynamicCouseCategory.feature:11:19:26
+src\test\features\CourseManagement\EditAndDelete.feature:26:42:78

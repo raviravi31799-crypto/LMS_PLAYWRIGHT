@@ -97,6 +97,10 @@ Then('the new category should be displayed in the category list', { timeout: 400
 
 When('Admin searches for a course', { timeout: 40000 }, async function (this: CustomWorld, dataTable) {
 
+    if (!dataTable || typeof dataTable.hashes !== 'function') {
+        throw new Error("DataTable is required for searching a course");
+    }
+
     const columnName =
         dataTable.raw()[0][0] as keyof CategoryCsvRow;
 
@@ -134,6 +138,10 @@ Then('the course should be displayed in the category list', { timeout: 40000 }, 
 // ============================================================
 
 When('Admin clicks the three dot menu for a category', { timeout: 40000 }, async function (this: CustomWorld, dataTable) {
+
+    if (!dataTable || typeof dataTable.hashes !== 'function') {
+        throw new Error("DataTable is required for clicking three dot menu for category");
+    }
 
     const columnName =
         dataTable.raw()[0][0] as keyof CategoryCsvRow;
@@ -228,44 +236,72 @@ Then('the updated category should be displayed in the category list', { timeout:
 // ============================================================
 // Delete Category
 // ============================================================
+// ============================================================
+// Delete Category - DataTable Driven
+// ============================================================
 
-When('Admin clicks the three dot menu for delete category', { timeout: 40000 }, async function (this: CustomWorld) {
+When(   'Admin clicks the three dot menu for delete category',{ timeout: 40000 },async function (this: CustomWorld, dataTable) {
 
-    /*
-     * Delete uses CSV row 3:
-     *
-     * IT,FSWD,developing a website,
-     *
-     * CourseNames -> FSWD
-     */
+       
+        const columnName = dataTable.raw()[0][0] as keyof CategoryCsvRow;
 
-    const courseName =
-        deleteCsvData.CourseNames
-            .split(";")[0]!;
+        logger.info(  `Delete DataTable column name: ${columnName}`);
 
-    this.courseName = courseName;
+        
+        const courseNames = deleteCsvData[columnName];
 
-    logger.info(
-        `Searching using Delete course: ${courseName}, then clicking three dot`
-    );
+        if (!courseNames) {
+            throw new Error(
+                `No value found in delete CSV for column: ${columnName}`
+            );
+        }
 
-    /*
-     * Search using Delete-specific CSV data.
-     */
-    await this.dynamiccoursecategorypage.searchCourse(
-        courseName
-    );
+        logger.info(
+            `Delete CSV value for ${columnName}: ${courseNames}`
+        );
+        const courseName = courseNames
+            .split(";")[0]!
+            .trim();
 
-    /*
-     * Click the three-dot button from the
-     * SAME row that contains FSWD.
-     */
-    await this.dynamiccoursecategorypage.clickThreeDotForCourse(
-        courseName
-    );
-});
+        if (!courseName) {
+            throw new Error(
+                `Course name is empty for CSV column: ${columnName}`
+            );
+        }
 
+    
+        this.courseName = courseName;
 
+        logger.info(
+            `Searching for delete course: ${courseName}`
+        );
+
+     
+        await this.dynamiccoursecategorypage.categorySearchInput.clear();
+
+        
+        await this.dynamiccoursecategorypage.searchCourse(
+            courseName
+        );
+
+    
+        await this.dynamiccoursecategorypage.page.waitForLoadState(
+            'networkidle'
+        );
+
+        logger.info(
+            `Clicking three-dot menu for delete course: ${courseName}`
+        );
+
+        await this.dynamiccoursecategorypage.clickThreeDotForCourse(
+            courseName
+        );
+
+        logger.info(
+            `Three-dot menu clicked successfully for delete course: ${courseName}`
+        );
+    }
+);
 When('Admin selects Delete option', { timeout: 40000 }, async function (this: CustomWorld) {
 
     logger.info("Selecting Delete option");
@@ -299,3 +335,24 @@ Then('the category should no longer be displayed in the category list', { timeou
 
     expect(isDisplayed).toBeTruthy();
 });
+
+// ============================================================
+// Verify Deleted Category
+// ============================================================
+
+Then('the course should no longer be displayed in the category list', 
+    { timeout: 40000 }, 
+    async function (this: CustomWorld) {
+
+        const isDisplayed =
+            await this.dynamiccoursecategorypage.verifyCourseNotDisplayed(
+                this.courseName
+            );
+
+        logger.info(
+            `Course "${this.courseName}" is no longer displayed after category deletion: ${isDisplayed}`
+        );
+
+        expect(isDisplayed).toBeTruthy();
+    }
+);

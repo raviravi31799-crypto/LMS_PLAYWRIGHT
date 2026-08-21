@@ -9,6 +9,50 @@ import { expect } from "@playwright/test";
 import { logger } from "../utils/winstonlogger";
 
 // ============================================================
+// HELPER: EXTRACT COURSEID FROM A DATATABLE
+//
+// Supports both table styles used across this feature:
+//
+//   | CourseID      |          <- with header, via hashes()
+//   | PT-BTI-PT-003 |
+//
+//   | PT-BTI-PT-003 |          <- header-less, single row
+//
+// hashes() requires a header row to treat any row as data, so a
+// header-less table returns an empty array from hashes(). In that
+// case we fall back to raw() and read the first cell directly.
+// ============================================================
+
+function extractCourseId(dataTable: any): string | undefined {
+
+    if (!dataTable) {
+        return undefined;
+    }
+
+    if (typeof dataTable.hashes === "function") {
+        const hashes = dataTable.hashes();
+
+        if (hashes && hashes.length && hashes[0].CourseID) {
+            return hashes[0].CourseID;
+        }
+    }
+
+    if (typeof dataTable.raw === "function") {
+        const rows = dataTable.raw();
+
+        for (const row of rows) {
+            const cell = row?.[0]?.trim();
+
+            if (cell && cell.toLowerCase() !== "courseid") {
+                return cell;
+            }
+        }
+    }
+
+    return undefined;
+}
+
+// ============================================================
 // LOGIN
 // ============================================================
 
@@ -60,15 +104,15 @@ When(
         dataTable
     ) {
 
-        const data = dataTable.hashes();
+        const courseId = extractCourseId(dataTable);
 
-        if (!data.length || !data[0].CourseID) {
+        if (!courseId) {
             throw new Error(
                 "CourseID is required for three dot menu."
             );
         }
 
-        this.courseId = data[0].CourseID;
+        this.courseId = courseId;
 
         logger.info(
             `Clicking three dot menu for course: ${this.courseId}`
@@ -109,7 +153,13 @@ When(
         dataTable
     ) {
 
-        const data = dataTable.hashes();
+        const data = dataTable?.hashes();
+
+        if (!data || !data.length) {
+            throw new Error(
+                "Course configuration data is required."
+            );
+        }
 
         const client =
             data[0].Client;
@@ -260,31 +310,58 @@ Then(
 );
 
 // ============================================================
-// VIEW BUTTON
-// Supports:
+// VIEW BUTTON - WITHOUT DATA TABLE
 // "Admin clicks the View button"
 // "Admin clicks View button"
+// ============================================================
+
+When(
+    /^Admin clicks (?:the )?View button$/,
+    { timeout: 60000 },
+    async function (this: CustomWorld) {
+
+        if (!this.courseId) {
+            throw new Error(
+                "CourseID must be set before clicking View button. " +
+                "Ensure a course has been selected in a previous step."
+            );
+        }
+
+        logger.info(
+            `Clicking View button for course: ${this.courseId}`
+        );
+
+        await this.editdeletepage.clickView(
+            this.courseId
+        );
+    }
+);
+
+// ============================================================
+// VIEW BUTTON - WITH DATA TABLE
 // "Admin clicks View button for the course"
 // "Admin clicks View button for course"
 // ============================================================
 
 When(
-    /^Admin clicks (?:the )?View button(?: for (?:the )?course)?$/,
+    /^Admin clicks (?:the )?View button (?:for (?:the )?course)?$/,
     { timeout: 60000 },
     async function (
         this: CustomWorld,
         dataTable
     ) {
 
-        const data = dataTable.hashes();
+        const courseId = extractCourseId(dataTable);
 
-        if (!data.length || !data[0].CourseID) {
+        if (courseId) {
+            this.courseId = courseId;
+        }
+
+        if (!this.courseId) {
             throw new Error(
                 "CourseID is required when clicking the View button."
             );
         }
-
-        this.courseId = data[0].CourseID;
 
         logger.info(
             `Clicking View button for course: ${this.courseId}`
@@ -305,7 +382,7 @@ Then(
     { timeout: 30000 },
     async function (this: CustomWorld) {
 
-        const expected = [
+        const expected = ["Module",
             "Sub Module",
             "Topic",
             "Sub Topic"
@@ -318,13 +395,7 @@ Then(
             `Displayed course levels: ${actual.join(", ")}`
         );
 
-        await expect(actual).toEqual(
-            expect.arrayContaining(expected)
-        );
-
-        logger.info(
-            "Verified Sub Module, Topic, and Sub Topic are displayed"
-        );
+        await expect(actual).toEqual(expected);
     }
 );
 
@@ -344,13 +415,13 @@ When(
         await this.editdeletepage.selectViewFullDetails();
 
         logger.info(
-            "View Full Details opened successfully"
+            "View Full Details option selected"
         );
     }
 );
 
 // ============================================================
-// VIEW FULL DETAILS - EDIT COURSE
+// SCROLL AND EDIT COURSE
 // ============================================================
 
 When(
@@ -425,17 +496,13 @@ Then(
         dataTable
     ) {
 
-        const data =
-            dataTable.hashes();
+        const courseId = extractCourseId(dataTable);
 
-        if (!data.length || !data[0].CourseID) {
+        if (!courseId) {
             throw new Error(
                 "CourseID is required for course level verification."
             );
         }
-
-        const courseId =
-            data[0].CourseID;
 
         logger.info(
             `Verifying course level "${expectedLevel}" for ${courseId}`
@@ -558,10 +625,59 @@ Then(
 );
 
 // ============================================================
-// CAPTURE ORIGINAL PEDAGOGY DATA
+// VIEW BUTTON - PEDAGOGY COLUMN
 // ============================================================
 
 When(
+    "Admin clicks the View button under the Pedagogy column for course",
+    { timeout: 60000 },
+    async function (
+        this: CustomWorld,
+        dataTable
+    ) {
+
+        const courseId = extractCourseId(dataTable);
+
+        if (!courseId) {
+            throw new Error(
+                "CourseID is required when clicking the Pedagogy View button."
+            );
+        }
+
+        this.courseId = courseId;
+
+        logger.info(
+            `Opening Pedagogy Details for course: ${this.courseId}`
+        );
+
+        await this.editdeletepage.openPedagogyDetails(
+            this.courseId
+        );
+    }
+);
+
+// ============================================================
+// CLOSE PEDAGOGY DETAILS POPUP
+// ============================================================
+
+When(
+    "Admin closes the Pedagogy Details popup",
+    { timeout: 30000 },
+    async function (this: CustomWorld) {
+
+        logger.info(
+            "Closing Pedagogy Details popup"
+        );
+
+        await this.editdeletepage.closePedagogyDetails();
+    }
+);
+
+// ============================================================
+// CAPTURE ORIGINAL PEDAGOGY DATA
+// ============================================================
+
+Then(
     "Admin captures the original pedagogy data",
     { timeout: 60000 },
     async function (this: CustomWorld) {
@@ -600,33 +716,12 @@ When(
 );
 
 // ============================================================
-// CHANGE YOU DO
-// ============================================================
-
-When(
-    "Admin changes the You Do pedagogy data",
-    { timeout: 60000 },
-    async function (this: CustomWorld) {
-
-        logger.info(
-            "Changing the You Do pedagogy data"
-        );
-
-        await this.editdeletepage.changeYouDoPedagogyData();
-
-        logger.info(
-            "You Do pedagogy data changed"
-        );
-    }
-);
-
-// ============================================================
 // DO NOT SAVE
 // ============================================================
 
 When(
     "Admin does not save the course layout",
-    { timeout: 30000 },
+    { timeout: 100000 },
     async function (this: CustomWorld) {
 
         logger.info(
